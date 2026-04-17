@@ -5,39 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Matt Danese — Demand Gen × AI</title>
   <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engineer, his newsletter on AI-powered demand gen." />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- KIT FORM INTEGRATION -->
   <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
 
   <style>
     /* ========= CSS CUSTOM PROPERTIES ========= */
     :root {
-      --color-bg: #FAF7F2;
-      --color-text: #1A1A1A;
-      --color-accent: #C4622D;
-      --color-accent-hover: #A84E22;
-      --color-muted: #6B6560;
-      --color-border: #E8E2DA;
-      --color-card-bg: #FFFFFF;
-      --color-tag-bg: #F0EBE4;
-      --font-heading: 'Playfair Display', Georgia, serif;
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
       --max-width: 760px;
-      --section-pad-desktop: 96px;
+      --section-pad: 96px;
       --section-pad-mobile: 64px;
       --nav-height: 56px;
     }
 
     /* ========= RESET & BASE ========= */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      scroll-behavior: smooth;
-      font-size: 17px;
-    }
+    html { scroll-behavior: smooth; font-size: 17px; }
 
     body {
       background-color: var(--color-bg);
@@ -51,6 +48,7 @@
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
+    button { font-family: var(--font-body); }
 
     /* ========= UTILITY ========= */
     .container {
@@ -62,42 +60,48 @@
     .eyebrow {
       display: inline-block;
       font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 13px;
+      font-weight: 600;
+      font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: 16px;
+      color: var(--color-eyebrow);
+      margin-bottom: 14px;
     }
 
-    /* ========= FADE-IN-UP ANIMATION ========= */
+    /* ========= FADE-IN-UP (IntersectionObserver) ========= */
     .animate {
       opacity: 0;
       transform: translateY(24px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.55s ease-out, transform 0.55s ease-out;
     }
-
     .animate.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
+    /* Hero staggered load animations */
+    .hero-load {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeIn 0.6s ease-out forwards;
+    }
+    @keyframes heroFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     /* ========= NAVIGATION ========= */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       height: var(--nav-height);
-      background-color: var(--color-bg);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--color-border);
       transition: transform 0.3s ease;
     }
-
-    .nav--hidden {
-      transform: translateY(-100%);
-    }
+    .nav--hidden { transform: translateY(-100%); }
 
     .nav__inner {
       max-width: var(--max-width);
@@ -113,88 +117,76 @@
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 18px;
-      color: var(--color-text);
+      color: var(--color-accent-dark);
       letter-spacing: -0.01em;
       transition: color 0.2s ease;
     }
-
-    .nav__logo:hover {
-      color: var(--color-accent);
-    }
+    .nav__logo:hover { color: var(--color-accent); }
 
     .nav__links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 28px;
     }
-
     .nav__links a {
+      position: relative;
       font-family: var(--font-body);
       font-weight: 500;
-      font-size: 15px;
-      color: var(--color-muted);
+      font-size: 14px;
+      color: var(--color-text-muted);
       transition: color 0.2s ease;
+      padding-bottom: 2px;
     }
-
-    .nav__links a:hover {
-      color: var(--color-accent);
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
     }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
 
-    /* ========= HAMBURGER ========= */
+    /* Hamburger */
     .nav__hamburger {
       display: none;
       flex-direction: column;
       justify-content: center;
       gap: 5px;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       cursor: pointer;
       background: none;
       border: none;
       padding: 0;
     }
-
     .nav__hamburger span {
       display: block;
-      width: 22px;
-      height: 2px;
-      background-color: var(--color-text);
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
       border-radius: 2px;
       transition: all 0.25s ease;
     }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .nav__hamburger.open span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-    .nav__hamburger.open span:nth-child(2) {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-
-    .nav__hamburger.open span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-
-    /* Mobile nav drawer */
     .nav__mobile {
       display: none;
       position: fixed;
-      top: var(--nav-height);
-      left: 0;
-      right: 0;
-      background-color: var(--color-bg);
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
       border-bottom: 1px solid var(--color-border);
       padding: 20px 24px;
       z-index: 99;
       flex-direction: column;
       gap: 20px;
     }
-
-    .nav__mobile.open {
-      display: flex;
-    }
-
+    .nav__mobile.open { display: flex; }
     .nav__mobile a {
       font-family: var(--font-body);
       font-weight: 500;
@@ -202,10 +194,7 @@
       color: var(--color-text);
       transition: color 0.2s ease;
     }
-
-    .nav__mobile a:hover {
-      color: var(--color-accent);
-    }
+    .nav__mobile a:hover { color: var(--color-accent); }
 
     /* ========= BUTTONS ========= */
     .btn {
@@ -213,37 +202,46 @@
       align-items: center;
       justify-content: center;
       height: 48px;
-      padding: 0 24px;
+      padding: 0 28px;
       border-radius: 6px;
       font-family: var(--font-body);
-      font-weight: 500;
+      font-weight: 600;
       font-size: 15px;
       cursor: pointer;
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-      white-space: nowrap;
-      border: 2px solid transparent;
+      border: none;
       text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
     }
 
     .btn--primary {
       background-color: var(--color-accent);
       color: #fff;
-      border-color: var(--color-accent);
+      box-shadow: 0 0 0 0 rgba(45, 91, 227, 0.4);
     }
-
     .btn--primary:hover {
       background-color: var(--color-accent-hover);
-      border-color: var(--color-accent-hover);
+      box-shadow: 0 0 0 6px rgba(45, 91, 227, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn--ghost-light {
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+    .btn--ghost-light:hover {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .btn--ghost {
-      background-color: transparent;
+      background: transparent;
       color: var(--color-accent);
-      border-color: var(--color-accent);
+      border: 1.5px solid var(--color-accent);
     }
-
     .btn--ghost:hover {
-      background-color: var(--color-accent);
+      background: var(--color-accent);
       color: #fff;
     }
 
@@ -253,65 +251,80 @@
       display: flex;
       align-items: center;
       padding-top: var(--nav-height);
+      padding-bottom: 80px;
       position: relative;
       overflow: hidden;
+      background-color: var(--color-accent-dark);
+      clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+      z-index: 2;
     }
 
-    /* Animated gradient mesh background */
+    /* Animated gradient mesh — dark blue/cobalt tones */
     .hero__bg {
       position: absolute;
       inset: 0;
       z-index: 0;
-      animation: meshShift 12s ease-in-out infinite alternate;
+      animation: heroMesh 16s ease-in-out infinite alternate;
     }
-
-    @keyframes meshShift {
+    @keyframes heroMesh {
       0% {
         background:
-          radial-gradient(ellipse 60% 50% at 20% 30%, rgba(196, 98, 45, 0.10) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 60% at 80% 70%, rgba(196, 98, 45, 0.07) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 40% at 60% 20%, rgba(196, 98, 45, 0.06) 0%, transparent 70%);
+          radial-gradient(ellipse 65% 55% at 18% 50%, rgba(45, 91, 227, 0.22) 0%, transparent 68%),
+          radial-gradient(ellipse 55% 65% at 82% 18%, rgba(26, 58, 122, 0.28) 0%, transparent 68%);
       }
       50% {
         background:
-          radial-gradient(ellipse 60% 50% at 35% 55%, rgba(196, 98, 45, 0.09) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 60% at 65% 40%, rgba(196, 98, 45, 0.08) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 40% at 25% 75%, rgba(196, 98, 45, 0.05) 0%, transparent 70%);
+          radial-gradient(ellipse 65% 55% at 38% 28%, rgba(45, 91, 227, 0.18) 0%, transparent 68%),
+          radial-gradient(ellipse 55% 65% at 72% 72%, rgba(26, 58, 122, 0.24) 0%, transparent 68%);
       }
       100% {
         background:
-          radial-gradient(ellipse 60% 50% at 70% 20%, rgba(196, 98, 45, 0.08) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 60% at 30% 80%, rgba(196, 98, 45, 0.10) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 40% at 80% 55%, rgba(196, 98, 45, 0.06) 0%, transparent 70%);
+          radial-gradient(ellipse 65% 55% at 14% 68%, rgba(45, 91, 227, 0.22) 0%, transparent 68%),
+          radial-gradient(ellipse 55% 65% at 88% 32%, rgba(26, 58, 122, 0.28) 0%, transparent 68%);
       }
+    }
+
+    /* Subtle noise overlay */
+    .hero__noise {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+      pointer-events: none;
     }
 
     .hero__content {
       position: relative;
-      z-index: 1;
-      padding: 80px 0;
+      z-index: 2;
       width: 100%;
+      padding: 60px 0 20px;
     }
 
-    .hero__content .container {
-      text-align: left;
+    .hero .eyebrow {
+      color: #7BA4F7;
+      display: block;
+      margin-bottom: 20px;
     }
 
     .hero h1 {
       font-family: var(--font-heading);
       font-weight: 900;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.15;
+      font-optical-sizing: auto;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 1.1;
       letter-spacing: -0.02em;
-      color: var(--color-text);
-      max-width: 640px;
+      color: #FFFFFF;
+      max-width: 720px;
       margin-bottom: 24px;
     }
 
     .hero__bio {
       font-size: 17px;
-      color: var(--color-muted);
-      max-width: 560px;
+      color: #A8BBDA;
+      max-width: 520px;
       margin-bottom: 40px;
       line-height: 1.7;
     }
@@ -323,32 +336,24 @@
       flex-wrap: wrap;
     }
 
-    /* Scroll indicator */
+    /* Scroll chevron */
     .hero__scroll {
       margin-top: 64px;
       display: flex;
       justify-content: flex-start;
       opacity: 0;
-      animation: fadeIn 0.5s ease 1.5s forwards;
+      animation: fadeInDelay 0.5s ease 2s forwards;
     }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
+    @keyframes fadeInDelay { to { opacity: 1; } }
 
     .hero__scroll-chevron {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
       animation: bounce 2s ease-in-out infinite;
     }
-
-    .hero__scroll-chevron svg {
-      stroke: var(--color-accent);
-    }
-
+    .hero__scroll-chevron svg { stroke: #7BA4F7; }
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(6px); }
@@ -356,47 +361,55 @@
 
     /* ========= SECTION SHARED ========= */
     .section {
-      padding: var(--section-pad-desktop) 0;
+      padding: var(--section-pad) 0;
     }
 
-    .section__header {
-      margin-bottom: 48px;
-    }
+    .section__header { margin-bottom: 48px; }
 
     .section__heading {
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-      line-height: 1.2;
+      font-optical-sizing: auto;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      line-height: 1.15;
       letter-spacing: -0.02em;
-      color: var(--color-text);
+      color: var(--color-accent-dark);
       margin-bottom: 12px;
     }
 
     .section__subhead {
       font-size: 17px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       max-width: 540px;
       line-height: 1.65;
     }
 
     /* ========= PROJECTS SECTION ========= */
+    #projects {
+      background-color: var(--color-bg);
+      margin-top: -50px;
+      padding-top: calc(50px + var(--section-pad));
+      position: relative;
+      z-index: 1;
+    }
+
     .projects__list {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .project-card {
-      background-color: var(--color-card-bg);
+      background: var(--color-bg-card);
       border: 1px solid var(--color-border);
-      border-radius: 8px;
-      padding: 32px;
-      transition: border-color 0.2s ease;
+      border-radius: 10px;
+      padding: 28px 32px;
+      transition: all 0.22s ease;
     }
-
     .project-card:hover {
       border-color: var(--color-accent);
+      box-shadow: 0 4px 24px rgba(45, 91, 227, 0.08);
+      transform: translateY(-2px);
     }
 
     .project-card__top {
@@ -410,15 +423,15 @@
     .project-card__title {
       font-family: var(--font-heading);
       font-weight: 700;
-      font-size: 1.2rem;
-      color: var(--color-text);
+      font-size: 1.05rem;
+      color: var(--color-accent-dark);
       line-height: 1.3;
     }
 
     .project-card__tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
       justify-content: flex-end;
       max-width: 260px;
@@ -426,21 +439,21 @@
 
     .tag {
       display: inline-block;
-      background-color: var(--color-tag-bg);
-      color: var(--color-muted);
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
       font-family: var(--font-body);
       font-weight: 500;
       font-size: 11px;
-      padding: 3px 10px;
+      padding: 3px 8px;
       border-radius: 4px;
       white-space: nowrap;
     }
 
     .project-card__desc {
       font-size: 15px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       line-height: 1.7;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .project-card__link {
@@ -455,22 +468,22 @@
       background: none;
       border: none;
       padding: 0;
-      transition: color 0.2s ease, gap 0.2s ease;
+      transition: color 0.2s ease, text-decoration 0.2s ease;
     }
-
     .project-card__link:hover {
       color: var(--color-accent-hover);
-      gap: 8px;
+      text-decoration: underline;
     }
 
     /* ========= NEWSLETTER SECTION ========= */
-    .newsletter {
-      background-color: var(--color-bg);
+    #newsletter {
+      background-color: var(--color-bg-card);
+      border-top: 1px solid var(--color-border);
     }
 
     .newsletter__tagline {
       font-size: 19px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       margin-bottom: 32px;
       line-height: 1.55;
     }
@@ -491,14 +504,12 @@
       line-height: 1.55;
     }
 
-    .bullet-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      min-width: 8px;
-      background-color: var(--color-accent);
-      border-radius: 50%;
-      margin-top: 8px;
+    .bullet-arrow {
+      font-family: var(--font-body);
+      font-weight: 500;
+      color: var(--color-accent);
+      flex-shrink: 0;
+      margin-top: 1px;
     }
 
     /* ========= FORM SHARED ========= */
@@ -510,42 +521,34 @@
 
     .form__input {
       flex: 1;
-      height: 44px;
+      height: 46px;
       padding: 0 14px;
-      border: 1px solid var(--color-border);
+      border: 1.5px solid var(--color-border);
       border-radius: 8px;
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15px;
       color: var(--color-text);
-      background-color: #fff;
+      background: #FFFFFF;
       outline: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .form__input::placeholder {
-      color: #B0A9A2;
-    }
-
+    .form__input::placeholder { color: #A0AABF; }
     .form__input:focus {
       border-color: var(--color-accent);
-      box-shadow: 0 0 0 3px rgba(196, 98, 45, 0.12);
+      box-shadow: 0 0 0 3px rgba(45, 91, 227, 0.12);
     }
-
-    .form__input--error {
-      border-color: #E05A2B;
-    }
+    .form__input--error { border-color: #E05A2B; }
 
     .form__error {
       font-family: var(--font-body);
       font-size: 13px;
       color: var(--color-accent);
       margin-top: 8px;
+      display: none;
     }
 
     /* Newsletter inline form */
-    .signup-form {
-      margin-bottom: 32px;
-    }
+    .signup-form { margin-bottom: 32px; }
 
     .signup-form__btn-wrap {
       display: flex;
@@ -553,14 +556,11 @@
       align-items: flex-start;
       gap: 12px;
     }
-
-    .signup-form .btn--primary {
-      width: 100%;
-    }
+    .signup-form .btn--primary { width: 100%; }
 
     .signup-form__disclaimer {
       font-size: 13px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       text-align: center;
       width: 100%;
     }
@@ -570,60 +570,55 @@
       align-items: center;
       gap: 10px;
       padding: 14px 20px;
-      background-color: #F0FAF0;
-      border: 1px solid #C3E6C3;
+      background: #EEF5EE;
+      border: 1px solid #B3D9B3;
       border-radius: 8px;
       font-size: 15px;
-      color: #2D7A2D;
+      color: #276127;
       font-weight: 500;
     }
+    .signup-form__success.show { display: flex; }
 
-    .signup-form__success.show {
-      display: flex;
-    }
-
-    /* Teaser card */
+    /* Issue preview teaser */
     .newsletter__teaser {
       border-left: 3px solid var(--color-accent);
-      background-color: #FFFEFB;
-      border-radius: 0 6px 6px 0;
-      padding: 24px;
+      background: #F4F6FB;
+      border-radius: 0 8px 8px 0;
+      padding: 20px 24px;
       margin-top: 32px;
     }
-
     .teaser__label {
       font-family: var(--font-body);
-      font-weight: 500;
+      font-weight: 600;
       font-size: 11px;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--color-accent);
       margin-bottom: 8px;
     }
-
     .teaser__title {
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 1.05rem;
-      color: var(--color-text);
-      margin-bottom: 8px;
+      color: var(--color-accent-dark);
+      margin-bottom: 6px;
       line-height: 1.3;
     }
-
     .teaser__body {
       font-size: 14px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       line-height: 1.6;
     }
 
     /* ========= CONTACT SECTION ========= */
-    .contact {
-      border-top: 1px solid var(--color-border);
+    #contact {
+      background-color: var(--color-accent-dark);
     }
+    #contact .section__heading { color: #FFFFFF; }
 
     .contact__invite {
       font-size: 17px;
-      color: var(--color-muted);
+      color: #A8BBDA;
       max-width: 500px;
       margin-bottom: 36px;
       line-height: 1.7;
@@ -643,33 +638,31 @@
       font-family: var(--font-body);
       font-weight: 500;
       font-size: 16px;
-      color: var(--color-accent);
+      color: #7BA4F7;
       text-decoration: none;
       border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease, color 0.2s ease;
+      transition: color 0.2s ease, border-color 0.2s ease;
     }
-
     .contact__link:hover {
-      color: var(--color-accent-hover);
-      border-bottom-color: var(--color-accent-hover);
+      color: #FFFFFF;
+      border-bottom-color: #FFFFFF;
     }
 
     .contact__divider {
-      width: 1px;
-      height: 20px;
-      background-color: var(--color-border);
+      width: 1px; height: 20px;
+      background: rgba(255,255,255,0.15);
     }
 
     /* ========= FOOTER ========= */
     .footer {
-      padding: 32px 0;
-      border-top: 1px solid var(--color-border);
+      padding: 28px 0;
+      background: var(--color-accent-dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
-
     .footer__inner {
       text-align: center;
       font-size: 12px;
-      color: var(--color-muted);
+      color: #4A6080;
     }
 
     /* ========= PRD GATE MODAL ========= */
@@ -678,22 +671,21 @@
       position: fixed;
       inset: 0;
       z-index: 200;
-      background-color: rgba(26, 26, 26, 0.6);
+      background: rgba(10, 22, 40, 0.65);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       align-items: center;
       justify-content: center;
       padding: 24px;
     }
-
-    .modal-overlay.open {
-      display: flex;
-    }
+    .modal-overlay.open { display: flex; }
 
     .modal {
-      background-color: var(--color-bg);
+      background: #FFFFFF;
+      border: 1px solid var(--color-border);
       border-radius: 12px;
-      padding: 32px;
+      box-shadow: 0 24px 64px rgba(10, 22, 40, 0.18);
+      padding: 36px;
       width: 100%;
       max-width: 480px;
       position: relative;
@@ -703,210 +695,113 @@
 
     .modal__close {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
+      top: 16px; right: 16px;
+      width: 32px; height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 20px;
-      color: var(--color-muted);
+      font-size: 18px;
+      color: var(--color-text-muted);
       border-radius: 4px;
       transition: color 0.2s ease, background-color 0.2s ease;
       line-height: 1;
     }
-
     .modal__close:hover {
       color: var(--color-accent);
-      background-color: var(--color-tag-bg);
+      background: var(--color-chip-bg);
     }
 
     .modal__heading {
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 1.5rem;
-      color: var(--color-text);
+      color: var(--color-accent-dark);
       margin-bottom: 10px;
       padding-right: 32px;
       line-height: 1.2;
     }
 
     .modal__subhead {
-      font-family: var(--font-body);
       font-size: 15px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       margin-bottom: 28px;
       line-height: 1.6;
     }
 
-    /* Modal form */
     .modal__form {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
     .modal__form .form__fields {
       flex-direction: column;
       gap: 10px;
       margin-bottom: 0;
     }
-
-    .modal__form .form__input {
-      width: 100%;
-    }
-
-    .modal__form .btn--primary {
-      width: 100%;
-      height: 48px;
-    }
+    .modal__form .form__input { width: 100%; }
+    .modal__form .btn--primary { width: 100%; height: 48px; }
 
     .modal__disclaimer {
       font-size: 12px;
-      color: var(--color-muted);
+      color: var(--color-text-muted);
       text-align: center;
     }
 
     /* Modal success state */
-    .modal__success {
-      display: none;
-    }
-
-    .modal__success.show {
-      display: block;
-    }
+    .modal__success { display: none; }
+    .modal__success.show { display: block; }
 
     .modal__success-heading {
       font-family: var(--font-heading);
       font-weight: 700;
       font-size: 1.375rem;
-      color: var(--color-text);
+      color: var(--color-accent-dark);
       margin-bottom: 8px;
       padding-right: 32px;
       line-height: 1.25;
     }
-
     .modal__success-sub {
       font-size: 14px;
-      color: var(--color-muted);
-      margin-bottom: 24px;
+      color: var(--color-text-muted);
+      margin-bottom: 28px;
       line-height: 1.6;
     }
+    .modal__prd-btn-wrap { margin-bottom: 20px; }
+    .modal__prd-btn-wrap .btn--primary { width: 100%; }
 
-    .modal__prd-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .modal__prd-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 15px;
-      color: var(--color-accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .modal__prd-link:hover {
-      color: var(--color-accent-hover);
-      border-bottom-color: var(--color-accent-hover);
-    }
-
-    .modal__close-btn {
-      width: 100%;
-    }
+    .modal__close-btn { width: 100%; }
 
     /* ========= RESPONSIVE: MOBILE ========= */
     @media (max-width: 768px) {
-      html {
-        font-size: 16px;
-      }
+      html { font-size: 16px; }
 
-      .section {
-        padding: var(--section-pad-mobile) 0;
-      }
+      .section { padding: var(--section-pad-mobile) 0; }
+      #projects { padding-top: calc(50px + var(--section-pad-mobile)); }
 
-      /* Nav */
-      .nav__links {
-        display: none;
-      }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
 
-      .nav__hamburger {
-        display: flex;
-      }
+      .hero { clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%); }
+      .hero__content .container { text-align: center; }
+      .hero h1 { font-size: 2rem; }
+      .hero__bio { margin-left: auto; margin-right: auto; }
+      .hero__ctas { flex-direction: column; align-items: stretch; }
+      .hero__ctas .btn { width: 100%; }
+      .hero__scroll { justify-content: center; }
 
-      /* Hero */
-      .hero__content .container {
-        text-align: center;
-      }
+      .project-card { padding: 20px 24px; }
+      .project-card__top { flex-direction: column; }
+      .project-card__tags { justify-content: flex-start; max-width: 100%; }
 
-      .hero h1 {
-        font-size: 1.85rem;
-      }
+      .form__fields { flex-direction: column; }
 
-      .hero__bio {
-        margin-left: auto;
-        margin-right: auto;
-      }
+      .contact__links { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .contact__divider { display: none; }
 
-      .hero__ctas {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero__ctas .btn {
-        width: 100%;
-      }
-
-      .hero__scroll {
-        justify-content: center;
-      }
-
-      /* Projects */
-      .project-card {
-        padding: 24px;
-      }
-
-      .project-card__top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .project-card__tags {
-        justify-content: flex-start;
-        max-width: 100%;
-      }
-
-      /* Forms */
-      .form__fields {
-        flex-direction: column;
-      }
-
-      /* Contact */
-      .contact__links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
-
-      .contact__divider {
-        display: none;
-      }
-
-      /* Modal */
-      .modal {
-        padding: 24px;
-      }
+      .modal { padding: 24px; }
     }
   </style>
 </head>
@@ -916,17 +811,13 @@
   <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="#" class="nav__logo">Matt Danese</a>
-
       <ul class="nav__links" role="list">
         <li><a href="#projects">Work</a></li>
         <li><a href="#newsletter">Newsletter</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
@@ -943,27 +834,24 @@
     <!-- ========= HERO ========= -->
     <section class="hero" id="home">
       <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__noise" aria-hidden="true"></div>
       <div class="hero__content">
         <div class="container">
-          <span class="eyebrow animate">Demand Gen × AI</span>
-
-          <h1 class="animate" style="transition-delay: 0.08s;">
+          <span class="eyebrow hero-load" style="animation-delay: 0.1s;">Demand Gen × AI</span>
+          <h1 class="hero-load" style="animation-delay: 0.25s;">
             I've spent 8 years in demand gen. Now I'm rebuilding it from scratch — with AI.
           </h1>
-
-          <p class="hero__bio animate" style="transition-delay: 0.16s;">
+          <p class="hero__bio hero-load" style="animation-delay: 0.4s;">
             I'm Matt — a demand gen leader who stopped waiting for the tools to exist
             and started building them. I've driven pipeline at Meta, Medely, and Regal.AI.
             Now I'm building AI-powered growth systems in public and writing about what
             actually works.
           </p>
-
-          <div class="hero__ctas animate" style="transition-delay: 0.24s;">
+          <div class="hero__ctas hero-load" style="animation-delay: 0.55s;">
             <a href="#newsletter" class="btn btn--primary">Read the Newsletter</a>
-            <a href="#projects" class="btn btn--ghost">See My Work ↓</a>
+            <a href="#projects" class="btn btn--ghost-light">See My Work ↓</a>
           </div>
-
-          <div class="hero__scroll animate" style="transition-delay: 0.32s;" aria-hidden="true">
+          <div class="hero__scroll" aria-hidden="true">
             <div class="hero__scroll-chevron">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="4,7 10,13 16,7"></polyline>
@@ -1092,8 +980,7 @@
     </section>
 
     <!-- ========= NEWSLETTER ========= -->
-    <!-- Updated name: The Demand Engineer (formerly Pipeline Intelligence) -->
-    <section class="section newsletter" id="newsletter">
+    <section class="section" id="newsletter">
       <div class="container">
 
         <div class="section__header animate">
@@ -1104,40 +991,26 @@
 
         <ul class="newsletter__bullets animate">
           <li class="newsletter__bullet">
-            <span class="bullet-dot" aria-hidden="true"></span>
+            <span class="bullet-arrow" aria-hidden="true">→</span>
             <span>AI-powered systems I've built and battle-tested in real B2B companies</span>
           </li>
           <li class="newsletter__bullet">
-            <span class="bullet-dot" aria-hidden="true"></span>
+            <span class="bullet-arrow" aria-hidden="true">→</span>
             <span>What worked, what broke, and the exact setup I'd use again</span>
           </li>
           <li class="newsletter__bullet">
-            <span class="bullet-dot" aria-hidden="true"></span>
+            <span class="bullet-arrow" aria-hidden="true">→</span>
             <span>Frameworks any demand gen manager can steal, deploy, and call their own</span>
           </li>
         </ul>
 
-        <!-- TODO: ConvertKit setup — wire this form to your ConvertKit form embed -->
+        <!-- KIT FORM INTEGRATION — inline newsletter signup -->
         <div class="signup-form animate" id="signupForm">
           <div class="form__fields">
-            <input
-              type="text"
-              class="form__input"
-              id="firstName"
-              name="firstName"
-              placeholder="First name"
-              autocomplete="given-name"
-              aria-label="First name"
-            />
-            <input
-              type="email"
-              class="form__input"
-              id="email"
-              name="email"
-              placeholder="your@email.com"
-              autocomplete="email"
-              aria-label="Email address"
-            />
+            <input type="text" class="form__input" id="firstName" name="firstName"
+              placeholder="First name" autocomplete="given-name" aria-label="First name" />
+            <input type="email" class="form__input" id="email" name="email"
+              placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
           </div>
           <div class="signup-form__btn-wrap">
             <button type="button" class="btn btn--primary" id="signupBtn" style="height:48px;">
@@ -1145,6 +1018,7 @@
             </button>
             <p class="signup-form__disclaimer">No spam. Real systems. Sent when it matters.</p>
           </div>
+          <p class="form__error" id="signupError">Something went wrong. Please try again or email matthewjdanese@gmail.com</p>
           <div class="signup-form__success" id="signupSuccess" role="status" aria-live="polite">
             <span>✓</span>
             <span>You're in. Next issue coming soon.</span>
@@ -1162,7 +1036,7 @@
     </section>
 
     <!-- ========= CONTACT ========= -->
-    <section class="section contact" id="contact">
+    <section class="section" id="contact">
       <div class="container">
 
         <div class="section__header animate">
@@ -1175,13 +1049,8 @@
         </p>
 
         <div class="contact__links animate">
-          <a
-            href="https://linkedin.com/in/matthew-danese"
-            class="contact__link"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Connect on LinkedIn"
-          >
+          <a href="https://linkedin.com/in/matthew-danese" class="contact__link"
+            target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
               <rect x="2" y="9" width="4" height="12"></rect>
@@ -1190,11 +1059,7 @@
             LinkedIn
           </a>
           <div class="contact__divider" aria-hidden="true"></div>
-          <a
-            href="mailto:matthewjdanese@gmail.com"
-            class="contact__link"
-            aria-label="Send an email"
-          >
+          <a href="mailto:matthewjdanese@gmail.com" class="contact__link" aria-label="Send an email">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
               <polyline points="22,6 12,13 2,6"></polyline>
@@ -1210,134 +1075,74 @@
 
   <!-- ========= FOOTER ========= -->
   <footer class="footer">
-    <div class="footer__inner">
+    <div class="footer__inner container">
       <p>© 2025 Matt Danese. Built with intention.</p>
     </div>
   </footer>
 
   <!-- ========= PRD GATE MODAL ========= -->
-  <!--
-    Gate mechanic: clicking any "Read the PRD →" button opens this modal.
-    If the user has already signed up this session (sessionStorage key: prd_gate_passed),
-    the modal opens directly to the success/download state.
-  -->
-  <div
-    class="modal-overlay"
-    id="modalOverlay"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modalHeading"
-    aria-hidden="true"
-  >
+  <div class="modal-overlay" id="modalOverlay"
+    role="dialog" aria-modal="true" aria-labelledby="modalHeading" aria-hidden="true">
     <div class="modal" id="modalBox">
 
-      <!-- Close ✕ button (visible in both states) -->
       <button class="modal__close" id="modalClose" aria-label="Close">✕</button>
 
-      <!-- ---- GATE FORM STATE ---- -->
+      <!-- Gate form state -->
       <div id="modalFormState">
         <h2 class="modal__heading" id="modalHeading">Unlock All 5 PRDs</h2>
         <p class="modal__subhead">
           Sign up for The Demand Engineer — free — and get instant access
           to all five system PRDs.
         </p>
-
-        <!-- TODO: ConvertKit setup — replace submitToConvertKit() with your form integration -->
+        <!-- KIT FORM INTEGRATION — modal gate form -->
         <div class="modal__form" id="modalForm">
           <div class="form__fields">
-            <input
-              type="text"
-              class="form__input"
-              id="modalFirstName"
-              name="modalFirstName"
-              placeholder="First name"
-              autocomplete="given-name"
-              aria-label="First name"
-            />
-            <input
-              type="email"
-              class="form__input"
-              id="modalEmail"
-              name="modalEmail"
-              placeholder="your@email.com"
-              autocomplete="email"
-              aria-label="Email address"
-            />
+            <input type="text" class="form__input" id="modalFirstName" name="modalFirstName"
+              placeholder="First name" autocomplete="given-name" aria-label="First name" />
+            <input type="email" class="form__input" id="modalEmail" name="modalEmail"
+              placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
           </div>
-          <button type="button" class="btn btn--primary" id="modalSubmitBtn">
-            Get Access →
-          </button>
+          <button type="button" class="btn btn--primary" id="modalSubmitBtn">Get Access →</button>
+          <p class="form__error" id="modalError">Something went wrong. Please try again or email matthewjdanese@gmail.com</p>
           <p class="modal__disclaimer">No spam. Unsubscribe anytime.</p>
         </div>
       </div>
 
-      <!-- ---- SUCCESS / DOWNLOAD STATE ---- -->
+      <!-- Success / download state -->
       <div class="modal__success" id="modalSuccessState" aria-live="polite">
-        <h2 class="modal__success-heading" id="modalSuccessHeading">You're in. Here are your PRDs.</h2>
+        <h2 class="modal__success-heading" id="modalSuccessHeading">You're in. Access your PRDs below.</h2>
         <p class="modal__success-sub">
-          Save these links — they'll also be in your welcome email.
+          All 5 system PRDs are in the shared folder.
+          Your confirmation email is on its way.
         </p>
-
-        <ul class="modal__prd-list" role="list">
-          <li>
-            <!-- TODO: replace with hosted PRD URL -->
-            <a
-              href="#"
-              class="modal__prd-link"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-            >↓ Weekly Channel Analysis Engine PRD</a>
-          </li>
-          <li>
-            <!-- TODO: replace with hosted PRD URL -->
-            <a
-              href="#"
-              class="modal__prd-link"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-            >↓ Ad &amp; Lead Quality Analysis Pipeline PRD</a>
-          </li>
-          <li>
-            <!-- TODO: replace with hosted PRD URL -->
-            <a
-              href="#"
-              class="modal__prd-link"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-            >↓ Automated A/B Testing System PRD</a>
-          </li>
-          <li>
-            <!-- TODO: replace with hosted PRD URL -->
-            <a
-              href="#"
-              class="modal__prd-link"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-            >↓ AI-Powered ABM Targeting Engine PRD</a>
-          </li>
-          <li>
-            <!-- TODO: replace with hosted PRD URL -->
-            <a
-              href="#"
-              class="modal__prd-link"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-            >↓ Lifecycle Email Personalization Engine PRD</a>
-          </li>
-        </ul>
-
-        <button type="button" class="btn btn--ghost modal__close-btn" id="modalSuccessClose">
-          Close
-        </button>
+        <div class="modal__prd-btn-wrap">
+          <a
+            href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing"
+            class="btn btn--primary"
+            target="_blank"
+            rel="noopener"
+            id="modalPrdLibraryBtn"
+          >Open PRD Library →</a>
+        </div>
+        <button type="button" class="btn btn--ghost modal__close-btn" id="modalSuccessClose">Close</button>
       </div>
 
     </div>
   </div>
+
+  <!-- KIT FORM INTEGRATION — Hidden form for Kit submission (avoids CORS) -->
+  <form
+    id="kit-hidden-form"
+    action="https://app.kit.com/forms/9339473/subscriptions"
+    method="post"
+    data-sv-form="9339473"
+    data-uid="0291ffce73"
+    style="display:none !important; position:absolute; left:-9999px;"
+  >
+    <input type="text" name="fields[first_name]" id="kit-first-name" />
+    <input type="email" name="email_address" id="kit-email" />
+    <button type="submit" id="kit-submit-btn">Subscribe</button>
+  </form>
 
   <!-- ========= JAVASCRIPT ========= -->
   <script>
@@ -1345,23 +1150,22 @@
       'use strict';
 
       // =========================================================
-      // KIT (CONVERTKIT) SUBSCRIPTION
+      // KIT FORM INTEGRATION
+      // submitToConvertKit: sets hidden form values and triggers
+      // Kit's own JS (ck.5.js) to handle the submission.
+      // Returns a Promise that resolves after 800ms.
       // =========================================================
       function submitToConvertKit(name, email) {
-        return fetch('https://app.kit.com/forms/9339473/subscriptions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-            'email_address': email,
-            'fields[first_name]': name,
-          })
-        }).then(function(response) {
-          if (!response.ok) {
-            throw new Error('Subscription failed');
-          }
-          return response;
+        var kitFirstName = document.getElementById('kit-first-name');
+        var kitEmail     = document.getElementById('kit-email');
+        var kitSubmit    = document.getElementById('kit-submit-btn');
+
+        kitFirstName.value = name;
+        kitEmail.value     = email;
+        kitSubmit.click();
+
+        return new Promise(function (resolve) {
+          setTimeout(resolve, 800);
         });
       }
 
@@ -1369,8 +1173,6 @@
       // =========================================================
       // 1. INTERSECTIONOBSERVER — FADE-IN-UP
       // =========================================================
-      var animateEls = document.querySelectorAll('.animate');
-
       var fadeObserver = new IntersectionObserver(
         function (entries) {
           entries.forEach(function (entry) {
@@ -1380,10 +1182,9 @@
             }
           });
         },
-        { threshold: 0.2 }
+        { threshold: 0.18 }
       );
-
-      animateEls.forEach(function (el) {
+      document.querySelectorAll('.animate').forEach(function (el) {
         fadeObserver.observe(el);
       });
 
@@ -1391,23 +1192,23 @@
       // =========================================================
       // 2. NAV HIDE / SHOW ON SCROLL DIRECTION
       // =========================================================
-      var nav = document.getElementById('nav');
+      var nav        = document.getElementById('nav');
       var lastScrollY = window.scrollY;
-      var scrollTicking = false;
+      var scrollTick  = false;
 
       window.addEventListener('scroll', function () {
-        if (!scrollTicking) {
+        if (!scrollTick) {
           window.requestAnimationFrame(function () {
-            var currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) {
               nav.classList.add('nav--hidden');
             } else {
               nav.classList.remove('nav--hidden');
             }
-            lastScrollY = currentScrollY;
-            scrollTicking = false;
+            lastScrollY = y;
+            scrollTick = false;
           });
-          scrollTicking = true;
+          scrollTick = true;
         }
       });
 
@@ -1419,13 +1220,12 @@
       var mobileNav = document.getElementById('mobileNav');
 
       hamburger.addEventListener('click', function () {
-        var isOpen = mobileNav.classList.toggle('open');
-        hamburger.classList.toggle('open', isOpen);
-        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        mobileNav.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
       });
 
-      // Close mobile nav when a link is clicked
       document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
         link.addEventListener('click', function () {
           mobileNav.classList.remove('open');
@@ -1441,15 +1241,9 @@
       // =========================================================
       var signupBtn      = document.getElementById('signupBtn');
       var signupSuccess  = document.getElementById('signupSuccess');
+      var signupError    = document.getElementById('signupError');
       var firstNameInput = document.getElementById('firstName');
       var emailInput     = document.getElementById('email');
-
-      // Create inline error element for the newsletter form
-      var signupError = document.createElement('p');
-      signupError.className = 'form__error';
-      signupError.style.display = 'none';
-      signupError.textContent = 'Something went wrong. Please try again or email matthewjdanese@gmail.com';
-      signupBtn.parentNode.insertAdjacentElement('afterend', signupError);
 
       signupBtn.addEventListener('click', function () {
         var email = emailInput.value.trim();
@@ -1458,14 +1252,11 @@
         if (!email || !email.includes('@')) {
           emailInput.classList.add('form__input--error');
           emailInput.focus();
-          setTimeout(function () {
-            emailInput.classList.remove('form__input--error');
-          }, 1500);
+          setTimeout(function () { emailInput.classList.remove('form__input--error'); }, 1500);
           return;
         }
 
-        // Loading state
-        signupBtn.disabled = true;
+        signupBtn.disabled    = true;
         signupBtn.textContent = 'Sending…';
         signupError.style.display = 'none';
 
@@ -1473,9 +1264,9 @@
           signupBtn.style.display = 'none';
           signupSuccess.classList.add('show');
           firstNameInput.disabled = true;
-          emailInput.disabled = true;
+          emailInput.disabled     = true;
         }).catch(function () {
-          signupBtn.disabled = false;
+          signupBtn.disabled    = false;
           signupBtn.textContent = 'Get the next issue →';
           signupError.style.display = 'block';
         });
@@ -1496,8 +1287,7 @@
           var target = document.querySelector(href);
           if (target) {
             e.preventDefault();
-            var offset = nav.offsetHeight;
-            var top = target.getBoundingClientRect().top + window.scrollY - offset;
+            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
             window.scrollTo({ top: top, behavior: 'smooth' });
           }
         });
@@ -1507,22 +1297,20 @@
       // =========================================================
       // 6. PRD GATE MODAL
       // =========================================================
-      var SESSION_KEY    = 'prd_gate_passed';
-      var modalOverlay   = document.getElementById('modalOverlay');
-      var modalBox       = document.getElementById('modalBox');
-      var modalFormState = document.getElementById('modalFormState');
-      var modalSuccess   = document.getElementById('modalSuccessState');
-      var modalClose     = document.getElementById('modalClose');
+      var SESSION_KEY       = 'prd_unlocked';
+      var modalOverlay      = document.getElementById('modalOverlay');
+      var modalBox          = document.getElementById('modalBox');
+      var modalFormState    = document.getElementById('modalFormState');
+      var modalSuccessState = document.getElementById('modalSuccessState');
+      var modalClose        = document.getElementById('modalClose');
       var modalSuccessClose = document.getElementById('modalSuccessClose');
-      var modalSubmitBtn = document.getElementById('modalSubmitBtn');
-      var modalFirstName = document.getElementById('modalFirstName');
-      var modalEmail     = document.getElementById('modalEmail');
+      var modalSubmitBtn    = document.getElementById('modalSubmitBtn');
+      var modalFirstName    = document.getElementById('modalFirstName');
+      var modalEmail        = document.getElementById('modalEmail');
+      var modalError        = document.getElementById('modalError');
+      var previousFocus     = null;
 
-      // Track element that had focus before modal opened (for restoration)
-      var previousFocus = null;
-
-      // All focusable elements inside the modal (for focus trap)
-      function getFocusableEls() {
+      function getFocusable() {
         return Array.prototype.slice.call(
           modalBox.querySelectorAll(
             'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -1535,12 +1323,11 @@
 
         if (startInSuccess) {
           modalFormState.style.display = 'none';
-          modalSuccess.classList.add('show');
-          // Update aria-labelledby to success heading when in success state
+          modalSuccessState.classList.add('show');
           modalOverlay.setAttribute('aria-labelledby', 'modalSuccessHeading');
         } else {
           modalFormState.style.display = '';
-          modalSuccess.classList.remove('show');
+          modalSuccessState.classList.remove('show');
           modalOverlay.setAttribute('aria-labelledby', 'modalHeading');
         }
 
@@ -1548,8 +1335,7 @@
         modalOverlay.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
 
-        // Focus first focusable element
-        var focusable = getFocusableEls();
+        var focusable = getFocusable();
         if (focusable.length) focusable[0].focus();
       }
 
@@ -1557,69 +1343,42 @@
         modalOverlay.classList.remove('open');
         modalOverlay.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-
-        // Restore focus to the element that opened the modal
         if (previousFocus) previousFocus.focus();
       }
 
-      // Open modal when any PRD trigger is clicked
+      // Open on PRD trigger click
       document.querySelectorAll('[data-prd-trigger]').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var alreadyPassed = sessionStorage.getItem(SESSION_KEY) === 'true';
-          showModal(alreadyPassed);
+          showModal(sessionStorage.getItem(SESSION_KEY) === 'true');
         });
       });
 
-      // Close via ✕ button
       modalClose.addEventListener('click', hideModal);
-
-      // Close via "Close" button in success state
       modalSuccessClose.addEventListener('click', hideModal);
 
-      // Close on overlay backdrop click (click outside modal box)
       modalOverlay.addEventListener('click', function (e) {
         if (e.target === modalOverlay) hideModal();
       });
 
-      // Close on ESC key
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modalOverlay.classList.contains('open')) {
-          hideModal();
-        }
+        if (e.key === 'Escape' && modalOverlay.classList.contains('open')) hideModal();
       });
 
-      // Focus trap inside modal
+      // Focus trap
       modalOverlay.addEventListener('keydown', function (e) {
         if (e.key !== 'Tab') return;
-        var focusable = getFocusableEls();
+        var focusable = getFocusable();
         if (!focusable.length) return;
-
         var first = focusable[0];
         var last  = focusable[focusable.length - 1];
-
         if (e.shiftKey) {
-          // Shift+Tab: if focus is on first element, wrap to last
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
         } else {
-          // Tab: if focus is on last element, wrap to first
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
+          if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
         }
       });
 
-      // Create inline error element for the modal form
-      var modalError = document.createElement('p');
-      modalError.className = 'form__error';
-      modalError.style.display = 'none';
-      modalError.textContent = 'Something went wrong. Please try again or email matthewjdanese@gmail.com';
-      modalSubmitBtn.insertAdjacentElement('afterend', modalError);
-
-      // Modal form submit
+      // Modal form submit — KIT FORM INTEGRATION
       modalSubmitBtn.addEventListener('click', function () {
         var email = modalEmail.value.trim();
         var name  = modalFirstName.value.trim();
@@ -1627,33 +1386,27 @@
         if (!email || !email.includes('@')) {
           modalEmail.classList.add('form__input--error');
           modalEmail.focus();
-          setTimeout(function () {
-            modalEmail.classList.remove('form__input--error');
-          }, 1500);
+          setTimeout(function () { modalEmail.classList.remove('form__input--error'); }, 1500);
           return;
         }
 
-        // Loading state
-        modalSubmitBtn.disabled = true;
+        modalSubmitBtn.disabled    = true;
         modalSubmitBtn.textContent = 'Sending…';
-        modalError.style.display = 'none';
+        modalError.style.display   = 'none';
 
         submitToConvertKit(name, email).then(function () {
-          // Mark gate as passed for this session
           sessionStorage.setItem(SESSION_KEY, 'true');
 
-          // Transition to success state
           modalFormState.style.display = 'none';
-          modalSuccess.classList.add('show');
+          modalSuccessState.classList.add('show');
           modalOverlay.setAttribute('aria-labelledby', 'modalSuccessHeading');
 
-          // Move focus to success heading
-          var successHeading = document.getElementById('modalSuccessHeading');
-          if (successHeading) { successHeading.setAttribute('tabindex', '-1'); successHeading.focus(); }
+          var h = document.getElementById('modalSuccessHeading');
+          if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
         }).catch(function () {
-          modalSubmitBtn.disabled = false;
+          modalSubmitBtn.disabled    = false;
           modalSubmitBtn.textContent = 'Get Access →';
-          modalError.style.display = 'block';
+          modalError.style.display   = 'block';
         });
       });
 
