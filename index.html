@@ -6,6 +6,7 @@
   <title>Matt Danese — Demand Gen × AI</title>
   <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engineer, his newsletter on AI-powered demand gen." />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
 
   <style>
     /* ========= CSS CUSTOM PROPERTIES ========= */
@@ -532,6 +533,13 @@
 
     .form__input--error {
       border-color: #E05A2B;
+    }
+
+    .form__error {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-accent);
+      margin-top: 8px;
     }
 
     /* Newsletter inline form */
@@ -1337,31 +1345,24 @@
       'use strict';
 
       // =========================================================
-      // CONVERTKIT INTEGRATION PLACEHOLDER
-      // =========================================================
-      // TODO: ConvertKit setup — replace this function body with
-      // your actual ConvertKit API call or embedded form submission.
-      //
-      // Recommended approach:
-      //   1. Get your ConvertKit form ID from your ConvertKit dashboard.
-      //   2. Either use ConvertKit's JS API:
-      //        fetch('https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions', {
-      //          method: 'POST',
-      //          headers: { 'Content-Type': 'application/json' },
-      //          body: JSON.stringify({ email_address: email, first_name: name })
-      //        })
-      //   3. Or replace this form entirely with a hidden ConvertKit embed
-      //      and trigger it programmatically on submit.
-      //
-      // For now, returns a resolved Promise so the success state always
-      // shows immediately (demo / no-backend mode).
+      // KIT (CONVERTKIT) SUBSCRIPTION
       // =========================================================
       function submitToConvertKit(name, email) {
-        /* TODO: Replace with ConvertKit API call or embedded form submission.
-           ConvertKit form embed ID goes here.
-           Recommended: use ConvertKit's JS API or replace this form
-           with a hidden ConvertKit embed and trigger it programmatically. */
-        return Promise.resolve();
+        return fetch('https://app.kit.com/forms/9339473/subscriptions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            'email_address': email,
+            'fields[first_name]': name,
+          })
+        }).then(function(response) {
+          if (!response.ok) {
+            throw new Error('Subscription failed');
+          }
+          return response;
+        });
       }
 
 
@@ -1438,10 +1439,17 @@
       // =========================================================
       // 4. MAIN NEWSLETTER FORM SUBMIT
       // =========================================================
-      var signupBtn     = document.getElementById('signupBtn');
-      var signupSuccess = document.getElementById('signupSuccess');
+      var signupBtn      = document.getElementById('signupBtn');
+      var signupSuccess  = document.getElementById('signupSuccess');
       var firstNameInput = document.getElementById('firstName');
-      var emailInput    = document.getElementById('email');
+      var emailInput     = document.getElementById('email');
+
+      // Create inline error element for the newsletter form
+      var signupError = document.createElement('p');
+      signupError.className = 'form__error';
+      signupError.style.display = 'none';
+      signupError.textContent = 'Something went wrong. Please try again or email matthewjdanese@gmail.com';
+      signupBtn.parentNode.insertAdjacentElement('afterend', signupError);
 
       signupBtn.addEventListener('click', function () {
         var email = emailInput.value.trim();
@@ -1456,12 +1464,20 @@
           return;
         }
 
-        // TODO: ConvertKit setup — submitToConvertKit is wired here
+        // Loading state
+        signupBtn.disabled = true;
+        signupBtn.textContent = 'Sending…';
+        signupError.style.display = 'none';
+
         submitToConvertKit(name, email).then(function () {
           signupBtn.style.display = 'none';
           signupSuccess.classList.add('show');
           firstNameInput.disabled = true;
           emailInput.disabled = true;
+        }).catch(function () {
+          signupBtn.disabled = false;
+          signupBtn.textContent = 'Get the next issue →';
+          signupError.style.display = 'block';
         });
       });
 
@@ -1596,6 +1612,13 @@
         }
       });
 
+      // Create inline error element for the modal form
+      var modalError = document.createElement('p');
+      modalError.className = 'form__error';
+      modalError.style.display = 'none';
+      modalError.textContent = 'Something went wrong. Please try again or email matthewjdanese@gmail.com';
+      modalSubmitBtn.insertAdjacentElement('afterend', modalError);
+
       // Modal form submit
       modalSubmitBtn.addEventListener('click', function () {
         var email = modalEmail.value.trim();
@@ -1610,11 +1633,11 @@
           return;
         }
 
-        // Disable button to prevent double-submit
+        // Loading state
         modalSubmitBtn.disabled = true;
-        modalSubmitBtn.textContent = 'Unlocking…';
+        modalSubmitBtn.textContent = 'Sending…';
+        modalError.style.display = 'none';
 
-        // TODO: ConvertKit setup — submitToConvertKit is wired here
         submitToConvertKit(name, email).then(function () {
           // Mark gate as passed for this session
           sessionStorage.setItem(SESSION_KEY, 'true');
@@ -1626,7 +1649,11 @@
 
           // Move focus to success heading
           var successHeading = document.getElementById('modalSuccessHeading');
-          if (successHeading) successHeading.setAttribute('tabindex', '-1'), successHeading.focus();
+          if (successHeading) { successHeading.setAttribute('tabindex', '-1'); successHeading.focus(); }
+        }).catch(function () {
+          modalSubmitBtn.disabled = false;
+          modalSubmitBtn.textContent = 'Get Access →';
+          modalError.style.display = 'block';
         });
       });
 
