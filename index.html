@@ -7,7 +7,7 @@
   <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engineer, his newsletter on AI-powered demand gen." />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <!-- KIT FORM INTEGRATION -->
-  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
 
   <style>
     /* ========= CSS CUSTOM PROPERTIES ========= */
@@ -1130,19 +1130,6 @@
     </div>
   </div>
 
-  <!-- KIT FORM INTEGRATION — Hidden form for Kit submission (avoids CORS) -->
-  <form
-    id="kit-hidden-form"
-    action="https://app.kit.com/forms/9339473/subscriptions"
-    method="post"
-    data-sv-form="9339473"
-    data-uid="0291ffce73"
-    style="display:none !important; position:absolute; left:-9999px;"
-  >
-    <input type="text" name="fields[first_name]" id="kit-first-name" />
-    <input type="email" name="email_address" id="kit-email" />
-    <button type="submit" id="kit-submit-btn">Subscribe</button>
-  </form>
 
   <!-- ========= JAVASCRIPT ========= -->
   <script>
@@ -1151,21 +1138,27 @@
 
       // =========================================================
       // KIT FORM INTEGRATION
-      // submitToConvertKit: sets hidden form values and triggers
-      // Kit's own JS (ck.5.js) to handle the submission.
-      // Returns a Promise that resolves after 800ms.
+      // Uses no-cors mode (opaque response) — Kit receives and
+      // processes the request server-side. UI resolves optimistically;
+      // Kit sends the subscriber a confirmation email.
       // =========================================================
       function submitToConvertKit(name, email) {
-        var kitFirstName = document.getElementById('kit-first-name');
-        var kitEmail     = document.getElementById('kit-email');
-        var kitSubmit    = document.getElementById('kit-submit-btn');
-
-        kitFirstName.value = name;
-        kitEmail.value     = email;
-        kitSubmit.click();
-
         return new Promise(function (resolve) {
-          setTimeout(resolve, 800);
+          fetch('https://app.kit.com/forms/9339473/subscriptions', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              'email_address': email,
+              'fields[first_name]': name,
+            }).toString()
+          });
+
+          // Resolve optimistically — with no-cors we cannot read the
+          // response, but the request reaches Kit's servers.
+          setTimeout(resolve, 600);
         });
       }
 
@@ -1419,3 +1412,4 @@
 
 </body>
 </html>
+
