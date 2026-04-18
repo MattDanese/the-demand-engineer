@@ -892,7 +892,7 @@
               with channel insights, budget recommendations, and anomaly flags — every week,
               on demand. Replaces ~4 hours of manual analyst work per cycle.
             </p>
-            <button class="project-card__link" data-prd-trigger="true" aria-haspopup="dialog">Read the PRD →</button>
+            <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
 
           <!-- Card B -->
@@ -912,7 +912,7 @@
               Near-Miss, and Noise — and delivers an interactive HTML report with campaign-level
               quality grades. Built to answer: are we buying the right leads?
             </p>
-            <button class="project-card__link" data-prd-trigger="true" aria-haspopup="dialog">Read the PRD →</button>
+            <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
 
           <!-- Card C -->
@@ -932,7 +932,7 @@
               87/100 in 8 minutes. Phase 2 deploys the winner and runs live traffic mutations
               week-over-week, compressing a 14-day A/B cycle into hours.
             </p>
-            <button class="project-card__link" data-prd-trigger="true" aria-haspopup="dialog">Read the PRD →</button>
+            <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
 
           <!-- Card D -->
@@ -952,7 +952,7 @@
               tier list with recommended channel mix per tier. Turns a spreadsheet of accounts
               into a deployment-ready ABM plan in minutes.
             </p>
-            <button class="project-card__link" data-prd-trigger="true" aria-haspopup="dialog">Read the PRD →</button>
+            <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
 
           <!-- Card E -->
@@ -972,7 +972,7 @@
               Marketo or HubSpot sequences with high-quality, on-brand copy without a
               copywriter bottleneck.
             </p>
-            <button class="project-card__link" data-prd-trigger="true" aria-haspopup="dialog">Read the PRD →</button>
+            <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
 
         </div>
@@ -1004,26 +1004,8 @@
           </li>
         </ul>
 
-        <!-- KIT FORM INTEGRATION — inline newsletter signup -->
-        <div class="signup-form animate" id="signupForm">
-          <div class="form__fields">
-            <input type="text" class="form__input" id="firstName" name="firstName"
-              placeholder="First name" autocomplete="given-name" aria-label="First name" />
-            <input type="email" class="form__input" id="email" name="email"
-              placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
-          </div>
-          <div class="signup-form__btn-wrap">
-            <button type="button" class="btn btn--primary" id="signupBtn" style="height:48px;">
-              Get the next issue →
-            </button>
-            <p class="signup-form__disclaimer">No spam. Real systems. Sent when it matters.</p>
-          </div>
-          <p class="form__error" id="signupError">Something went wrong. Please try again or email matthewjdanese@gmail.com</p>
-          <div class="signup-form__success" id="signupSuccess" role="status" aria-live="polite">
-            <span>✓</span>
-            <span>You're in. Next issue coming soon.</span>
-          </div>
-        </div>
+        <!-- KIT FORM INTEGRATION — inline newsletter embed -->
+        <script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
 
         <!-- Issue preview teaser card -->
         <div class="newsletter__teaser animate">
@@ -1080,88 +1062,12 @@
     </div>
   </footer>
 
-  <!-- ========= PRD GATE MODAL ========= -->
-  <div class="modal-overlay" id="modalOverlay"
-    role="dialog" aria-modal="true" aria-labelledby="modalHeading" aria-hidden="true">
-    <div class="modal" id="modalBox">
-
-      <button class="modal__close" id="modalClose" aria-label="Close">✕</button>
-
-      <!-- Gate form state -->
-      <div id="modalFormState">
-        <h2 class="modal__heading" id="modalHeading">Unlock All 5 PRDs</h2>
-        <p class="modal__subhead">
-          Sign up for The Demand Engineer — free — and get instant access
-          to all five system PRDs.
-        </p>
-        <!-- KIT FORM INTEGRATION — modal gate form -->
-        <div class="modal__form" id="modalForm">
-          <div class="form__fields">
-            <input type="text" class="form__input" id="modalFirstName" name="modalFirstName"
-              placeholder="First name" autocomplete="given-name" aria-label="First name" />
-            <input type="email" class="form__input" id="modalEmail" name="modalEmail"
-              placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
-          </div>
-          <button type="button" class="btn btn--primary" id="modalSubmitBtn">Get Access →</button>
-          <p class="form__error" id="modalError">Something went wrong. Please try again or email matthewjdanese@gmail.com</p>
-          <p class="modal__disclaimer">No spam. Unsubscribe anytime.</p>
-        </div>
-      </div>
-
-      <!-- Success / download state -->
-      <div class="modal__success" id="modalSuccessState" aria-live="polite">
-        <h2 class="modal__success-heading" id="modalSuccessHeading">You're in. Access your PRDs below.</h2>
-        <p class="modal__success-sub">
-          All 5 system PRDs are in the shared folder.
-          Your confirmation email is on its way.
-        </p>
-        <div class="modal__prd-btn-wrap">
-          <a
-            href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing"
-            class="btn btn--primary"
-            target="_blank"
-            rel="noopener"
-            id="modalPrdLibraryBtn"
-          >Open PRD Library →</a>
-        </div>
-        <button type="button" class="btn btn--ghost modal__close-btn" id="modalSuccessClose">Close</button>
-      </div>
-
-    </div>
-  </div>
 
 
   <!-- ========= JAVASCRIPT ========= -->
   <script>
     (function () {
       'use strict';
-
-      // =========================================================
-      // KIT FORM INTEGRATION
-      // Uses no-cors mode (opaque response) — Kit receives and
-      // processes the request server-side. UI resolves optimistically;
-      // Kit sends the subscriber a confirmation email.
-      // =========================================================
-      function submitToConvertKit(name, email) {
-        return new Promise(function (resolve) {
-          fetch('https://app.kit.com/forms/9339473/subscriptions', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-              'email_address': email,
-              'fields[first_name]': name,
-            }).toString()
-          });
-
-          // Resolve optimistically — with no-cors we cannot read the
-          // response, but the request reaches Kit's servers.
-          setTimeout(resolve, 600);
-        });
-      }
-
 
       // =========================================================
       // 1. INTERSECTIONOBSERVER — FADE-IN-UP
@@ -1230,48 +1136,7 @@
 
 
       // =========================================================
-      // 4. MAIN NEWSLETTER FORM SUBMIT
-      // =========================================================
-      var signupBtn      = document.getElementById('signupBtn');
-      var signupSuccess  = document.getElementById('signupSuccess');
-      var signupError    = document.getElementById('signupError');
-      var firstNameInput = document.getElementById('firstName');
-      var emailInput     = document.getElementById('email');
-
-      signupBtn.addEventListener('click', function () {
-        var email = emailInput.value.trim();
-        var name  = firstNameInput.value.trim();
-
-        if (!email || !email.includes('@')) {
-          emailInput.classList.add('form__input--error');
-          emailInput.focus();
-          setTimeout(function () { emailInput.classList.remove('form__input--error'); }, 1500);
-          return;
-        }
-
-        signupBtn.disabled    = true;
-        signupBtn.textContent = 'Sending…';
-        signupError.style.display = 'none';
-
-        submitToConvertKit(name, email).then(function () {
-          signupBtn.style.display = 'none';
-          signupSuccess.classList.add('show');
-          firstNameInput.disabled = true;
-          emailInput.disabled     = true;
-        }).catch(function () {
-          signupBtn.disabled    = false;
-          signupBtn.textContent = 'Get the next issue →';
-          signupError.style.display = 'block';
-        });
-      });
-
-      emailInput.addEventListener('input', function () {
-        emailInput.classList.remove('form__input--error');
-      });
-
-
-      // =========================================================
-      // 5. SMOOTH SCROLL FOR ANCHOR LINKS
+      // 4. SMOOTH SCROLL FOR ANCHOR LINKS
       // =========================================================
       document.querySelectorAll('a[href^="#"]').forEach(function (link) {
         link.addEventListener('click', function (e) {
@@ -1287,129 +1152,9 @@
       });
 
 
-      // =========================================================
-      // 6. PRD GATE MODAL
-      // =========================================================
-      var SESSION_KEY       = 'prd_unlocked';
-      var modalOverlay      = document.getElementById('modalOverlay');
-      var modalBox          = document.getElementById('modalBox');
-      var modalFormState    = document.getElementById('modalFormState');
-      var modalSuccessState = document.getElementById('modalSuccessState');
-      var modalClose        = document.getElementById('modalClose');
-      var modalSuccessClose = document.getElementById('modalSuccessClose');
-      var modalSubmitBtn    = document.getElementById('modalSubmitBtn');
-      var modalFirstName    = document.getElementById('modalFirstName');
-      var modalEmail        = document.getElementById('modalEmail');
-      var modalError        = document.getElementById('modalError');
-      var previousFocus     = null;
-
-      function getFocusable() {
-        return Array.prototype.slice.call(
-          modalBox.querySelectorAll(
-            'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
-          )
-        );
-      }
-
-      function showModal(startInSuccess) {
-        previousFocus = document.activeElement;
-
-        if (startInSuccess) {
-          modalFormState.style.display = 'none';
-          modalSuccessState.classList.add('show');
-          modalOverlay.setAttribute('aria-labelledby', 'modalSuccessHeading');
-        } else {
-          modalFormState.style.display = '';
-          modalSuccessState.classList.remove('show');
-          modalOverlay.setAttribute('aria-labelledby', 'modalHeading');
-        }
-
-        modalOverlay.classList.add('open');
-        modalOverlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-
-        var focusable = getFocusable();
-        if (focusable.length) focusable[0].focus();
-      }
-
-      function hideModal() {
-        modalOverlay.classList.remove('open');
-        modalOverlay.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        if (previousFocus) previousFocus.focus();
-      }
-
-      // Open on PRD trigger click
-      document.querySelectorAll('[data-prd-trigger]').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          showModal(sessionStorage.getItem(SESSION_KEY) === 'true');
-        });
-      });
-
-      modalClose.addEventListener('click', hideModal);
-      modalSuccessClose.addEventListener('click', hideModal);
-
-      modalOverlay.addEventListener('click', function (e) {
-        if (e.target === modalOverlay) hideModal();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modalOverlay.classList.contains('open')) hideModal();
-      });
-
-      // Focus trap
-      modalOverlay.addEventListener('keydown', function (e) {
-        if (e.key !== 'Tab') return;
-        var focusable = getFocusable();
-        if (!focusable.length) return;
-        var first = focusable[0];
-        var last  = focusable[focusable.length - 1];
-        if (e.shiftKey) {
-          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-        } else {
-          if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
-        }
-      });
-
-      // Modal form submit — KIT FORM INTEGRATION
-      modalSubmitBtn.addEventListener('click', function () {
-        var email = modalEmail.value.trim();
-        var name  = modalFirstName.value.trim();
-
-        if (!email || !email.includes('@')) {
-          modalEmail.classList.add('form__input--error');
-          modalEmail.focus();
-          setTimeout(function () { modalEmail.classList.remove('form__input--error'); }, 1500);
-          return;
-        }
-
-        modalSubmitBtn.disabled    = true;
-        modalSubmitBtn.textContent = 'Sending…';
-        modalError.style.display   = 'none';
-
-        submitToConvertKit(name, email).then(function () {
-          sessionStorage.setItem(SESSION_KEY, 'true');
-
-          modalFormState.style.display = 'none';
-          modalSuccessState.classList.add('show');
-          modalOverlay.setAttribute('aria-labelledby', 'modalSuccessHeading');
-
-          var h = document.getElementById('modalSuccessHeading');
-          if (h) { h.setAttribute('tabindex', '-1'); h.focus(); }
-        }).catch(function () {
-          modalSubmitBtn.disabled    = false;
-          modalSubmitBtn.textContent = 'Get Access →';
-          modalError.style.display   = 'block';
-        });
-      });
-
-      modalEmail.addEventListener('input', function () {
-        modalEmail.classList.remove('form__input--error');
-      });
 
     })();
   </script>
 
 </body>
 </html>
-
