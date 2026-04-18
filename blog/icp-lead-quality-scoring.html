@@ -323,6 +323,80 @@
       text-align: center;
     }
 
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover {
+      color: var(--color-accent-hover);
+      text-decoration: underline;
+    }
+
     /* ========= MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -373,6 +447,15 @@
       </div>
     </section>
 
+    <!-- AUTHOR BIO -->
+    <div class="author-bio">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name">Matt Danese</p>
+        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+      </div>
+    </div>
+
     <!-- POST BODY -->
     <article class="post-body">
 
@@ -410,6 +493,18 @@
       <p>The output is an interactive HTML report that shows ICP distribution by campaign, by ad set, by creative, and by landing page. You can see exactly which campaigns are buying True ICP leads and which ones are inflating your MQL count. You can sort by True ICP CPL and finally make budget decisions that reflect reality, not vanity metrics.</p>
 
       <p>The full PRD, including the Python processing logic, the Claude ICP scoring prompt, and the report template, is available to newsletter subscribers.</p>
+
+      <!-- RELATED READING -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Reading</p>
+        <ul class="related-reading__list">
+          <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
+          <li><a href="marketo-nurture-diagnostic.html">The Marketo Black Box: Why Your Leads Never Get Nurtured</a></li>
+          <li><a href="https://blog.hubspot.com/marketing/ideal-customer-profile" target="_blank" rel="noopener noreferrer">What Is an Ideal Customer Profile? (HubSpot)</a></li>
+          <li><a href="https://realpython.com/pandas-python-explore-dataset/" target="_blank" rel="noopener noreferrer">How to Use Python Pandas for Data Analysis (Real Python)</a></li>
+          <li><a href="https://business.adobe.com/blog/basics/lead-scoring" target="_blank" rel="noopener noreferrer">B2B Lead Scoring: The Definitive Guide (Marketo)</a></li>
+        </ul>
+      </div>
 
       <!-- POST CTA -->
       <div class="post-cta">
