@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matt Danese — The Demand Engine(er)</title>
-  <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engine(er), his newsletter on AI-powered demand gen." />
+  <title>Matt Danese — Demand Gen × AI</title>
+  <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engineer, his newsletter on AI-powered demand gen." />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <!-- KIT FORM INTEGRATION -->
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
@@ -861,6 +861,228 @@
 
     .modal__close-btn { width: 100%; }
 
+    /* ========= BLOG SECTION ========= */
+    #blog {
+      background-color: var(--color-bg);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .blog-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 72px;
+    }
+
+    .blog-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 32px 40px;
+      transition: all 0.22s ease;
+      display: block;
+    }
+    .blog-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 24px rgba(45, 91, 227, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .blog-card__category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+    }
+
+    .blog-card__title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--color-accent-dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .blog-card__teaser {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .blog-card__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .blog-card__readtime {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .blog-card__link {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+    .blog-card:hover .blog-card__link {
+      color: var(--color-accent-hover);
+      text-decoration: underline;
+    }
+
+    .blog-posts-divider {
+      border: none;
+      border-top: 2px solid var(--color-border);
+      margin: 0 0 80px;
+    }
+
+    /* ========= BLOG POST BODY ========= */
+    .blog-post {
+      margin-bottom: 80px;
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--color-border);
+      scroll-margin-top: calc(var(--nav-height) + 24px);
+    }
+    .blog-post:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .blog-post__header {
+      margin-bottom: 40px;
+    }
+
+    .blog-post__category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .blog-post__title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 16px;
+    }
+
+    .blog-post__meta {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+    }
+
+    .blog-post__body {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--color-text);
+    }
+
+    .blog-post__body p {
+      margin-bottom: 24px;
+    }
+
+    .blog-post__h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin: 44px 0 16px;
+    }
+
+    .stat-callout {
+      border-left: 4px solid var(--color-accent);
+      padding: 20px 28px;
+      margin: 40px 0;
+      background: var(--color-chip-bg);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .stat-callout__number {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-callout__label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    .post-cta-box {
+      background: var(--color-accent-dark);
+      border-radius: 10px;
+      padding: 36px 40px;
+      margin-top: 48px;
+      text-align: center;
+    }
+
+    .post-cta-box__heading {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .post-cta-box__sub {
+      font-size: 15px;
+      color: #A8BBDA;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .back-to-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      margin-top: 32px;
+      transition: color 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .back-to-top:hover {
+      color: var(--color-accent);
+    }
+
     /* ========= RESPONSIVE: MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -892,6 +1114,11 @@
       .contact__divider { display: none; }
 
       .modal { padding: 24px; }
+
+      .blog-card { padding: 20px 24px; }
+      .blog-post__title { font-size: 1.5rem; }
+      .stat-callout__number { font-size: 2.25rem; }
+      .post-cta-box { padding: 28px 24px; }
     }
   </style>
 </head>
@@ -902,7 +1129,8 @@
     <div class="nav__inner">
       <a href="#" class="nav__logo">Matt Danese</a>
       <ul class="nav__links" role="list">
-        <li><a href="#projects">Work</a></li>
+        <li><a href="#projects">Agents &amp; Skills</a></li>
+        <li><a href="#blog">Blog</a></li>
         <li><a href="#newsletter">Newsletter</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -914,7 +1142,8 @@
 
   <!-- Mobile nav drawer -->
   <div class="nav__mobile" id="mobileNav" aria-hidden="true">
-    <a href="#projects" class="mobile-nav-link">Work</a>
+    <a href="#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="#blog" class="mobile-nav-link">Blog</a>
     <a href="#newsletter" class="mobile-nav-link">Newsletter</a>
     <a href="#contact" class="mobile-nav-link">Contact</a>
   </div>
@@ -927,14 +1156,14 @@
       <div class="hero__noise" aria-hidden="true"></div>
       <div class="hero__content">
         <div class="container">
-          <span class="eyebrow hero-load" style="animation-delay: 0.1s;">The Demand Engine(er)</span>
+          <span class="eyebrow hero-load" style="animation-delay: 0.1s;">Demand Gen × AI</span>
           <h1 class="hero-load" style="animation-delay: 0.25s;">
-            I build AI systems that turn GTM playbooks into pipeline.
+            I build AI systems that turn ad spend into pipeline.
           </h1>
           <p class="hero__bio hero-load" style="animation-delay: 0.4s;">
-            I've spent 8+ years in demand gen at Meta, Medely, Regal.AI, and Webflow.
+            I've spent 8 years in demand gen at Meta, Medely, and Regal.AI.
             I stopped waiting for the tools to exist and started building them.
-            Now I'm shipping AI-powered growth systems in public and writing
+            Now I'm shipping AI-powered growth systems in public — and writing
             about what actually works.
           </p>
           <div class="hero__ctas hero-load" style="animation-delay: 0.55s;">
@@ -944,12 +1173,7 @@
 
           <div class="hero__proof hero-load" style="animation-delay: 0.7s;">
             <div class="hero__proof-stat">
-              <span class="hero__proof-number">10,000+</span>
-              <span class="hero__proof-label">leads generated</span>
-            </div>
-            <div class="hero__proof-divider" aria-hidden="true"></div>
-            <div class="hero__proof-stat">
-              <span class="hero__proof-number">$12M+</span>
+              <span class="hero__proof-number">$2.6M+</span>
               <span class="hero__proof-label">pipeline generated</span>
             </div>
             <div class="hero__proof-divider" aria-hidden="true"></div>
@@ -994,16 +1218,20 @@
               <h3 class="project-card__title">Weekly Channel Analysis Engine</h3>
               <div class="project-card__tags">
                 <span class="tag">Claude API</span>
-                <span class="tag">Python</span>
-                <span class="tag">Paid Media</span>
-                <span class="tag">Automation</span>
+                <span class="tag">LinkedIn Ads API</span>
+                <span class="tag">Google Ads API</span>
+                <span class="tag">Slack</span>
+                <span class="tag">Node.js</span>
               </div>
             </div>
             <p class="project-card__desc">
-              An AI workflow that ingests raw LinkedIn, Google, and Meta performance exports,
-              runs Python-based analysis through Claude, and delivers a structured HTML report
-              with channel insights, budget recommendations, and anomaly flags — every week,
-              on demand. Replaces ~4 hours of manual analyst work per cycle.
+              A Claude Code-powered system that connects the LinkedIn Ads API, Google Ads API,
+              and Anthropic API to eliminate manual reporting entirely. Pulls prior-week data
+              every Monday at 8AM, runs Claude analysis with a locked senior analyst persona,
+              and posts a structured briefing to Slack — headline story, what worked, what needs
+              attention, and 3 prioritized actions. Saves an estimated 12–18 hours of analyst
+              time per week across 12 discrete automations including anomaly detection, budget
+              pacing, and a real-time Slack Q&amp;A bot.
             </p>
             <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
@@ -1016,14 +1244,17 @@
                 <span class="tag">Claude API</span>
                 <span class="tag">Python</span>
                 <span class="tag">ICP Scoring</span>
-                <span class="tag">HTML Reports</span>
+                <span class="tag">Marketo</span>
+                <span class="tag">Salesforce</span>
               </div>
             </div>
             <p class="project-card__desc">
-              A data pipeline that scores leads from LinkedIn Ads, Google Ads, Marketo, and
-              Salesforce against ICP criteria — bucketing them into segments like True ICP,
-              Near-Miss, and Noise — and delivers an interactive HTML report with campaign-level
-              quality grades. Built to answer: are we buying the right leads?
+              An on-demand diagnostic system that accepts raw CSV and XLSX exports from LinkedIn
+              Ads, Google Ads, Marketo, and Salesforce — runs Python-based processing through
+              Claude — and delivers interactive HTML reports with ICP scoring and campaign quality
+              grades. Scores every lead against ICP criteria (Title, Function, Company Size) and
+              buckets them into True ICP, Near-Miss, Wrong Title, and Noise. Built to answer one
+              question: are we buying the right leads?
             </p>
             <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
@@ -1037,13 +1268,17 @@
                 <span class="tag">CRO</span>
                 <span class="tag">Landing Pages</span>
                 <span class="tag">Ad Copy</span>
+                <span class="tag">Autoresearch</span>
               </div>
             </div>
             <p class="project-card__desc">
-              A two-phase system: Phase 1 generates 50+ copy variants and scores them with a
-              simulated expert panel before any traffic hits — taking a landing page from 62 to
-              87/100 in 8 minutes. Phase 2 deploys the winner and runs live traffic mutations
-              week-over-week, compressing a 14-day A/B cycle into hours.
+              A two-phase system that eliminates the 14-day testing bottleneck. Phase 1
+              (Autoresearch) generates 50+ copy variants and scores them with a simulated
+              5-person expert panel — CMO, Skeptical Buyer, CRO Specialist, Senior Copywriter,
+              ROI-Focused CEO — before any traffic hits the page. Took a landing page from 62 to
+              87/100 across 51 variants in 8 minutes. Phase 2 (Autogrowth) deploys the winner
+              and runs live traffic mutations week-over-week, compressing a 14-day A/B cycle
+              into hours.
             </p>
             <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
@@ -1051,19 +1286,22 @@
           <!-- Card D -->
           <article class="project-card animate">
             <div class="project-card__top">
-              <h3 class="project-card__title">AI-Powered ABM Targeting Engine</h3>
+              <h3 class="project-card__title">Strategic Briefs &amp; Pipeline Response Engine</h3>
               <div class="project-card__tags">
                 <span class="tag">Claude API</span>
+                <span class="tag">Brand Strategy</span>
                 <span class="tag">ABM</span>
-                <span class="tag">Account Scoring</span>
-                <span class="tag">Paid Media</span>
+                <span class="tag">Pipeline</span>
+                <span class="tag">Prompt Engineering</span>
               </div>
             </div>
             <p class="project-card__desc">
-              A system that ingests a target account list, enriches each account with firmographic
-              and intent signals, scores them against ICP fit, and outputs a prioritized account
-              tier list with recommended channel mix per tier. Turns a spreadsheet of accounts
-              into a deployment-ready ABM plan in minutes.
+              Uses Claude as a senior demand gen thinking partner for high-stakes decisions —
+              brand campaign briefs, pipeline gap responses, ABM personalization specs, and
+              cross-channel keyword strategy. When Q1 pipeline hit 70% of plan ($25.2M vs.
+              $36.7M target), this system diagnosed which signals were paid-addressable vs. sales
+              process issues, produced a concrete action plan, and flagged what NOT to do —
+              preventing a wrong budget reallocation decision based on broken attribution data.
             </p>
             <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
@@ -1071,19 +1309,23 @@
           <!-- Card E -->
           <article class="project-card animate">
             <div class="project-card__top">
-              <h3 class="project-card__title">Lifecycle Email Personalization Engine</h3>
+              <h3 class="project-card__title">Marketo Audit &amp; RevOps Infrastructure</h3>
               <div class="project-card__tags">
                 <span class="tag">Claude API</span>
-                <span class="tag">Lifecycle</span>
-                <span class="tag">Email</span>
-                <span class="tag">Personalization</span>
+                <span class="tag">Marketo</span>
+                <span class="tag">RevOps</span>
+                <span class="tag">Python</span>
+                <span class="tag">Sales Enablement</span>
               </div>
             </div>
             <p class="project-card__desc">
-              An AI pipeline that takes CRM segment data and generates personalized email copy
-              variants per persona — subject lines, body, and CTA — at scale. Built to feed
-              Marketo or HubSpot sequences with high-quality, on-brand copy without a
-              copywriter bottleneck.
+              A diagnostic and documentation system at the intersection of paid media, marketing
+              ops, and sales. Accepts Marketo activity log exports, runs Python parsing through
+              Claude, and diagnoses record-by-record why leads failed to enter nurture programs —
+              identifying blockers like Master Send List exclusions, stale unsubscribes, and EMEA
+              routing gaps. Also drafts technically precise RevOps tracking requests and produces
+              full sales enablement packages for new MOF/BOF offers in 15–20 minutes vs. 2–4
+              hours manually.
             </p>
             <a class="project-card__link" href="https://drive.google.com/drive/folders/1rLw1q4USoX6Lo2c1Q_Wvt8wsxzBX6ZjV?usp=sharing" target="_blank" rel="noopener" data-formkit-toggle="0291ffce73">Read the PRD →</a>
           </article>
@@ -1092,13 +1334,302 @@
       </div>
     </section>
 
+    <!-- ========= BLOG ========= -->
+    <section class="section" id="blog">
+      <div class="container">
+
+        <div class="section__header animate">
+          <span class="eyebrow">The Demand Engineer Blog</span>
+          <h2 class="section__heading">Field Notes from the Build</h2>
+          <p class="section__subhead">Real experiments, honest numbers, and the systems I'm building to make demand gen faster and smarter.</p>
+        </div>
+
+        <!-- Blog card index -->
+        <div class="blog-cards">
+
+          <a class="blog-card animate" href="#post-automation">
+            <span class="blog-card__category">Automation</span>
+            <h3 class="blog-card__title">How I Automated a Week of Media Reporting in 20 Minutes</h3>
+            <p class="blog-card__teaser">The honest story of replacing 18 hours of analyst work with Claude, Python, and a handful of API calls — including what broke the first time.</p>
+            <div class="blog-card__meta">
+              <span class="blog-card__readtime">8 min read</span>
+              <span class="blog-card__link">Read post →</span>
+            </div>
+          </a>
+
+          <a class="blog-card animate" href="#post-lead-quality">
+            <span class="blog-card__category">Lead Quality</span>
+            <h3 class="blog-card__title">Why Your Lead Quality Score is Lying to You</h3>
+            <p class="blog-card__teaser">Most lead scoring models reward form fills and email opens — not actual fit. Here's the ICP scoring framework I built to fix it.</p>
+            <div class="blog-card__meta">
+              <span class="blog-card__readtime">7 min read</span>
+              <span class="blog-card__link">Read post →</span>
+            </div>
+          </a>
+
+          <a class="blog-card animate" href="#post-cro">
+            <span class="blog-card__category">CRO</span>
+            <h3 class="blog-card__title">The A/B Testing Problem Nobody Talks About</h3>
+            <p class="blog-card__teaser">Running a 14-day test to validate a headline change is broken. There's a better way — and I found it by accident when I needed 51 variants in 8 minutes.</p>
+            <div class="blog-card__meta">
+              <span class="blog-card__readtime">9 min read</span>
+              <span class="blog-card__link">Read post →</span>
+            </div>
+          </a>
+
+          <a class="blog-card animate" href="#post-marketing-ops">
+            <span class="blog-card__category">Marketing Ops</span>
+            <h3 class="blog-card__title">The Marketo Debt Hiding in Your Lead Database</h3>
+            <p class="blog-card__teaser">Most Marketo instances have silent exclusion logic that's killing nurture enrollment. Here's how to find it — and what I built to diagnose it at scale.</p>
+            <div class="blog-card__meta">
+              <span class="blog-card__readtime">6 min read</span>
+              <span class="blog-card__link">Read post →</span>
+            </div>
+          </a>
+
+          <a class="blog-card animate" href="#post-ai-strategy">
+            <span class="blog-card__category">AI Strategy</span>
+            <h3 class="blog-card__title">What to Build vs. Buy in Your AI Demand Gen Stack</h3>
+            <p class="blog-card__teaser">The wrong answer is buying more AI tools. The right answer depends on which part of your funnel you're trying to fix — and what your team can actually maintain.</p>
+            <div class="blog-card__meta">
+              <span class="blog-card__readtime">10 min read</span>
+              <span class="blog-card__link">Read post →</span>
+            </div>
+          </a>
+
+        </div><!-- /blog-cards -->
+
+        <hr class="blog-posts-divider">
+
+        <!-- ===== FULL POST BODIES ===== -->
+
+        <!-- POST 1 -->
+        <article class="blog-post animate" id="post-automation">
+          <header class="blog-post__header">
+            <span class="blog-post__category">Automation</span>
+            <h2 class="blog-post__title">How I Automated a Week of Media Reporting in 20 Minutes</h2>
+            <p class="blog-post__meta">Matt Danese · 8 min read</p>
+          </header>
+          <div class="blog-post__body">
+            <p>Every Monday morning, for about three years, I did the same thing. I opened LinkedIn Campaign Manager, Google Ads, and a blank spreadsheet. I pulled last week's data. I copy-pasted numbers across tabs, built pivot tables I'd rebuilt a hundred times before, and wrote a summary email that said roughly the same things every single week. Then I sent it to my manager and we talked about what to do next.</p>
+            <p>I estimated once that this ritual consumed 3–4 hours of my time per week. For a demand gen manager running multiple channels with a reporting analyst, it can easily hit 12–18 hours. That's one person's job, every week, for the rest of your career — just to answer the question "what happened last week?"</p>
+            <p>I stopped doing it manually in Q4 of last year. Here's exactly how.</p>
+
+            <h3 class="blog-post__h3">The architecture (it's simpler than you think)</h3>
+            <p>The system has three components: a data layer, an analysis layer, and an output layer. That's it. I use Node.js to hit the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8AM. The data pulls are scoped to the prior calendar week — impressions, clicks, spend, conversions, CPL by campaign and ad set. Nothing fancy. The same numbers I used to pull by hand.</p>
+            <p>That data gets passed to the Anthropic Claude API with a structured prompt that gives Claude a specific analyst persona: senior demand gen lead, 8+ years B2B experience, direct and prioritized in their output, no hedging. The persona matters more than most people expect. A Claude prompt without a persona gives you balanced, hedged, corporate-sounding analysis. Give it a point of view and it writes like a person.</p>
+            <p>The output goes to Slack. Not an email. Not a dashboard. A Slack message with a structured format: one headline story (what was the single most important thing that happened this week), a "what worked" section, a "what needs attention" section, and three prioritized action items — ranked by expected impact, not urgency.</p>
+
+            <div class="stat-callout">
+              <div class="stat-callout__number">18 hrs</div>
+              <div class="stat-callout__label">Estimated weekly analyst time eliminated across 12 discrete automations in the full system.</div>
+            </div>
+
+            <h3 class="blog-post__h3">What broke the first time</h3>
+            <p>The data pull worked fine. The Claude analysis was good. The Slack output was readable. What broke was the prompt context window. I was passing raw JSON API responses directly into the prompt — campaign objects with every field the API returns, including a lot of fields I didn't care about. I hit token limits and the analysis started truncating.</p>
+            <p>The fix was pre-processing. Before passing data to Claude, I wrote a simple transformation step that strips everything except the fields that matter for analysis: campaign name, spend, impressions, clicks, conversions, CPL. I also aggregate to campaign level rather than ad-set level by default — Claude can ask for drill-down on specific campaigns if the top-line numbers look anomalous, which is a separate automation I added later.</p>
+            <p>The second thing that broke was the action items. Early versions of the prompt produced action items that were too generic: "Consider reallocating budget to higher-performing campaigns." That's useless. I rewrote the prompt to require that each action item include the specific campaign name, the specific metric that triggered it, and the specific dollar amount or percentage change recommended. Generic analysis is entertainment. Specific analysis is leverage.</p>
+
+            <h3 class="blog-post__h3">The 12 automations I ended up with</h3>
+            <p>The weekly briefing was just the start. Once I had the data pipeline and analysis layer working, I kept adding modules. Anomaly detection that fires mid-week if CPL spikes more than 30% vs. the prior 3-week average. Budget pacing alerts when a campaign is on track to over- or under-deliver by more than 15% by end of month. A creative fatigue detector that flags ad sets where CTR has declined week-over-week for three consecutive weeks.</p>
+            <p>The most useful addition was a real-time Slack Q&A bot. Using the same data pipeline with a persistent context window, I can ask questions like "which LinkedIn campaigns had the best ICP lead ratio last month?" or "show me the CPL trend for the [campaign name] campaign over the last 8 weeks" and get a real answer in under 10 seconds. This replaced about 60% of the ad-hoc data pulls I used to do manually.</p>
+
+            <h3 class="blog-post__h3">The thing I didn't expect</h3>
+            <p>The best outcome wasn't the time saved. It was the consistency. When I wrote the Monday briefing manually, my analysis quality varied. If I was busy, I'd write a thinner email. If I was already convinced I knew the answer, I'd look for data that confirmed it. The automated briefing has no off days. It applies the same analytical framework every single week, flags the same types of anomalies, asks the same clarifying questions. It's more consistent than I was.</p>
+            <p>If you want the full system design — prompts, data schema, Slack integration pattern, and the 12 automation specs — it's all in the PRD. Subscribe to the newsletter and you'll get access.</p>
+
+            <div class="post-cta-box">
+              <p class="post-cta-box__heading">Get the full system PRD</p>
+              <p class="post-cta-box__sub">Every automation spec, prompt, and data schema — free with a newsletter subscription.</p>
+              <a href="#newsletter" class="btn btn--primary">Subscribe to get access</a>
+            </div>
+
+            <a href="#blog" class="back-to-top">↑ Back to all posts</a>
+          </div>
+        </article>
+
+        <!-- POST 2 -->
+        <article class="blog-post animate" id="post-lead-quality">
+          <header class="blog-post__header">
+            <span class="blog-post__category">Lead Quality</span>
+            <h2 class="blog-post__title">Why Your Lead Quality Score is Lying to You</h2>
+            <p class="blog-post__meta">Matt Danese · 7 min read</p>
+          </header>
+          <div class="blog-post__body">
+            <p>Here is the most dangerous sentence in B2B marketing: "Our MQL volume is up 40% this quarter." It sounds good. It gets used in board slides. It is almost completely meaningless without one additional piece of information: what were you buying?</p>
+            <p>Most lead scoring models are proxies for engagement, not fit. A lead scores high because they opened four emails and downloaded a whitepaper. But nothing in that scoring model tells you whether they're a VP at a 500-person company in your ICP or a coordinator at a 10-person agency who found your content via Google. Both of them clicked. Only one of them will ever buy.</p>
+            <p>I built a scoring system to fix this. It doesn't replace engagement scoring — it runs alongside it, as a fit layer. And the results were not what I expected.</p>
+
+            <h3 class="blog-post__h3">The four ICP buckets</h3>
+            <p>Every lead that enters the system gets scored across three dimensions: Title/Level, Function, and Company Size. Each dimension gets a score from 0 to 3 based on how closely it matches our ICP definition. The composite score determines which of four buckets a lead lands in: True ICP, Near-Miss, Wrong Title, or Noise.</p>
+            <p>True ICP is what it sounds like — leads that match all three criteria. Near-Miss is leads that match two of three, typically the right function and size but a title that's one level below the decision-making threshold. Wrong Title is the largest bucket: companies that match on size but where the person who converted is clearly not the buyer (coordinator, intern, analyst at a non-ICP company). Noise is everything else.</p>
+            <p>The critical design decision was how to define these buckets. I didn't want a scoring model I had to maintain manually — one where I'm updating "acceptable titles" in a spreadsheet every quarter. I wanted a system that could reason about fit. So I passed the scoring criteria and the raw lead data to Claude and asked it to score each record with a brief justification for why it was placed in its bucket.</p>
+
+            <div class="stat-callout">
+              <div class="stat-callout__number">34%</div>
+              <div class="stat-callout__label">Of "high-scoring" MQLs in one campaign turned out to be Wrong Title or Noise when run through ICP scoring — inflating CPL by more than 2x on a true-ICP basis.</div>
+            </div>
+
+            <h3 class="blog-post__h3">What the data actually showed</h3>
+            <p>The first time I ran this system against a live campaign dataset, the results were uncomfortable. One campaign that had been running for six weeks and had a CPL our team was proud of — comfortably below target — had a True ICP rate of 41%. That means 59% of the leads we'd been counting as MQLs were Near-Miss or worse. When I recalculated CPL using only True ICP leads, it was 2.3x the reported number and well above our target.</p>
+            <p>This wasn't a surprise to anyone who thought hard about it. The campaign in question was driving a lot of volume by targeting broad job function parameters on LinkedIn. Broad targeting generates cheap leads. Cheap leads are rarely the right leads. But nobody had quantified it before because we were measuring CPL against total MQL volume, not against ICP-qualified lead volume.</p>
+            <p>The fix wasn't complicated: narrow the targeting, accept higher CPL on the raw count, watch the True ICP CPL drop. But you can't make that decision without the data to support it, and most teams don't have it.</p>
+
+            <h3 class="blog-post__h3">How to build this without a data team</h3>
+            <p>The system I built accepts CSV exports from LinkedIn Ads, Google Ads, Marketo, and Salesforce. You don't need an engineering team. You need Python to parse and join the files, Claude to run the ICP scoring logic, and about four hours to set up the first time. After that, it's on-demand — pull the exports, run the script, get the report.</p>
+            <p>The output is an interactive HTML report that shows ICP distribution by campaign, by ad set, by creative, and by landing page. You can see exactly which campaigns are buying True ICP leads and which ones are inflating your MQL count. You can sort by True ICP CPL and finally make budget decisions that reflect reality, not vanity metrics.</p>
+            <p>The full PRD, including the Python processing logic, the Claude ICP scoring prompt, and the report template, is available to newsletter subscribers.</p>
+
+            <div class="post-cta-box">
+              <p class="post-cta-box__heading">Get the ICP scoring system</p>
+              <p class="post-cta-box__sub">The full Python + Claude setup, scoring prompt, and report template — free with a newsletter subscription.</p>
+              <a href="#newsletter" class="btn btn--primary">Subscribe to get access</a>
+            </div>
+
+            <a href="#blog" class="back-to-top">↑ Back to all posts</a>
+          </div>
+        </article>
+
+        <!-- POST 3 -->
+        <article class="blog-post animate" id="post-cro">
+          <header class="blog-post__header">
+            <span class="blog-post__category">CRO</span>
+            <h2 class="blog-post__title">The A/B Testing Problem Nobody Talks About</h2>
+            <p class="blog-post__meta">Matt Danese · 9 min read</p>
+          </header>
+          <div class="blog-post__body">
+            <p>The standard advice on A/B testing is: run one test at a time, isolate your variable, wait for statistical significance, then implement the winner and run the next test. This process, done correctly, takes 14–21 days per test. If you're testing 4 elements on a landing page — headline, subhead, CTA, hero image — at one test at a time, you're looking at 8–12 weeks before you've run through even a basic optimization cycle.</p>
+            <p>Most demand gen teams I've talked to don't have 12 weeks. They have a campaign launching in two weeks and a landing page that hasn't been touched since it was built by an agency 18 months ago. The standard advice is useless for them. It's designed for large-traffic consumer e-commerce, not B2B campaigns with 200–400 conversions per month.</p>
+            <p>So I built something different. Not better — different. For a specific type of problem that most B2B teams actually face.</p>
+
+            <h3 class="blog-post__h3">The insight: pre-traffic validation</h3>
+            <p>If you can't run a statistically valid live test in your timeline, the next best thing is to use human judgment at scale before any traffic hits the page. The question is: whose judgment, and how do you get it fast?</p>
+            <p>The answer I landed on was a simulated expert panel. I built a two-phase system. Phase 1 generates copy variants and scores them using five distinct evaluator personas: a CMO focused on strategic messaging alignment, a Skeptical Buyer who has seen every B2B cliché and is suspicious of all of them, a CRO Specialist who scores purely on clarity and friction reduction, a Senior Copywriter who evaluates structure and rhythm, and an ROI-Focused CEO who only cares about one thing: does this make the business case in the first two sentences.</p>
+            <p>Each variant gets scored 0–100 by each evaluator. The composite score is the average. Variants above a threshold advance to a second round where the top performers compete head-to-head with more detailed feedback. The process runs entirely through the Claude API.</p>
+
+            <div class="stat-callout">
+              <div class="stat-callout__number">62→87</div>
+              <div class="stat-callout__label">Score improvement on a live landing page — evaluating 51 copy variants in 8 minutes before a single dollar of traffic was spent.</div>
+            </div>
+
+            <h3 class="blog-post__h3">What actually happened</h3>
+            <p>The first real test of this system was on a landing page for a webinar campaign. The original page had a composite panel score of 62/100. The CMO persona liked the strategic framing. The Skeptical Buyer hated the headline — said it used three different B2B buzzwords in one sentence and that any real buyer would stop reading immediately. The CRO Specialist flagged that the primary CTA was below the fold on mobile.</p>
+            <p>I generated 51 variants targeting those three specific failure modes. The system scored all 51 variants in 8 minutes. The winning variant — new headline, restructured first paragraph, CTA moved above fold — scored 87/100. The Skeptical Buyer's score went from 48 to 79. That single persona's feedback, surfaced in 8 minutes, probably saved two weeks of a live test that would have been telling me the same thing with real ad budget behind it.</p>
+            <p>Does this replace live testing? No. Phase 2 of the system deploys the pre-validated winner to real traffic and runs ongoing mutations week over week. But Phase 1 means you're starting live tests from a much stronger baseline — which means you're not burning budget on variants you could have eliminated in advance with a well-structured prompt.</p>
+
+            <h3 class="blog-post__h3">The prompt architecture matters more than the model</h3>
+            <p>The temptation when building something like this is to prompt Claude generically: "Score this landing page copy on a scale of 1 to 100." Generic prompts produce generic scores. Every variant ends up in a 65–75 band and you can't differentiate between them.</p>
+            <p>The panel works because each evaluator has a distinct, opinionated point of view with a specific axis of evaluation. The Skeptical Buyer doesn't evaluate everything — they evaluate trust and credibility signals. The CRO Specialist doesn't evaluate messaging strategy — they evaluate friction and clarity. When evaluators have narrow mandates, their scores become meaningful signals rather than average opinions.</p>
+            <p>The other critical piece is requiring brief justification for every score. A score without justification is useless for iteration. A score with a specific critique ("this headline buries the value prop behind a question — buyers don't want to think, they want to understand immediately") gives you the exact edit to make on the next variant. Justifications are what turn a scoring system into a feedback loop.</p>
+
+            <div class="post-cta-box">
+              <p class="post-cta-box__heading">Get the full system design</p>
+              <p class="post-cta-box__sub">The panel evaluator prompts, variant generation logic, scoring methodology, and Phase 2 live testing setup — in the PRD.</p>
+              <a href="#newsletter" class="btn btn--primary">Subscribe to get access</a>
+            </div>
+
+            <a href="#blog" class="back-to-top">↑ Back to all posts</a>
+          </div>
+        </article>
+
+        <!-- POST 4 -->
+        <article class="blog-post animate" id="post-marketing-ops">
+          <header class="blog-post__header">
+            <span class="blog-post__category">Marketing Ops</span>
+            <h2 class="blog-post__title">The Marketo Debt Hiding in Your Lead Database</h2>
+            <p class="blog-post__meta">Matt Danese · 6 min read</p>
+          </header>
+          <div class="blog-post__body">
+            <p>There is a category of problem in marketing operations that almost nobody talks about publicly because it makes your team look bad when you find it. I'm going to talk about it anyway, because it's the most common and most expensive silent failure mode I've encountered in every Marketo instance I've ever audited.</p>
+            <p>The problem is silent exclusion. Leads that enter your database, trigger the right smart campaigns, pass scoring thresholds — and then simply don't enroll in nurture programs. No error. No alert. No failed step in the flow. They just don't get added to the list, and nobody notices because the campaign stats look normal. Volume is fine. Enrollment rate looks fine from the top. But individual records are silently falling through gaps that have been accumulating in your instance for years.</p>
+
+            <h3 class="blog-post__h3">The three most common failure modes</h3>
+            <p>After running Claude-assisted diagnostics on Marketo activity log exports from three different companies, I've found the same three failure patterns showing up in every instance.</p>
+            <p>The first is Master Send List exclusions. Most Marketo instances have a suppression list that was set up years ago to exclude certain domains, email patterns, or lead statuses from all sends. Over time, this list accumulates entries that were added for specific reasons that no longer apply — old competitors who were added during a competitive response, domains from acquired companies that are now customers, email patterns that matched spam but also match legitimate leads. Nobody audits the list. It just grows. And every lead that matches a suppression rule fails to enroll silently.</p>
+            <p>The second is stale unsubscribes. Leads who unsubscribed from one email program years ago are often blocked from all email communication, including nurture programs they never received and would consent to today. The unsubscribe record is old but the block is permanent. This is particularly common with leads who were acquired through list purchases or event badge scans — they unsubscribed from one campaign and got locked out of the entire nurture funnel forever.</p>
+            <p>The third is routing gaps. For companies with multi-regional Marketo instances or complex territory rules, leads sometimes fail to enroll because they don't match any routing criteria. A lead from the EMEA region tries to enroll in a North America nurture program, fails the territory check, and should route to an EMEA equivalent — but the EMEA equivalent doesn't exist, or the routing rule has a gap. The lead just stops. No error. No notification to anyone.</p>
+
+            <div class="stat-callout">
+              <div class="stat-callout__number">23%</div>
+              <div class="stat-callout__label">Of leads in one campaign's conversion window had failed to enroll in any nurture program — invisible to every standard Marketo report.</div>
+            </div>
+
+            <h3 class="blog-post__h3">How the diagnostic system works</h3>
+            <p>The system I built accepts Marketo activity log exports — the raw activity data that Marketo generates when you export a lead's full activity history. I process these with a Python script that joins activity records with lead profile data, then passes the joined records to Claude with a prompt that asks it to diagnose, record by record, why each lead failed to enroll in its expected nurture program.</p>
+            <p>Claude reads the activity chain for each lead: what campaigns fired, what conditions were evaluated, where the chain ends, and what the last recorded activity was before enrollment should have happened. It classifies each failure into one of the three buckets — suppression list, unsubscribe block, routing gap — and generates a plain-English explanation of exactly what happened and what needs to change to fix it.</p>
+            <p>The output is a prioritized remediation plan. Not a list of affected records — a list of root causes, ranked by the number of records affected, with specific instructions for the ops team. "Remove these 47 domains from the Master Send List — they were added in 2021 during a competitive campaign and are blocking current customers." That's actionable. That's the difference between a diagnostic and a report.</p>
+
+            <h3 class="blog-post__h3">Why this matters for demand gen</h3>
+            <p>If you're running paid campaigns and optimizing CPL, you're measuring efficiency of lead acquisition. But if 20–25% of those leads are silently falling out of nurture before they ever get a follow-up communication, your pipeline contribution from those campaigns is systematically understated. The campaigns look less effective than they are because the ops infrastructure downstream is leaking.</p>
+            <p>I've seen this cause demand gen teams to reallocate budget away from high-performing campaigns toward lower-performing ones — because the attribution model showed worse pipeline conversion for campaigns whose leads were disproportionately falling into suppression gaps. The marketing data was technically accurate and functionally misleading.</p>
+            <p>Fix the ops infrastructure first. Then measure the campaigns.</p>
+
+            <div class="post-cta-box">
+              <p class="post-cta-box__heading">Get the Marketo diagnostic system</p>
+              <p class="post-cta-box__sub">The Python processing script, Claude diagnostic prompt, and remediation report template — in the full PRD.</p>
+              <a href="#newsletter" class="btn btn--primary">Subscribe to get access</a>
+            </div>
+
+            <a href="#blog" class="back-to-top">↑ Back to all posts</a>
+          </div>
+        </article>
+
+        <!-- POST 5 -->
+        <article class="blog-post animate" id="post-ai-strategy">
+          <header class="blog-post__header">
+            <span class="blog-post__category">AI Strategy</span>
+            <h2 class="blog-post__title">What to Build vs. Buy in Your AI Demand Gen Stack</h2>
+            <p class="blog-post__meta">Matt Danese · 10 min read</p>
+          </header>
+          <div class="blog-post__body">
+            <p>Every few months a new AI tool for marketing gets announced with a demo that looks impressive in a 90-second video and breaks immediately when you try to use it on your actual data, in your actual tech stack, solving your actual problem. The demo is always a generic use case. Your situation is never generic.</p>
+            <p>I've spent the last 18 months building AI systems for demand gen rather than buying them. Not because I'm philosophically opposed to SaaS, but because the problems I needed to solve were specific enough that no off-the-shelf tool could have addressed them. The Weekly Channel Analysis Engine works because it knows my exact campaign naming conventions, my specific ICP definition, and the context of our business at a point in time that a generic product can't have. That context is the difference between analysis that's useful and analysis that's technically correct and practically irrelevant.</p>
+            <p>But building isn't always the right answer. Here's the framework I actually use.</p>
+
+            <h3 class="blog-post__h3">When to buy</h3>
+            <p>Buy when the problem is generic. If your need is "write better email subject lines" or "generate first-draft ad copy" or "summarize a long document," there are tools built specifically for those tasks that are good enough, fast to deploy, and cheap relative to the engineering time of building your own. The value of building is context and customization. If the task doesn't require either, buying wins on speed.</p>
+            <p>Buy when you need a UI your whole team can use. Systems I build are designed for me or for a technical operator. They run from command line, they require knowing which files to export and where to put them, they need someone who can read an error message. That's fine for a tool one person uses. It's not fine for a workflow your entire growth team needs to access daily. If the audience is non-technical and frequent, buy a tool with a proper interface or invest in building one — don't hand someone a Python script and expect it to stick.</p>
+            <p>Buy when the category is mature. Ad copywriting, SEO content generation, email personalization at scale — these are sufficiently mature use cases that the leading tools have been trained on massive amounts of good output. Your custom Claude prompt won't beat them on the core task. It might beat them on context, but if the context isn't critical to the task, why spend the time building?</p>
+
+            <h3 class="blog-post__h3">When to build</h3>
+            <p>Build when the value is in the data connection. Every system I've built that's actually changed how I work is valuable primarily because of what data it touches, not what AI model it uses. The channel analysis engine is useful because it pulls live API data from the platforms I actually run. The lead quality pipeline is useful because it joins Marketo, Salesforce, and ad platform data that no off-the-shelf tool has access to. The Marketo diagnostic system is useful because it reads raw activity logs that aren't exposed in any standard reporting interface.</p>
+            <p>If your AI use case requires connecting systems that don't talk to each other, or processing data that exists in a format no tool supports, or applying logic that's specific to your ICP definition or business model — you're building, not buying. The AI model is almost incidental. The value is the data layer underneath it.</p>
+
+            <div class="stat-callout">
+              <div class="stat-callout__number">$0</div>
+              <div class="stat-callout__label">Monthly SaaS spend on the five systems described on this site. Total API cost across all five systems: under $40/month.</div>
+            </div>
+
+            <h3 class="blog-post__h3">Build when the problem needs a point of view</h3>
+            <p>Generic AI tools give generic output because they're designed not to offend anyone. They hedge. They present multiple options. They avoid making strong recommendations. For consumer use cases, this is fine. For a demand gen lead who needs to make a budget reallocation decision on Thursday with incomplete data, hedged output is worse than useless — it adds noise to a decision that already has too much uncertainty in it.</p>
+            <p>When I built the Strategic Briefs &amp; Pipeline Response Engine, the entire design was oriented around getting Claude to take a position. When pipeline is at 70% of plan, I don't want a balanced analysis of possible causes. I want a ranked set of hypotheses with the evidence for each, a concrete action plan for the two or three that are worth addressing now, and an explicit list of things NOT to do — because bad decisions made with urgency in a pipeline shortfall are how demand gen teams destroy Q2 to fix Q1.</p>
+            <p>That kind of output requires a custom prompt with a custom persona and extensive context about the business. No product can give you that. You have to build it.</p>
+
+            <h3 class="blog-post__h3">The question I ask before starting any build</h3>
+            <p>Before I write a single line of code, I ask one question: if this system works exactly as designed, what decision does it change? Not "what does it automate" — what decision. Automation without a decision attached is a party trick. If I can't name the specific decision that becomes better or faster because this system exists, I stop and reconsider whether I'm solving the right problem.</p>
+            <p>The weekly channel briefing changes the Monday morning decision about what to focus on this week. The ICP scoring pipeline changes the decision about which campaigns to scale and which to pause. The A/B testing panel changes the decision about which variant to deploy before spending budget. The Marketo diagnostic changes the decision about where ops resources go in the next sprint.</p>
+            <p>Every build I've done that I'm still using has a clean answer to that question. The builds that didn't have a clean answer are the ones I abandoned after two weeks. Start with the decision. The system follows from there.</p>
+
+            <div class="post-cta-box">
+              <p class="post-cta-box__heading">Get the full PRDs for all five systems</p>
+              <p class="post-cta-box__sub">Architecture, prompts, data schemas, and implementation notes — free with a newsletter subscription.</p>
+              <a href="#newsletter" class="btn btn--primary">Subscribe to get access</a>
+            </div>
+
+            <a href="#blog" class="back-to-top">↑ Back to all posts</a>
+          </div>
+        </article>
+
+      </div><!-- /container -->
+    </section>
+
     <!-- ========= NEWSLETTER ========= -->
     <section class="section" id="newsletter">
       <div class="container">
 
         <div class="section__header animate">
           <span class="eyebrow">The Newsletter</span>
-          <h2 class="section__heading">The Demand Engine(er)</h2>
+          <h2 class="section__heading">The Demand Engineer</h2>
           <p class="newsletter__tagline">AI systems for B2B growth operators — built by someone who actually runs the plays.</p>
         </div>
 
