@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matt Danese — Demand Gen × AI</title>
+  <title>Matt Danese — The Demand Engine(er)</title>
   <meta name="description" content="Matt Danese is a B2B demand generation leader building AI-powered growth systems in public. Read The Demand Engineer, his newsletter on AI-powered demand gen." />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <!-- KIT FORM INTEGRATION -->
@@ -26,8 +26,8 @@
       --font-heading: 'Fraunces', serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
       --max-width: 760px;
-      --section-pad: 96px;
-      --section-pad-mobile: 64px;
+      --section-pad: 120px;
+      --section-pad-mobile: 80px;
       --nav-height: 56px;
     }
 
@@ -396,14 +396,14 @@
     .projects__list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
     }
 
     .project-card {
       background: var(--color-bg-card);
       border: 1px solid var(--color-border);
       border-radius: 10px;
-      padding: 28px 32px;
+      padding: 36px 40px;
       transition: all 0.22s ease;
     }
     .project-card:hover {
@@ -417,7 +417,7 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
     }
 
     .project-card__title {
@@ -453,7 +453,7 @@
       font-size: 15px;
       color: var(--color-text-muted);
       line-height: 1.7;
-      margin-bottom: 18px;
+      margin-bottom: 0;
     }
 
     .project-card__link {
@@ -468,6 +468,7 @@
       background: none;
       border: none;
       padding: 0;
+      margin-top: 24px;
       transition: color 0.2s ease, text-decoration 0.2s ease;
     }
     .project-card__link:hover {
@@ -585,7 +586,7 @@
       background: #F4F6FB;
       border-radius: 0 8px 8px 0;
       padding: 20px 24px;
-      margin-top: 32px;
+      margin-top: 40px;
     }
     .teaser__label {
       font-family: var(--font-body);
@@ -609,6 +610,13 @@
       color: var(--color-text-muted);
       line-height: 1.6;
     }
+    .teaser__cta {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--color-accent);
+      margin-top: 12px;
+    }
 
     /* ========= CONTACT SECTION ========= */
     #contact {
@@ -620,14 +628,15 @@
       font-size: 17px;
       color: #A8BBDA;
       max-width: 500px;
-      margin-bottom: 36px;
+      margin-top: 16px;
+      margin-bottom: 48px;
       line-height: 1.7;
     }
 
     .contact__links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 40px;
       flex-wrap: wrap;
     }
 
@@ -663,6 +672,84 @@
       text-align: center;
       font-size: 12px;
       color: #4A6080;
+    }
+
+    /* ========= HERO SOCIAL PROOF ========= */
+    .hero__proof {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .hero__proof-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hero__proof-number {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 28px;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .hero__proof-label {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 13px;
+      color: #A8BBDA;
+      line-height: 1.3;
+    }
+
+    .hero__proof-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+
+    /* ========= KIT EMBED WRAPPER ========= */
+    .kit-embed-wrapper {
+      max-width: 560px;
+      margin: 48px auto 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .kit-embed-wrapper .formkit-form {
+      background: transparent !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: 10px !important;
+    }
+
+    .kit-embed-wrapper .formkit-submit {
+      background-color: var(--color-accent) !important;
+      border-radius: 6px !important;
+    }
+
+    .kit-embed-wrapper .formkit-submit:hover {
+      background-color: var(--color-accent-hover) !important;
+    }
+
+    .kit-embed-wrapper .formkit-powered-by-convertkit-container {
+      opacity: 0.4 !important;
+    }
+
+    .kit-embed-wrapper .formkit-input {
+      border-color: var(--color-border) !important;
+      border-radius: 8px !important;
+      font-family: 'DM Sans', sans-serif !important;
+    }
+
+    .kit-embed-wrapper .formkit-input:focus {
+      border-color: var(--color-accent) !important;
+      box-shadow: 0 0 0 3px rgba(45, 91, 227, 0.12) !important;
     }
 
     /* ========= PRD GATE MODAL ========= */
@@ -778,6 +865,9 @@
     @media (max-width: 768px) {
       html { font-size: 16px; }
 
+      .hero__proof-number { font-size: 22px; }
+      .hero__proof-label { font-size: 11px; }
+
       .section { padding: var(--section-pad-mobile) 0; }
       #projects { padding-top: calc(50px + var(--section-pad-mobile)); }
 
@@ -839,18 +929,40 @@
         <div class="container">
           <span class="eyebrow hero-load" style="animation-delay: 0.1s;">The Demand Engine(er)</span>
           <h1 class="hero-load" style="animation-delay: 0.25s;">
-            I'm Matt Danese and I'm rebuilding how you think about Demand Generation.
+            I build AI systems that turn GTM playbooks into pipeline.
           </h1>
           <p class="hero__bio hero-load" style="animation-delay: 0.4s;">
-            I've spent the past 8+ years living and breathing demand gen and I've stopped waiting for tools to exist
-            and started building them. I've driven pipeline at Meta, Medely, Regal.AI, and Webflow.
-            Now I'm building AI-powered growth systems in public and writing about what
-            actually works.
+            I've spent 8+ years in demand gen at Meta, Medely, Regal.AI, and Webflow.
+            I stopped waiting for the tools to exist and started building them.
+            Now I'm shipping AI-powered growth systems in public and writing
+            about what actually works.
           </p>
           <div class="hero__ctas hero-load" style="animation-delay: 0.55s;">
             <a href="#newsletter" class="btn btn--primary">Read the Newsletter</a>
             <a href="#projects" class="btn btn--ghost-light">See My Work ↓</a>
           </div>
+
+          <div class="hero__proof hero-load" style="animation-delay: 0.7s;">
+            <div class="hero__proof-stat">
+              <span class="hero__proof-number">10,000+</span>
+              <span class="hero__proof-label">leads generated</span>
+            </div>
+            <div class="hero__proof-stat">
+              <span class="hero__proof-number">$12M+</span>
+              <span class="hero__proof-label">pipeline generated</span>
+            </div>
+            <div class="hero__proof-divider" aria-hidden="true"></div>
+            <div class="hero__proof-stat">
+              <span class="hero__proof-number">138%</span>
+              <span class="hero__proof-label">YoY site traffic lift</span>
+            </div>
+            <div class="hero__proof-divider" aria-hidden="true"></div>
+            <div class="hero__proof-stat">
+              <span class="hero__proof-number">50%</span>
+              <span class="hero__proof-label">YoY SQL increase</span>
+            </div>
+          </div>
+
           <div class="hero__scroll" aria-hidden="true">
             <div class="hero__scroll-chevron">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -869,8 +981,8 @@
         <div class="section__header animate">
           <span class="eyebrow">Selected Work</span>
           <h2 class="section__heading">Things I've Built</h2>
-          <p class="section__subhead">AI systems I built to automate demand gen work —
-            each one replacing hours of manual effort.</p>
+          <p class="section__subhead">Real systems I built to replace hours of manual demand gen work.
+            Click any project to access the full PRD — free with a newsletter signup.</p>
         </div>
 
         <div class="projects__list">
@@ -1005,13 +1117,16 @@
         </ul>
 
         <!-- KIT FORM INTEGRATION — inline newsletter embed -->
-        <script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
+        <div class="kit-embed-wrapper">
+          <script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
+        </div>
 
         <!-- Issue preview teaser card -->
         <div class="newsletter__teaser animate">
-          <p class="teaser__label">Issue #1 Preview</p>
+          <p class="teaser__label">Coming in Issue #1</p>
           <h3 class="teaser__title">How I automated a week of media reporting in 20 minutes</h3>
-          <p class="teaser__body">Using Claude, Python, and a handful of CSV exports — here's the exact system.</p>
+          <p class="teaser__body">Claude + Python + a handful of CSV exports. I'll walk through the exact system, the prompts, and what broke the first time.</p>
+          <p class="teaser__cta">→ Subscribe above to get it when it drops.</p>
         </div>
 
       </div>
