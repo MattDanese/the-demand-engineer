@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Automate Paid Media Reporting with Claude API and LinkedIn/Google Ads</title>
+  <meta name="description" content="A complete architecture for automating weekly paid media reporting using the Claude API, LinkedIn Ads API, and Google Ads API. Includes prompt patterns, safety rules, and 12 automations in priority order." />
+  <meta name="author" content="Matt Danese" />
+  <meta property="og:title" content="How to Automate Paid Media Reporting with Claude API and LinkedIn/Google Ads" />
+  <meta property="og:description" content="A complete architecture for automating weekly paid media reporting using the Claude API, LinkedIn Ads API, and Google Ads API. Includes prompt patterns, safety rules, and 12 automations in priority order." />
+  <link rel="canonical" href="https://mattdanese.github.io/the-demand-engineer/blog/automated-paid-media-reporting.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --section-pad: 120px;
+      --section-pad-mobile: 80px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-accent-dark);
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav__logo:hover { color: var(--color-accent); }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background-color: var(--color-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 80px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-optical-sizing: auto;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= STAT CALLOUT ========= */
+    .stat-callout {
+      border-left: 3px solid var(--color-accent);
+      padding-left: 20px;
+      margin: 32px 0;
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--color-accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .stat-number { font-size: 2.25rem; }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">Matt Danese</a>
+      <ul class="nav__links" role="list">
+        <li><a href="../index.html">← Back to Site</a></li>
+        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../index.html#blog">Blog</a></li>
+        <li><a href="../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../index.html" class="mobile-nav-link">← Back to Site</a>
+    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../index.html#blog" class="mobile-nav-link">Blog</a>
+    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <span class="post-category">Automation</span>
+        <h1 class="post-title">How I Automated 12 Hours of Weekly Paid Media Reporting with Claude and Two APIs</h1>
+        <p class="post-meta">8 min read · Matt Danese · April 2026</p>
+      </div>
+    </section>
+
+    <!-- POST BODY -->
+    <article class="post-body">
+
+      <p>Every Monday morning, for about three years, I did the same thing. I opened LinkedIn Campaign Manager, Google Ads, and a blank spreadsheet. I pulled last week's data. I copy-pasted numbers across tabs, built pivot tables I'd rebuilt a hundred times before, and wrote a summary email that said roughly the same things every single week. Then I sent it to my manager and we talked about what to do next.</p>
+
+      <p>I estimated once that this ritual consumed 3–4 hours of my time per week. For a demand gen manager running multiple channels with a reporting analyst, it can easily hit 12–18 hours. That's one person's job, every week, for the rest of your career — just to answer the question "what happened last week?"</p>
+
+      <p>I stopped doing it manually in Q4 of last year. Here's exactly how.</p>
+
+      <h3>The architecture (it's simpler than you think)</h3>
+
+      <p>The system has three components: a data layer, an analysis layer, and an output layer. That's it. I use Node.js to hit the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8AM. The data pulls are scoped to the prior calendar week — impressions, clicks, spend, conversions, CPL by campaign and ad set. Nothing fancy. The same numbers I used to pull by hand.</p>
+
+      <p>That data gets passed to the Anthropic Claude API with a structured prompt that gives Claude a specific analyst persona: senior demand gen lead, 8+ years B2B experience, direct and prioritized in their output, no hedging. The persona matters more than most people expect. A Claude prompt without a persona gives you balanced, hedged, corporate-sounding analysis. Give it a point of view and it writes like a person.</p>
+
+      <p>The output goes to Slack. Not an email. Not a dashboard. A Slack message with a structured format: one headline story (what was the single most important thing that happened this week), a "what worked" section, a "what needs attention" section, and three prioritized action items — ranked by expected impact, not urgency.</p>
+
+      <div class="stat-callout">
+        <span class="stat-number">18 hrs</span>
+        <span class="stat-label">Estimated weekly analyst time eliminated across 12 discrete automations in the full system.</span>
+      </div>
+
+      <h3>What broke the first time</h3>
+
+      <p>The data pull worked fine. The Claude analysis was good. The Slack output was readable. What broke was the prompt context window. I was passing raw JSON API responses directly into the prompt — campaign objects with every field the API returns, including a lot of fields I didn't care about. I hit token limits and the analysis started truncating.</p>
+
+      <p>The fix was pre-processing. Before passing data to Claude, I wrote a simple transformation step that strips everything except the fields that matter for analysis: campaign name, spend, impressions, clicks, conversions, CPL. I also aggregate to campaign level rather than ad-set level by default — Claude can ask for drill-down on specific campaigns if the top-line numbers look anomalous, which is a separate automation I added later.</p>
+
+      <p>The second thing that broke was the action items. Early versions of the prompt produced action items that were too generic: "Consider reallocating budget to higher-performing campaigns." That's useless. I rewrote the prompt to require that each action item include the specific campaign name, the specific metric that triggered it, and the specific dollar amount or percentage change recommended. <strong>Generic analysis is entertainment. Specific analysis is leverage.</strong></p>
+
+      <h3>The 12 automations I ended up with</h3>
+
+      <p>The weekly briefing was just the start. Once I had the data pipeline and analysis layer working, I kept adding modules. Anomaly detection that fires mid-week if CPL spikes more than 30% vs. the prior 3-week average. Budget pacing alerts when a campaign is on track to over- or under-deliver by more than 15% by end of month. A creative fatigue detector that flags ad sets where CTR has declined week-over-week for three consecutive weeks.</p>
+
+      <p>The most useful addition was a real-time Slack Q&amp;A bot. Using the same data pipeline with a persistent context window, I can ask questions like "which LinkedIn campaigns had the best ICP lead ratio last month?" or "show me the CPL trend for the [campaign name] campaign over the last 8 weeks" and get a real answer in under 10 seconds. This replaced about 60% of the ad-hoc data pulls I used to do manually.</p>
+
+      <h3>The thing I didn't expect</h3>
+
+      <p>The best outcome wasn't the time saved. It was the consistency. When I wrote the Monday briefing manually, my analysis quality varied. If I was busy, I'd write a thinner email. If I was already convinced I knew the answer, I'd look for data that confirmed it. The automated briefing has no off days. It applies the same analytical framework every single week, flags the same types of anomalies, asks the same clarifying questions. <strong>It's more consistent than I was.</strong></p>
+
+      <p>If you want the full system design — prompts, data schema, Slack integration pattern, and the 12 automation specs — it's all in the PRD. Subscribe to the newsletter and you'll get access.</p>
+
+      <!-- POST CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Want the full system PRD?</p>
+        <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
+        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+      </div>
+
+    </article>
+
+    <!-- POST FOOTER -->
+    <footer class="post-footer">
+      <a href="../index.html#blog" class="post-footer__back">← Back to all posts</a>
+      <p class="post-footer__copy">© 2025 Matt Danese · The Demand Engine(er)</p>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Nav hide/show on scroll direction
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) {
+              nav.classList.add('nav--hidden');
+            } else {
+              nav.classList.remove('nav--hidden');
+            }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      // Hamburger menu toggle
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      // Smooth scroll for in-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (href === '#') return;
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
