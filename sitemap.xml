@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/blog/automated-paid-media-reporting.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/blog/icp-lead-quality-scoring.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/blog/ab-testing-expert-panel.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/blog/marketo-nurture-diagnostic.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mattdanese.github.io/the-demand-engineer/blog/slack-paid-media-bot.html</loc>
+    <lastmod>2026-04-18</lastmod>
+    <priority>0.8</priority>
+  </url>
+</urlset>
