@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to Use AI for Paid Media Budget Allocation — A B2B Demand Gen Framework</title>
+  <meta name="description" content="How to use Claude as a strategic thinking partner for paid media budget decisions — including when to cut a campaign that looks like it's working, how to diagnose pipeline gaps, and the framework for separating paid-addressable problems from sales process issues." />
+  <meta name="author" content="Matt Danese" />
+  <meta property="og:title" content="How to Use AI for Paid Media Budget Allocation — A B2B Demand Gen Framework" />
+  <meta property="og:description" content="How to use Claude as a strategic thinking partner for paid media budget decisions — including when to cut a campaign that looks like it's working, how to diagnose pipeline gaps, and the framework for separating paid-addressable problems from sales process issues." />
+  <link rel="canonical" href="https://thedemandengineer.com/blog/ai-budget-allocation-paid-media.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --section-pad: 120px;
+      --section-pad-mobile: 80px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-accent-dark);
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav__logo:hover { color: var(--color-accent); }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background-color: var(--color-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 80px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-optical-sizing: auto;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= STAT CALLOUT ========= */
+    .stat-callout {
+      border-left: 3px solid var(--color-accent);
+      padding-left: 20px;
+      margin: 32px 0;
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--color-accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover {
+      color: var(--color-accent-hover);
+      text-decoration: underline;
+    }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .stat-number { font-size: 2.25rem; }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+    }
+  </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N24QM0NQG6');
+</script>
+<!-- End Google Analytics -->
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">Matt Danese</a>
+      <ul class="nav__links" role="list">
+        <li><a href="../index.html">← Back to Site</a></li>
+        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../index.html#blog">Blog</a></li>
+        <li><a href="../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../index.html" class="mobile-nav-link">← Back to Site</a>
+    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../index.html#blog" class="mobile-nav-link">Blog</a>
+    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <span class="post-category">Strategy</span>
+        <h1 class="post-title">How I Use Claude to Make Paid Media Budget Decisions — Including When to Cut a Campaign That Looks Like It's Working</h1>
+        <p class="post-meta">9 min read · Matt Danese · April 2026</p>
+      </div>
+    </section>
+
+    <!-- AUTHOR BIO -->
+    <div class="author-bio">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name">Matt Danese</p>
+        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+      </div>
+    </div>
+
+    <!-- POST BODY -->
+    <article class="post-body">
+
+      <p>The hardest budget decision in paid media isn't whether to cut a campaign that's clearly failing. That one's easy. The hard decision is whether to cut a campaign that's hitting its CPL target, generating leads on pace, and showing green across every metric you track — but isn't generating pipeline.</p>
+
+      <p>I've made the wrong call on this more times than I'd like to admit. I've kept campaigns running because the numbers looked fine, while the real problem was buried in the handoff between marketing and sales. I've also cut campaigns that were actually working, because I misread a pipeline gap as a paid media problem when it was a sales velocity problem. Both mistakes cost real money.</p>
+
+      <p>I use Claude now as a mandatory checkpoint before any budget reallocation over $5k/month. Not as an oracle — it doesn't know things I don't know. But as a structured thinking partner that forces me to work through the right diagnostic questions before I touch a budget line.</p>
+
+      <h3>The first question: is this a paid-addressable problem?</h3>
+
+      <p>Most pipeline gaps are not paid media problems. They're sales process problems, ICP definition problems, or product-market fit problems dressed up as paid media problems because paid media is the most visible and measurable part of the funnel.</p>
+
+      <p>Before I look at any campaign-level data, I ask a single diagnostic question: <strong>Is the conversion rate from MQL to SAO consistent with historical baseline?</strong> If MQL-to-SAO conversion is on track and pipeline is still short, I have a volume problem — not enough leads entering the top. That's potentially paid media. If MQL-to-SAO conversion has dropped and pipeline is short, I have a quality or process problem. That's almost never fixable by changing a bid strategy.</p>
+
+      <p>When I paste this framing into Claude along with the actual conversion rate data — current quarter vs. trailing four quarters — it reliably surfaces the follow-up questions I need to ask before I can make a budget decision. Which SDR segment is underperforming? Is the drop uniform across all campaigns or concentrated in one audience? Has anything changed in the sales process or ICP criteria in the last 90 days? These aren't questions Claude is answering — they're questions it's prompting me to go get answers to.</p>
+
+      <div class="stat-callout">
+        <span class="stat-number">3 of 4</span>
+        <span class="stat-label">Pipeline gaps I've diagnosed turned out to be sales process or ICP problems — not paid media volume problems. Budget cuts wouldn't have helped.</span>
+      </div>
+
+      <h3>When to cut a campaign that looks like it's working</h3>
+
+      <p>There's a specific pattern that signals a campaign should be cut despite hitting its CPL target. I call it the <strong>lead quality decay curve</strong>: CPL holds steady or improves, lead volume is on pace, but ICP score distribution shifts downward over time. You're generating cheaper leads because you're reaching less qualified audiences — and Smart Bidding is optimizing toward whatever conversion signal you're feeding it, which may not be pipeline.</p>
+
+      <p>The diagnostic I run in Claude looks like this: I share three data points — this campaign's CPL trend over 8 weeks, ICP score distribution for leads generated this quarter vs. last, and MQL-to-SAO conversion rate for this campaign specifically. Then I ask Claude to identify whether the data is consistent with lead quality decay, and if so, what I'd expect to see in the next 30 days if I don't intervene.</p>
+
+      <p>The value isn't in Claude's answer. The value is in the process of assembling those three data points. In most cases, when I actually pull ICP score distribution at the campaign level, I find the answer before I even paste it into the prompt.</p>
+
+      <h3>The budget reallocation framework</h3>
+
+      <p>I don't approach budget decisions as a single optimization problem. I treat them as a portfolio with three buckets, each evaluated on different criteria:</p>
+      <ul>
+        <li><strong>Pipeline production campaigns:</strong> Evaluated on cost-per-SAO. These are non-negotiable if the SAO cost is within range. Don't touch them to fund experiments.</li>
+        <li><strong>Efficiency experiments:</strong> New audiences, new creatives, new bidding strategies. Evaluated on whether the test has reached statistical significance, not on in-flight CPL. Kill early if the confidence interval is too wide to ever be meaningful.</li>
+        <li><strong>Brand and pipeline-support spend:</strong> LinkedIn thought leadership, retargeting, content amplification. Evaluated on engagement quality and downstream MQL influence, not direct CPL. These are the first to get cut in a budget crunch — but cutting them rarely helps as much as you think.</li>
+      </ul>
+
+      <p>When I bring a reallocation decision to Claude, I structure it the same way every time. Here's the exact prompt pattern I use: "I'm considering reallocating $X/month from [Campaign A] to [Campaign B]. Campaign A metrics: [data]. Campaign B metrics: [data]. My hypothesis is [hypothesis]. What assumptions am I making that could be wrong? What would I need to be true for this reallocation to make pipeline worse, not better?"</p>
+
+      <p>That last question — what would need to be true for this to make things worse — is the one that catches mistakes. Most budget reallocation decisions feel obvious until you force yourself to steelman the case against them.</p>
+
+      <h3>The pipeline gap diagnostic workflow</h3>
+
+      <p>When pipeline is behind plan and I can't immediately identify the cause, I run a structured diagnostic that I've built into a repeatable Claude workflow. The inputs are: pipeline created this month vs. plan, MQL volume vs. plan, MQL-to-SAO rate vs. trailing baseline, average days MQL-to-SAO vs. trailing baseline, and SAO-to-close rate vs. trailing baseline.</p>
+
+      <p>I paste all five into Claude with a single instruction: "Identify the most likely stage where the gap originated, rank the three most probable root causes in order of likelihood, and tell me what data I would need to confirm or rule out each one."</p>
+
+      <p>This doesn't replace talking to your sales team. It doesn't replace pulling Salesforce reports. What it does is give me a structured starting point that prevents me from jumping straight to the most visible explanation — which is almost always paid media volume, because that's the number I happen to control.</p>
+
+      <h3>What Claude is bad at here</h3>
+
+      <p>It's worth being explicit about the limits. Claude cannot tell you whether your ICP is correct. It cannot access your CRM or ad platforms without integration. It will confidently produce analysis that sounds right but is based on whatever priors are baked into its training data about B2B demand gen — which may not match your specific market, your specific sales motion, or your specific ACV range.</p>
+
+      <p><strong>The best use is forcing structure, not generating answers.</strong> When I'm under pressure to justify a budget decision in a QBR and I've been staring at the same dashboards for two hours, having a thinking partner that asks "what else could explain this?" is genuinely valuable. When I want Claude to tell me what to do, I'm using it wrong.</p>
+
+      <h3>Frequently asked questions</h3>
+
+      <h3>How do you handle budget decisions when you don't have pipeline attribution data?</h3>
+
+      <p>You make the same framework work with the best proxy available. If you don't have SAO attribution, use MQL-to-opportunity conversion rate as a proxy for lead quality, and use win rate by campaign cohort if your CRM has enough history. The framework doesn't require perfect data — it requires consistent data. A flawed metric that's consistently measured quarter over quarter is more useful for budget decisions than a theoretically correct metric you only started tracking last month.</p>
+
+      <h3>Should this workflow replace a weekly campaign review?</h3>
+
+      <p>No. The Claude diagnostic is for non-routine decisions — budget reallocations, responses to pipeline shortfalls, or pre-planning conversations. Routine campaign management (bid adjustments, creative rotation, audience exclusions) should run on a standard operating cadence with human review. Don't outsource judgment on decisions you make every week — build the instinct instead.</p>
+
+      <h3>What's the right amount of budget to hold back for experiments?</h3>
+
+      <p>I keep 15–20% of paid media budget in active experimentation at all times. Below 15% and you're not generating enough signal to ever improve. Above 25% and you're sacrificing too much pipeline production to fund tests that might not run long enough to be conclusive. The exact number matters less than having a defined budget for experiments that is protected from reallocation when pipeline gets tight — because pipeline getting tight is exactly when the temptation to kill experiments is highest and the cost of doing so is hardest to see.</p>
+
+      <!-- RELATED READING -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Reading</p>
+        <ul class="related-reading__list">
+          <li><a href="b2b-paid-media-attribution-tracking.html">The B2B Paid Media Tracking Stack That Actually Connects Ad Spend to Pipeline</a></li>
+          <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
+          <li><a href="https://blog.hubspot.com/marketing/marketing-attribution" target="_blank" rel="noopener noreferrer">B2B Marketing Attribution Models Explained (HubSpot)</a></li>
+          <li><a href="https://www.gartner.com/en/marketing/topics/demand-generation" target="_blank" rel="noopener noreferrer">How to Build a Demand Generation Strategy (Gartner)</a></li>
+          <li><a href="https://support.google.com/google-ads/answer/7065882" target="_blank" rel="noopener noreferrer">Google Smart Bidding: How It Works (Google)</a></li>
+        </ul>
+      </div>
+
+      <!-- POST CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Want the full system PRD?</p>
+        <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
+        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+      </div>
+
+    </article>
+
+    <!-- POST FOOTER -->
+    <footer class="post-footer">
+      <a href="../index.html#blog" class="post-footer__back">← Back to all posts</a>
+      <p class="post-footer__copy">© 2025 Matt Danese · The Demand Engine(er)</p>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Nav hide/show on scroll direction
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) {
+              nav.classList.add('nav--hidden');
+            } else {
+              nav.classList.remove('nav--hidden');
+            }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      // Hamburger menu toggle
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      // Smooth scroll for in-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (href === '#') return;
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B2B Paid Media Attribution: How to Connect Ad Spend to Pipeline in Salesforce</title>
+  <meta name="description" content="A complete guide to B2B paid media attribution architecture — Enhanced Conversions for MQLs, Offline Conversion Import for SAOs, GCLID capture, and using Claude to diagnose broken attribution before it corrupts your budget decisions." />
+  <meta name="author" content="Matt Danese" />
+  <meta property="og:title" content="B2B Paid Media Attribution: How to Connect Ad Spend to Pipeline in Salesforce" />
+  <meta property="og:description" content="A complete guide to B2B paid media attribution architecture — Enhanced Conversions for MQLs, Offline Conversion Import for SAOs, GCLID capture, and using Claude to diagnose broken attribution before it corrupts your budget decisions." />
+  <link rel="canonical" href="https://thedemandengineer.com/blog/b2b-paid-media-attribution-tracking.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --section-pad: 120px;
+      --section-pad-mobile: 80px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-accent-dark);
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav__logo:hover { color: var(--color-accent); }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background-color: var(--color-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 80px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-optical-sizing: auto;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= STAT CALLOUT ========= */
+    .stat-callout {
+      border-left: 3px solid var(--color-accent);
+      padding-left: 20px;
+      margin: 32px 0;
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--color-accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover {
+      color: var(--color-accent-hover);
+      text-decoration: underline;
+    }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .stat-number { font-size: 2.25rem; }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+    }
+  </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N24QM0NQG6');
+</script>
+<!-- End Google Analytics -->
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">Matt Danese</a>
+      <ul class="nav__links" role="list">
+        <li><a href="../index.html">← Back to Site</a></li>
+        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../index.html#blog">Blog</a></li>
+        <li><a href="../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../index.html" class="mobile-nav-link">← Back to Site</a>
+    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../index.html#blog" class="mobile-nav-link">Blog</a>
+    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <span class="post-category">Attribution</span>
+        <h1 class="post-title">The B2B Paid Media Tracking Stack That Actually Connects Ad Spend to Pipeline</h1>
+        <p class="post-meta">11 min read · Matt Danese · April 2026</p>
+      </div>
+    </section>
+
+    <!-- AUTHOR BIO -->
+    <div class="author-bio">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name">Matt Danese</p>
+        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+      </div>
+    </div>
+
+    <!-- POST BODY -->
+    <article class="post-body">
+
+      <p>Here's the most common attribution setup I see at B2B SaaS companies: Google Ads fires a conversion event when someone submits a demo request form. That's it. The campaign reports a CPL. The budget gets allocated based on that CPL. Nobody checks whether those demo requests ever became pipeline.</p>
+
+      <p>This is not attribution. It's form tracking. And it's the reason demand gen teams get defunded — not because paid media doesn't work, but because they can't prove it does. The finance team sees spend. They don't see pipeline. When it comes time to cut, paid media looks like a cost center instead of a revenue driver.</p>
+
+      <p>I've rebuilt attribution from scratch at three companies. Here's the stack that actually works — and how I use Claude to diagnose it when it breaks.</p>
+
+      <h3>Why standard conversion tracking lies to you</h3>
+
+      <p>When you set up a Google Ads conversion action based on a thank-you page view or a form submit event, you're measuring intent signals, not business outcomes. A person who filled out a demo form and was immediately disqualified by your SDR counts as a conversion in exactly the same way as the enterprise deal that closed six months later.</p>
+
+      <p>This creates two problems. The first is obvious: your CPL metric is meaningless. A $200 CPL on a campaign full of unqualified leads is worse than a $400 CPL on a campaign that fills your enterprise pipeline. The second is less visible but more damaging: Google's Smart Bidding algorithm optimizes toward whatever conversion signal you give it. If you're feeding it form submits from unqualified leads, it will find you more people who look like those unqualified leads. <strong>You train the algorithm to be bad at your job.</strong></p>
+
+      <p>The fix is a three-layer attribution stack that connects your ad platform data to Salesforce, sends pipeline milestones back as conversion signals, and gives you the reporting surface to see cost-per-SAO and cost-per-opportunity alongside CPL.</p>
+
+      <h3>Layer one: GCLID capture</h3>
+
+      <p>Everything else depends on this. Google Click ID (GCLID) is the unique identifier Google appends to your landing page URL when someone clicks a Google Ad. If you capture it at form submission and store it in your CRM, you can trace any future pipeline milestone back to the original ad click — weeks or months later.</p>
+
+      <p>The implementation has three parts. First, add a hidden field to every form on your site: <strong>field name "gclid", value populated by a URL parameter reader that checks for the gclid query parameter on page load.</strong> Second, write that GCLID value to a custom field on the Lead or Contact object in Salesforce at the moment the form submits. Third, make sure your Salesforce admin doesn't delete or overwrite it when records get updated — this is the most common place it breaks.</p>
+
+      <p>For LinkedIn, the equivalent is the LinkedIn Insight Tag plus UTM parameters. LinkedIn doesn't pass a click ID the same way Google does, so you're relying on UTM-based attribution. This is why LinkedIn attribution tends to be less precise than Google — and why "dark social" attribution matters more for LinkedIn campaigns than for search.</p>
+
+      <div class="stat-callout">
+        <span class="stat-number">41%</span>
+        <span class="stat-label">Median share of closed-won opportunities that had no attributed source in Salesforce — before fixing GCLID capture and offline conversion import.</span>
+      </div>
+
+      <h3>Layer two: Enhanced Conversions for MQLs</h3>
+
+      <p>Once you have GCLID capture working, you can send MQL status back to Google Ads as a conversion event using Enhanced Conversions. This is different from standard conversion tracking: instead of firing a pixel when someone hits a thank-you page, you're sending a server-side conversion event from Salesforce (or your MAP) when a lead crosses the MQL threshold.</p>
+
+      <p>The setup requires a conversion action in Google Ads with the "Import from CRM" source type, a Google Ads API connection or a connector like Zapier or Make, and a Salesforce workflow that fires when Lead Status equals MQL. The conversion event you send back includes the GCLID (so Google can tie it to the original click), a conversion value (optional but recommended — use average MQL-to-close rate times ACV), and a conversion timestamp.</p>
+
+      <p>When this is working correctly, your Google Ads reports will show conversions that lag your click data by days or weeks — which is accurate, because that's how long it actually takes a click to become a qualified lead. The CPL you see in platform will be higher than form-submit CPL. That's also accurate. It's the number you should have been using all along.</p>
+
+      <h3>Layer three: Offline Conversion Import for SAOs and pipeline</h3>
+
+      <p>MQL attribution is useful. Pipeline attribution is what finance actually cares about. Offline Conversion Import (OCI) lets you send Sales Accepted Opportunity creation events back to Google Ads — again tied to the GCLID from the original click.</p>
+
+      <p>The mechanics are the same as Enhanced Conversions for MQLs, but the Salesforce trigger fires when an Opportunity is created with Stage = Sales Accepted (or whatever your equivalent is). The conversion value here should be the actual opportunity amount, which gives you a real cost-per-dollar-of-pipeline metric that you can bring to your CFO.</p>
+
+      <p>A few things that break OCI in practice:</p>
+      <ul>
+        <li><strong>GCLID expiration:</strong> GCLIDs are only valid for 90 days. If your sales cycle is longer than 90 days from click to SAO, the import will fail silently. For long-cycle businesses, send the SAO conversion at the point of MQL creation instead, with a flag that it represents pipeline intent rather than closed pipeline.</li>
+        <li><strong>Duplicate opportunity records:</strong> If your SDR team creates multiple opportunity records before settling on one, your import process needs deduplication logic or you'll double-count.</li>
+        <li><strong>CRM integration lag:</strong> If you're using a native Salesforce-Google integration, test the latency. Some integrations batch-sync daily, which means your Smart Bidding algorithm is working with day-old signal.</li>
+      </ul>
+
+      <h3>Using Claude to diagnose broken attribution</h3>
+
+      <p>Attribution stacks break constantly. A developer updates the form library and the GCLID hidden field stops populating. Someone changes the Salesforce workflow and MQL conversions stop sending. A campaign manager changes a landing page URL and the UTM parameters get stripped. Any one of these can make a perfectly good campaign look like it stopped generating pipeline — and cause you to cut budget that was working.</p>
+
+      <p>I built a diagnostic workflow using Claude that runs weekly and checks for attribution degradation signals before they corrupt budget decisions. The inputs are: GCLID population rate from Salesforce (what percentage of leads created this week have a non-null GCLID value), MQL conversion import match rate from Google Ads (what percentage of GCLIDs sent as conversions were matched to a click), and SAO-to-click attribution rate (what percentage of new SAOs this week have a traceable ad source).</p>
+
+      <p>I pass those three metrics to Claude along with their 4-week averages and ask it to identify whether any signal shows a statistically meaningful drop, likely root cause, and recommended diagnostic steps. It's not magic — it's pattern matching on numbers that would take me 20 minutes to calculate manually. But it runs every Monday before I open a single dashboard, so I catch attribution problems the week they start rather than the quarter they surface in a budget review.</p>
+
+      <h3>Frequently asked questions</h3>
+
+      <h3>What if our sales cycle is longer than 90 days?</h3>
+
+      <p>Use MQL-to-close rate as a proxy for pipeline value. Send the MQL conversion with a conversion value of (historical MQL-to-close rate) × (average ACV). This gives Smart Bidding a pipeline-predictive signal without the GCLID expiration problem. Reassess the conversion value quarterly as your MQL-to-close rate changes.</p>
+
+      <h3>Does this work for LinkedIn Ads too?</h3>
+
+      <p>LinkedIn supports offline conversion import via the Conversions API (CAPI). The implementation is similar but uses LinkedIn's member ID instead of a GCLID — which means you need LinkedIn's Insight Tag on your landing pages and you need to be capturing the li_fat_id URL parameter at form submission. The match rates are lower than Google's because LinkedIn's ID has a shorter lifespan, but even a 40–50% match rate on SAO conversions meaningfully improves LinkedIn's bidding algorithm.</p>
+
+      <h3>What's the minimum viable version of this stack?</h3>
+
+      <p>If you're starting from zero: implement GCLID capture first. Everything else depends on it. Once GCLIDs are populating consistently on 85%+ of leads, set up MQL Enhanced Conversions. Once that's stable, add SAO Offline Conversion Import. Don't try to do all three at once — each layer needs to be validated before the next one is useful.</p>
+
+      <!-- RELATED READING -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Reading</p>
+        <ul class="related-reading__list">
+          <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
+          <li><a href="icp-lead-quality-scoring.html">Your CPL Is Down. Are You Buying the Right Leads?</a></li>
+          <li><a href="https://support.google.com/google-ads/answer/9888656" target="_blank" rel="noopener noreferrer">Google Ads Enhanced Conversions Setup Guide (Google)</a></li>
+          <li><a href="https://developers.google.com/google-ads/api/docs/conversions/upload-clicks" target="_blank" rel="noopener noreferrer">Offline Conversion Import for Google Ads (Google Developers)</a></li>
+          <li><a href="https://help.salesforce.com/s/articleView?id=sf.google_ads_integration.htm" target="_blank" rel="noopener noreferrer">Salesforce and Google Ads Integration Guide</a></li>
+        </ul>
+      </div>
+
+      <!-- POST CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Want the full system PRD?</p>
+        <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
+        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+      </div>
+
+    </article>
+
+    <!-- POST FOOTER -->
+    <footer class="post-footer">
+      <a href="../index.html#blog" class="post-footer__back">← Back to all posts</a>
+      <p class="post-footer__copy">© 2025 Matt Danese · The Demand Engine(er)</p>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Nav hide/show on scroll direction
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) {
+              nav.classList.add('nav--hidden');
+            } else {
+              nav.classList.remove('nav--hidden');
+            }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      // Hamburger menu toggle
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      // Smooth scroll for in-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (href === '#') return;
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
