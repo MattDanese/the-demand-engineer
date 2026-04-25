@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICP Lead Scoring with Python and Claude API: How to Grade Every Campaign by Lead Quality</title>
+  <meta name="description" content="How to build a lead quality scoring pipeline that accepts CSV exports from LinkedIn Ads and Google Ads, scores every lead against ICP criteria, and grades each campaign A–F. Built with Python and Claude API." />
+  <meta name="author" content="Matt Danese" />
+  <meta property="og:title" content="ICP Lead Scoring with Python and Claude API: How to Grade Every Campaign by Lead Quality" />
+  <meta property="og:description" content="How to build a lead quality scoring pipeline that accepts CSV exports from LinkedIn Ads and Google Ads, scores every lead against ICP criteria, and grades each campaign A–F. Built with Python and Claude API." />
+  <link rel="canonical" href="https://thedemandengineer.com/blog/icp-lead-quality-scoring.html" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --section-pad: 120px;
+      --section-pad-mobile: 80px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-accent-dark);
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav__logo:hover { color: var(--color-accent); }
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background-color: var(--color-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 80px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-optical-sizing: auto;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.375rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= STAT CALLOUT ========= */
+    .stat-callout {
+      border-left: 3px solid var(--color-accent);
+      padding-left: 20px;
+      margin: 32px 0;
+    }
+    .stat-number {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--color-accent);
+      line-height: 1;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover {
+      color: var(--color-accent-hover);
+      text-decoration: underline;
+    }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .stat-number { font-size: 2.25rem; }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+    }
+  </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N24QM0NQG6');
+</script>
+<!-- End Google Analytics -->
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">Matt Danese</a>
+      <ul class="nav__links" role="list">
+        <li><a href="../index.html">← Back to Site</a></li>
+        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../index.html#blog">Blog</a></li>
+        <li><a href="../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../index.html" class="mobile-nav-link">← Back to Site</a>
+    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../index.html#blog" class="mobile-nav-link">Blog</a>
+    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- POST HERO -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <span class="post-category">Lead Quality</span>
+        <h1 class="post-title">Your CPL Is Down. Are You Buying the Right Leads? A Python + Claude Pipeline for ICP Scoring</h1>
+        <p class="post-meta">7 min read · Matt Danese · April 2026</p>
+      </div>
+    </section>
+
+    <!-- AUTHOR BIO -->
+    <div class="author-bio">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name">Matt Danese</p>
+        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+      </div>
+    </div>
+
+    <!-- POST BODY -->
+    <article class="post-body">
+
+      <p>Here is the most dangerous sentence in B2B marketing: "Our MQL volume is up 40% this quarter." It sounds good. It gets used in board slides. It is almost completely meaningless without one additional piece of information: what were you buying?</p>
+
+      <p>Most lead scoring models are proxies for engagement, not fit. A lead scores high because they opened four emails and downloaded a whitepaper. But nothing in that scoring model tells you whether they're a VP at a 500-person company in your ICP or a coordinator at a 10-person agency who found your content via Google. Both of them clicked. Only one of them will ever buy.</p>
+
+      <p>I built a scoring system to fix this. It doesn't replace engagement scoring — it runs alongside it, as a fit layer. And the results were not what I expected.</p>
+
+      <h3>The four ICP buckets</h3>
+
+      <p>Every lead that enters the system gets scored across three dimensions: Title/Level, Function, and Company Size. Each dimension gets a score from 0 to 3 based on how closely it matches our ICP definition. The composite score determines which of four buckets a lead lands in: True ICP, Near-Miss, Wrong Title, or Noise.</p>
+
+      <p>True ICP is what it sounds like — leads that match all three criteria. Near-Miss is leads that match two of three, typically the right function and size but a title that's one level below the decision-making threshold. Wrong Title is the largest bucket: companies that match on size but where the person who converted is clearly not the buyer (coordinator, intern, analyst at a non-ICP company). Noise is everything else.</p>
+
+      <p>The critical design decision was how to define these buckets. I didn't want a scoring model I had to maintain manually — one where I'm updating "acceptable titles" in a spreadsheet every quarter. I wanted a system that could reason about fit. So I passed the scoring criteria and the raw lead data to Claude and asked it to score each record with a brief justification for why it was placed in its bucket.</p>
+
+      <div class="stat-callout">
+        <span class="stat-number">34%</span>
+        <span class="stat-label">Of "high-scoring" MQLs in one campaign turned out to be Wrong Title or Noise when run through ICP scoring — inflating CPL by more than 2x on a true-ICP basis.</span>
+      </div>
+
+      <h3>What the data actually showed</h3>
+
+      <p>The first time I ran this system against a live campaign dataset, the results were uncomfortable. One campaign that had been running for six weeks and had a CPL our team was proud of — comfortably below target — had a True ICP rate of 41%. That means 59% of the leads we'd been counting as MQLs were Near-Miss or worse. When I recalculated CPL using only True ICP leads, it was 2.3x the reported number and well above our target.</p>
+
+      <p>This wasn't a surprise to anyone who thought hard about it. The campaign in question was driving a lot of volume by targeting broad job function parameters on LinkedIn. Broad targeting generates cheap leads. Cheap leads are rarely the right leads. But nobody had quantified it before because we were measuring CPL against total MQL volume, not against ICP-qualified lead volume.</p>
+
+      <p>The fix wasn't complicated: narrow the targeting, accept higher CPL on the raw count, watch the True ICP CPL drop. But <strong>you can't make that decision without the data to support it</strong>, and most teams don't have it.</p>
+
+      <h3>How to build this without a data team</h3>
+
+      <p>The system I built accepts CSV exports from LinkedIn Ads, Google Ads, Marketo, and Salesforce. You don't need an engineering team. You need Python to parse and join the files, Claude to run the ICP scoring logic, and about four hours to set up the first time. After that, it's on-demand — pull the exports, run the script, get the report.</p>
+
+      <p>The output is an interactive HTML report that shows ICP distribution by campaign, by ad set, by creative, and by landing page. You can see exactly which campaigns are buying True ICP leads and which ones are inflating your MQL count. You can sort by True ICP CPL and finally make budget decisions that reflect reality, not vanity metrics.</p>
+
+      <p>The full PRD, including the Python processing logic, the Claude ICP scoring prompt, and the report template, is available to newsletter subscribers.</p>
+
+      <!-- RELATED READING -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Reading</p>
+        <ul class="related-reading__list">
+          <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
+          <li><a href="marketo-nurture-diagnostic.html">The Marketo Black Box: Why Your Leads Never Get Nurtured</a></li>
+          <li><a href="https://blog.hubspot.com/marketing/ideal-customer-profile" target="_blank" rel="noopener noreferrer">What Is an Ideal Customer Profile? (HubSpot)</a></li>
+          <li><a href="https://realpython.com/pandas-python-explore-dataset/" target="_blank" rel="noopener noreferrer">How to Use Python Pandas for Data Analysis (Real Python)</a></li>
+          <li><a href="https://business.adobe.com/blog/basics/lead-scoring" target="_blank" rel="noopener noreferrer">B2B Lead Scoring: The Definitive Guide (Marketo)</a></li>
+        </ul>
+      </div>
+
+      <!-- POST CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Want the full system PRD?</p>
+        <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
+        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+      </div>
+
+    </article>
+
+    <!-- POST FOOTER -->
+    <footer class="post-footer">
+      <a href="../index.html#blog" class="post-footer__back">← Back to all posts</a>
+      <p class="post-footer__copy">© 2025 Matt Danese · The Demand Engine(er)</p>
+    </footer>
+
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) {
+              nav.classList.add('nav--hidden');
+            } else {
+              nav.classList.remove('nav--hidden');
+            }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+
+      hamburger.addEventListener('click', function () {
+        var open = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileNav.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (href === '#') return;
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
