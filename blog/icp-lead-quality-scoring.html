@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ICP Lead Scoring with Python and Claude API: How to Grade Every Campaign by Lead Quality</title>
   <meta name="description" content="How to build a lead quality scoring pipeline that accepts CSV exports from LinkedIn Ads and Google Ads, scores every lead against ICP criteria, and grades each campaign A–F. Built with Python and Claude API." />
@@ -72,15 +73,6 @@
       align-items: center;
       justify-content: space-between;
     }
-    .nav__logo {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--color-accent-dark);
-      letter-spacing: -0.01em;
-      transition: color 0.2s ease;
-    }
-    .nav__logo:hover { color: var(--color-accent); }
     .nav__links {
       display: flex;
       align-items: center;
@@ -425,7 +417,10 @@
   <!-- NAV -->
   <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav__inner">
-      <a href="../index.html" class="nav__logo">Matt Danese</a>
+      <a href="../index.html" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+  <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+  <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+</a>
       <ul class="nav__links" role="list">
         <li><a href="../index.html">← Back to Site</a></li>
         <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
