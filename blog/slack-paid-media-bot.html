@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Build a Slack Bot for Real-Time Paid Media Analytics Using Claude API</title>
-  <meta name="description" content="Full architecture for a read-only Slack bot that answers paid media questions in real time using the LinkedIn Ads API, Google Ads API, and Claude. Answers in ~10 seconds. Includes prompt design, safety rules, and what to build differently." />
+  <title>Slack Paid Media Reporting Bot with Claude API | The Demand Engineer</title>
+  <meta name="description" content="Slack paid media bot using Claude API and LinkedIn/Google Ads. Answers B2B campaign questions in ~10 seconds. Build architecture and prompt design included." />
   <meta name="author" content="Matt Danese" />
-  <meta property="og:title" content="How to Build a Slack Bot for Real-Time Paid Media Analytics Using Claude API" />
-  <meta property="og:description" content="Full architecture for a read-only Slack bot that answers paid media questions in real time using the LinkedIn Ads API, Google Ads API, and Claude. Answers in ~10 seconds. Includes prompt design, safety rules, and what to build differently." />
+  <meta property="og:title" content="I Built a Slack Bot That Answers Paid Media Questions in Real Time. Here's the Architecture." />
+  <meta property="og:description" content="Slack paid media bot using Claude API and LinkedIn/Google Ads. Answers B2B campaign questions in ~10 seconds. Build architecture and prompt design included." />
+  <meta property="og:url" content="https://thedemandengineer.com/blog/slack-paid-media-bot.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="I Built a Slack Bot That Answers Paid Media Questions in Real Time. Here's the Architecture." />
+  <meta name="twitter:description" content="Slack paid media bot using Claude API and LinkedIn/Google Ads. Answers B2B campaign questions in ~10 seconds. Build architecture and prompt design included." />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://thedemandengineer.com/blog/slack-paid-media-bot.html" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
@@ -389,6 +396,64 @@
       text-decoration: underline;
     }
 
+
+    /* ========= POST SUBTITLE ========= */
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong {
+      font-weight: 600;
+      color: var(--color-accent-dark);
+    }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item {
+      margin-bottom: 28px;
+    }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
     /* ========= MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -411,6 +476,79 @@
   gtag('config', 'G-N24QM0NQG6');
 </script>
 <!-- End Google Analytics -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "I Built a Slack Bot That Answers Paid Media Questions in Real Time. Here's the Architecture.",
+  "description": "Slack paid media bot using Claude API and LinkedIn/Google Ads. Answers B2B campaign questions in ~10 seconds. Build architecture and prompt design included.",
+  "author": {
+    "@type": "Person",
+    "name": "Matt Danese",
+    "jobTitle": "Senior Demand Generation Manager",
+    "url": "https://thedemandengineer.com",
+    "sameAs": [
+      "https://linkedin.com/in/matthew-danese"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Demand Engineer",
+    "url": "https://thedemandengineer.com"
+  },
+  "url": "https://thedemandengineer.com/blog/slack-paid-media-bot.html",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-26",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://thedemandengineer.com/blog/slack-paid-media-bot.html"
+  },
+  "keywords": "Slack paid media bot, paid media reporting bot, Claude API Slack integration, real-time paid media analytics, build vs buy AI, B2B demand gen automation",
+  "articleSection": "AI Strategy",
+  "inLanguage": "en-US"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the Slack paid media bot handle real-time data requests?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On trigger, a Node.js service authenticates to LinkedIn Ads API and Google Ads API, pulls data for the time window specified in the question, pre-processes it by stripping irrelevant fields, passes it to Claude with a structured prompt, and posts the formatted response as a Slack thread reply in approximately 10 seconds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why should a Slack paid media reporting bot be read-only?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Read-only constraints are a feature, not a limitation. A read-only bot can answer any question instantly without requiring safety review of write actions. Adding bid changes or budget reallocations would require a completely different safety model and would have slowed the initial build by months while adding ongoing operational risk."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should a B2B demand gen team build vs. buy an AI tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Build when the value is in the data connection \u2014 like authenticated access to specific ad accounts with campaign-level context that no off-the-shelf tool can have. Buy when the problem is generic, the audience is non-technical, or the category is mature enough that existing tools outperform a custom prompt on the core task."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the most important question to ask before building an AI automation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ask: if this system works exactly as designed, what decision does it change? Automation without a connected decision is a party trick. The Slack bot changes the daily decision about what to focus on \u2014 surfaced in real time without pulling up a dashboard or waiting for someone to run a report."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -447,21 +585,24 @@
       <div class="post-hero__inner">
         <span class="post-category">AI Strategy</span>
         <h1 class="post-title">I Built a Slack Bot That Answers Paid Media Questions in Real Time. Here's the Architecture.</h1>
-        <p class="post-meta">10 min read · Matt Danese · April 2026</p>
+        <h2 class="post-subtitle">Building a Slack Paid Media Reporting Bot with Claude API and LinkedIn/Google Ads</h2>
+        <p class="post-meta">10 min read · Matt Danese · April 2026 · <span style="color:var(--color-accent);">Last updated: April 2026</span></p>
       </div>
     </section>
 
     <!-- AUTHOR BIO -->
-    <div class="author-bio">
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
       <div class="author-bio__avatar" aria-hidden="true">MD</div>
       <div>
-        <p class="author-bio__name">Matt Danese</p>
-        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
       </div>
     </div>
 
     <!-- POST BODY -->
     <article class="post-body">
+
+      <div class="direct-answer"><strong>Slack paid media reporting bot:</strong> Build a read-only Node.js bot using the Slack Bolt SDK and Claude API. On trigger, it authenticates to LinkedIn Ads and Google Ads APIs, pre-processes the data, passes it to Claude with a structured prompt, and posts the answer as a Slack thread reply in approximately 10 seconds — replacing 60% of manual ad-hoc data pulls.</div>
 
       <p>Every few months a new AI tool for marketing gets announced with a demo that looks impressive in a 90-second video and breaks immediately when you try to use it on your actual data, in your actual tech stack, solving your actual problem. The demo is always a generic use case. Your situation is never generic.</p>
 
@@ -510,12 +651,35 @@
 
       <p><strong>Start with the decision. The system follows from there.</strong></p>
 
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>How does the Slack paid media bot handle real-time data requests?</h3>
+          <p>On trigger, a Node.js service authenticates to LinkedIn Ads API and Google Ads API, pulls data for the time window specified in the question, pre-processes it by stripping irrelevant fields, passes it to Claude with a structured prompt, and posts the formatted response as a Slack thread reply in approximately 10 seconds.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why should a Slack paid media reporting bot be read-only?</h3>
+          <p>Read-only constraints are a feature, not a limitation. A read-only bot can answer any question instantly without requiring safety review of write actions. Adding bid changes or budget reallocations would require a completely different safety model and would have slowed the initial build by months while adding ongoing operational risk.</p>
+        </div>
+        <div class="faq-item">
+          <h3>When should a B2B demand gen team build vs. buy an AI tool?</h3>
+          <p>Build when the value is in the data connection — like authenticated access to specific ad accounts with campaign-level context that no off-the-shelf tool can have. Buy when the problem is generic, the audience is non-technical, or the category is mature enough that existing tools outperform a custom prompt on the core task.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the most important question to ask before building an AI automation?</h3>
+          <p>Ask: if this system works exactly as designed, what decision does it change? Automation without a connected decision is a party trick. The Slack bot changes the daily decision about what to focus on — surfaced in real time without pulling up a dashboard or waiting for someone to run a report.</p>
+        </div>
+      </section>
+
       <!-- RELATED READING -->
       <div class="related-reading">
         <p class="related-reading__heading">Related Reading</p>
         <ul class="related-reading__list">
           <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
           <li><a href="ab-testing-expert-panel.html">51 Variants, 8 Minutes: Pre-Testing Landing Pages with AI</a></li>
+          <li><a href="b2b-paid-media-attribution-tracking.html">B2B Paid Media Attribution Tracking: How to Connect Ad Spend to Pipeline</a></li>
           <li><a href="https://api.slack.com/start" target="_blank" rel="noopener noreferrer">Slack API: Building Bots and Apps (Slack Developer Docs)</a></li>
           <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener noreferrer">Building with the Claude API: Prompting Guide (Anthropic)</a></li>
           <li><a href="https://developers.google.com/google-ads/api/docs/query/overview" target="_blank" rel="noopener noreferrer">Google Ads Query Language (GAQL) Reference</a></li>
@@ -526,7 +690,7 @@
       <div class="post-cta">
         <p class="post-cta__heading">Want the full system PRD?</p>
         <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
-        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter">Get the PRDs →</a>
       </div>
 
     </article>

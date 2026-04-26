@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to Automate Paid Media Reporting with Claude API and LinkedIn/Google Ads</title>
-  <meta name="description" content="A complete architecture for automating weekly paid media reporting using the Claude API, LinkedIn Ads API, and Google Ads API. Includes prompt patterns, safety rules, and 12 automations in priority order." />
+  <title>Automated Paid Media Reporting with Claude API and LinkedIn/Google Ads | The Demand Engineer</title>
+  <meta name="description" content="Build an automated paid media reporting system with Claude API and LinkedIn/Google Ads. Saves 18 hrs/week with Slack briefings and prioritized action items." />
   <meta name="author" content="Matt Danese" />
-  <meta property="og:title" content="How to Automate Paid Media Reporting with Claude API and LinkedIn/Google Ads" />
-  <meta property="og:description" content="A complete architecture for automating weekly paid media reporting using the Claude API, LinkedIn Ads API, and Google Ads API. Includes prompt patterns, safety rules, and 12 automations in priority order." />
+  <meta property="og:title" content="How I Automated 18 Hours of Weekly Paid Media Reporting with Claude and Two APIs" />
+  <meta property="og:description" content="Build an automated paid media reporting system with Claude API and LinkedIn/Google Ads. Saves 18 hrs/week with Slack briefings and prioritized action items." />
+  <meta property="og:url" content="https://thedemandengineer.com/blog/automated-paid-media-reporting.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="How I Automated 18 Hours of Weekly Paid Media Reporting with Claude and Two APIs" />
+  <meta name="twitter:description" content="Build an automated paid media reporting system with Claude API and LinkedIn/Google Ads. Saves 18 hrs/week with Slack briefings and prioritized action items." />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://thedemandengineer.com/blog/automated-paid-media-reporting.html" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
@@ -389,6 +396,64 @@
       text-decoration: underline;
     }
 
+
+    /* ========= POST SUBTITLE ========= */
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong {
+      font-weight: 600;
+      color: var(--color-accent-dark);
+    }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item {
+      margin-bottom: 28px;
+    }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
     /* ========= MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -411,6 +476,79 @@
   gtag('config', 'G-N24QM0NQG6');
 </script>
 <!-- End Google Analytics -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How I Automated 18 Hours of Weekly Paid Media Reporting with Claude and Two APIs",
+  "description": "Build an automated paid media reporting system with Claude API and LinkedIn/Google Ads. Saves 18 hrs/week with Slack briefings and prioritized action items.",
+  "author": {
+    "@type": "Person",
+    "name": "Matt Danese",
+    "jobTitle": "Senior Demand Generation Manager",
+    "url": "https://thedemandengineer.com",
+    "sameAs": [
+      "https://linkedin.com/in/matthew-danese"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Demand Engineer",
+    "url": "https://thedemandengineer.com"
+  },
+  "url": "https://thedemandengineer.com/blog/automated-paid-media-reporting.html",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-26",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://thedemandengineer.com/blog/automated-paid-media-reporting.html"
+  },
+  "keywords": "automated paid media reporting, paid media automation, Claude API, LinkedIn Ads API, Google Ads API, B2B demand gen, Slack reporting, marketing automation",
+  "articleSection": "Automation",
+  "inLanguage": "en-US"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What APIs do I need to automate paid media reporting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need the LinkedIn Ads API and Google Ads API for data collection, and the Anthropic Claude API for analysis. A Node.js cron job orchestrates the pipeline, running every Monday at 8AM to pull the prior week's data across campaigns and route a structured briefing to Slack."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I prevent token limit errors when passing ad data to Claude?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pre-process the API response before sending it to Claude. Strip all fields except what's needed for analysis \u2014 campaign name, spend, impressions, clicks, conversions, CPL \u2014 and aggregate to campaign level rather than ad-set level. This reduces token count without losing analytical signal."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why route automated reports to Slack instead of email?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Slack delivers the briefing where decisions get made, without adding inbox noise. A structured Slack message with a headline story, what worked and needs attention, and 3 ranked action items is faster to act on than a report that sits in an email thread."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What automations are included in the full paid media reporting system?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The full system includes 12 automations: weekly briefing, anomaly detection for CPL spikes above 30%, budget pacing alerts, creative fatigue detection, and a real-time Slack Q&A bot for ad-hoc data pulls \u2014 together replacing 18 hours of weekly manual reporting."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -447,21 +585,24 @@
       <div class="post-hero__inner">
         <span class="post-category">Automation</span>
         <h1 class="post-title">How I Automated 12 Hours of Weekly Paid Media Reporting with Claude and Two APIs</h1>
-        <p class="post-meta">8 min read · Matt Danese · April 2026</p>
+        <h2 class="post-subtitle">Automated Paid Media Reporting with Claude API, LinkedIn Ads, and Google Ads</h2>
+        <p class="post-meta">8 min read · Matt Danese · April 2026 · <span style="color:var(--color-accent);">Last updated: April 2026</span></p>
       </div>
     </section>
 
     <!-- AUTHOR BIO -->
-    <div class="author-bio">
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
       <div class="author-bio__avatar" aria-hidden="true">MD</div>
       <div>
-        <p class="author-bio__name">Matt Danese</p>
-        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
       </div>
     </div>
 
     <!-- POST BODY -->
     <article class="post-body">
+
+      <div class="direct-answer"><strong>Automated paid media reporting:</strong> Connect LinkedIn Ads and Google Ads APIs to a Node.js cron job, pre-process the data, and pass it to Claude for analysis. The result is a Slack briefing every Monday with a headline story, what worked and what needs attention, and 3 specific campaign actions — eliminating 18 hours of weekly manual reporting with more consistency than doing it by hand.</div>
 
       <p>Every Monday morning, for about three years, I did the same thing. I opened LinkedIn Campaign Manager, Google Ads, and a blank spreadsheet. I pulled last week's data. I copy-pasted numbers across tabs, built pivot tables I'd rebuilt a hundred times before, and wrote a summary email that said roughly the same things every single week. Then I sent it to my manager and we talked about what to do next.</p>
 
@@ -502,12 +643,35 @@
 
       <p>If you want the full system design — prompts, data schema, Slack integration pattern, and the 12 automation specs — it's all in the PRD. Subscribe to the newsletter and you'll get access.</p>
 
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>What APIs do I need to automate paid media reporting?</h3>
+          <p>You need the LinkedIn Ads API and Google Ads API for data collection, and the Anthropic Claude API for analysis. A Node.js cron job orchestrates the pipeline, running every Monday at 8AM to pull the prior week's data across campaigns and route a structured briefing to Slack.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent token limit errors when passing ad data to Claude?</h3>
+          <p>Pre-process the API response before sending it to Claude. Strip all fields except what's needed for analysis — campaign name, spend, impressions, clicks, conversions, CPL — and aggregate to campaign level rather than ad-set level. This reduces token count without losing analytical signal.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why route automated reports to Slack instead of email?</h3>
+          <p>Slack delivers the briefing where decisions get made, without adding inbox noise. A structured Slack message with a headline story, what worked and needs attention, and 3 ranked action items is faster to act on than a report that sits in an email thread.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What automations are included in the full paid media reporting system?</h3>
+          <p>The full system includes 12 automations: weekly briefing, anomaly detection for CPL spikes above 30%, budget pacing alerts, creative fatigue detection, and a real-time Slack Q&A bot for ad-hoc data pulls — together replacing 18 hours of weekly manual reporting.</p>
+        </div>
+      </section>
+
       <!-- RELATED READING -->
       <div class="related-reading">
         <p class="related-reading__heading">Related Reading</p>
         <ul class="related-reading__list">
           <li><a href="icp-lead-quality-scoring.html">How I Score Lead Quality Campaign-by-Campaign with Python and Claude</a></li>
           <li><a href="slack-paid-media-bot.html">The Slack Bot That Replaced My Paid Media Dashboard</a></li>
+          <li><a href="b2b-paid-media-attribution-tracking.html">B2B Paid Media Attribution Tracking: How to Connect Ad Spend to Pipeline</a></li>
           <li><a href="https://developers.google.com/google-ads/api/docs/start" target="_blank" rel="noopener noreferrer">How to Use the Google Ads API: Getting Started Guide (Google Developers)</a></li>
           <li><a href="https://learn.microsoft.com/en-us/linkedin/marketing/" target="_blank" rel="noopener noreferrer">LinkedIn Marketing Solutions API Documentation</a></li>
           <li><a href="https://docs.anthropic.com" target="_blank" rel="noopener noreferrer">Anthropic Claude API Documentation</a></li>
@@ -518,7 +682,7 @@
       <div class="post-cta">
         <p class="post-cta__heading">Want the full system PRD?</p>
         <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
-        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter">Get the PRDs →</a>
       </div>
 
     </article>

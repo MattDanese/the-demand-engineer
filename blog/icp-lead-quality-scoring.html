@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ICP Lead Scoring with Python and Claude API: How to Grade Every Campaign by Lead Quality</title>
-  <meta name="description" content="How to build a lead quality scoring pipeline that accepts CSV exports from LinkedIn Ads and Google Ads, scores every lead against ICP criteria, and grades each campaign A–F. Built with Python and Claude API." />
+  <title>ICP Lead Scoring for B2B with Python and Claude API | The Demand Engineer</title>
+  <meta name="description" content="ICP lead scoring for B2B using Python and Claude API. In one campaign, 59% of MQLs were wrong-fit, revealing true CPL 2.3x higher than reported." />
   <meta name="author" content="Matt Danese" />
-  <meta property="og:title" content="ICP Lead Scoring with Python and Claude API: How to Grade Every Campaign by Lead Quality" />
-  <meta property="og:description" content="How to build a lead quality scoring pipeline that accepts CSV exports from LinkedIn Ads and Google Ads, scores every lead against ICP criteria, and grades each campaign A–F. Built with Python and Claude API." />
+  <meta property="og:title" content="Your CPL Is Down. Are You Buying the Right Leads? A Python + Claude Pipeline for ICP Scoring" />
+  <meta property="og:description" content="ICP lead scoring for B2B using Python and Claude API. In one campaign, 59% of MQLs were wrong-fit, revealing true CPL 2.3x higher than reported." />
+  <meta property="og:url" content="https://thedemandengineer.com/blog/icp-lead-quality-scoring.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your CPL Is Down. Are You Buying the Right Leads? A Python + Claude Pipeline for ICP Scoring" />
+  <meta name="twitter:description" content="ICP lead scoring for B2B using Python and Claude API. In one campaign, 59% of MQLs were wrong-fit, revealing true CPL 2.3x higher than reported." />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://thedemandengineer.com/blog/icp-lead-quality-scoring.html" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
@@ -389,6 +396,64 @@
       text-decoration: underline;
     }
 
+
+    /* ========= POST SUBTITLE ========= */
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong {
+      font-weight: 600;
+      color: var(--color-accent-dark);
+    }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item {
+      margin-bottom: 28px;
+    }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
     /* ========= MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -411,6 +476,79 @@
   gtag('config', 'G-N24QM0NQG6');
 </script>
 <!-- End Google Analytics -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Your CPL Is Down. Are You Buying the Right Leads? A Python + Claude Pipeline for ICP Scoring",
+  "description": "ICP lead scoring for B2B using Python and Claude API. In one campaign, 59% of MQLs were wrong-fit, revealing true CPL 2.3x higher than reported.",
+  "author": {
+    "@type": "Person",
+    "name": "Matt Danese",
+    "jobTitle": "Senior Demand Generation Manager",
+    "url": "https://thedemandengineer.com",
+    "sameAs": [
+      "https://linkedin.com/in/matthew-danese"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Demand Engineer",
+    "url": "https://thedemandengineer.com"
+  },
+  "url": "https://thedemandengineer.com/blog/icp-lead-quality-scoring.html",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-26",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://thedemandengineer.com/blog/icp-lead-quality-scoring.html"
+  },
+  "keywords": "ICP lead scoring, B2B lead quality, lead scoring model, Python Claude API, true ICP CPL, demand gen lead quality, marketing qualified leads",
+  "articleSection": "Lead Quality",
+  "inLanguage": "en-US"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the four ICP lead scoring buckets?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "True ICP matches all three criteria: title, function, and company size. Near-Miss matches two of three, typically right function and size but title one level below the decision-making threshold. Wrong Title is the largest bucket \u2014 companies that match on size but where the person who converted is not the buyer. Noise is everything else."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I build an ICP scoring system without a data team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You need Python to parse and join CSV exports from LinkedIn Ads, Google Ads, Marketo, and Salesforce, plus the Claude API to run the scoring logic. Initial setup takes about four hours. After that it's on-demand \u2014 pull the exports, run the script, get the interactive HTML report."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does true ICP CPL matter more than reported CPL?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reported CPL counts all MQLs equally. True ICP CPL counts only leads that match your ideal customer profile. In one campaign, reported CPL was below target while true ICP CPL was 2.3x above target \u2014 a number that would have changed the budget decision entirely."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the ICP scoring output report show?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An interactive HTML report showing ICP distribution by campaign, ad set, creative, and landing page. You can see which campaigns are buying True ICP leads versus inflating MQL count, then sort by True ICP CPL to make budget decisions that reflect reality rather than vanity metrics."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -447,21 +585,24 @@
       <div class="post-hero__inner">
         <span class="post-category">Lead Quality</span>
         <h1 class="post-title">Your CPL Is Down. Are You Buying the Right Leads? A Python + Claude Pipeline for ICP Scoring</h1>
-        <p class="post-meta">7 min read · Matt Danese · April 2026</p>
+        <h2 class="post-subtitle">ICP Lead Scoring for B2B: Grade Every Campaign by Lead Quality</h2>
+        <p class="post-meta">7 min read · Matt Danese · April 2026 · <span style="color:var(--color-accent);">Last updated: April 2026</span></p>
       </div>
     </section>
 
     <!-- AUTHOR BIO -->
-    <div class="author-bio">
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
       <div class="author-bio__avatar" aria-hidden="true">MD</div>
       <div>
-        <p class="author-bio__name">Matt Danese</p>
-        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
       </div>
     </div>
 
     <!-- POST BODY -->
     <article class="post-body">
+
+      <div class="direct-answer"><strong>ICP lead scoring for B2B:</strong> Use Python to parse CRM and ad platform CSV exports, then pass each lead to Claude with a scoring rubric to classify leads as True ICP, Near-Miss, Wrong Title, or Noise. In one campaign, 59% of MQLs were reclassified as wrong-fit, revealing a true CPL 2.3x higher than the reported number — a result that changed the budget decision entirely.</div>
 
       <p>Here is the most dangerous sentence in B2B marketing: "Our MQL volume is up 40% this quarter." It sounds good. It gets used in board slides. It is almost completely meaningless without one additional piece of information: what were you buying?</p>
 
@@ -498,12 +639,35 @@
 
       <p>The full PRD, including the Python processing logic, the Claude ICP scoring prompt, and the report template, is available to newsletter subscribers.</p>
 
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>What are the four ICP lead scoring buckets?</h3>
+          <p>True ICP matches all three criteria: title, function, and company size. Near-Miss matches two of three, typically right function and size but title one level below the decision-making threshold. Wrong Title is the largest bucket — companies that match on size but where the person who converted is not the buyer. Noise is everything else.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I build an ICP scoring system without a data team?</h3>
+          <p>You need Python to parse and join CSV exports from LinkedIn Ads, Google Ads, Marketo, and Salesforce, plus the Claude API to run the scoring logic. Initial setup takes about four hours. After that it's on-demand — pull the exports, run the script, get the interactive HTML report.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why does true ICP CPL matter more than reported CPL?</h3>
+          <p>Reported CPL counts all MQLs equally. True ICP CPL counts only leads that match your ideal customer profile. In one campaign, reported CPL was below target while true ICP CPL was 2.3x above target — a number that would have changed the budget decision entirely.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What does the ICP scoring output report show?</h3>
+          <p>An interactive HTML report showing ICP distribution by campaign, ad set, creative, and landing page. You can see which campaigns are buying True ICP leads versus inflating MQL count, then sort by True ICP CPL to make budget decisions that reflect reality rather than vanity metrics.</p>
+        </div>
+      </section>
+
       <!-- RELATED READING -->
       <div class="related-reading">
         <p class="related-reading__heading">Related Reading</p>
         <ul class="related-reading__list">
           <li><a href="automated-paid-media-reporting.html">How I Automated 12 Hours of Weekly Paid Media Reporting</a></li>
           <li><a href="marketo-nurture-diagnostic.html">The Marketo Black Box: Why Your Leads Never Get Nurtured</a></li>
+          <li><a href="b2b-paid-media-attribution-tracking.html">B2B Paid Media Attribution Tracking: How to Connect Ad Spend to Pipeline</a></li>
           <li><a href="https://blog.hubspot.com/marketing/ideal-customer-profile" target="_blank" rel="noopener noreferrer">What Is an Ideal Customer Profile? (HubSpot)</a></li>
           <li><a href="https://realpython.com/pandas-python-explore-dataset/" target="_blank" rel="noopener noreferrer">How to Use Python Pandas for Data Analysis (Real Python)</a></li>
           <li><a href="https://business.adobe.com/blog/basics/lead-scoring" target="_blank" rel="noopener noreferrer">B2B Lead Scoring: The Definitive Guide (Marketo)</a></li>
@@ -514,7 +678,7 @@
       <div class="post-cta">
         <p class="post-cta__heading">Want the full system PRD?</p>
         <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
-        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter">Get the PRDs →</a>
       </div>
 
     </article>

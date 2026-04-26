@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketo Lead Routing Audit: How to Diagnose Why Leads Don't Enter Nurture Programs</title>
-  <meta name="description" content="A step-by-step workflow for diagnosing why leads from LinkedIn Ads fail to enter Marketo nurture programs. Covers Master Send List exclusions, stale unsubscribes, lifecycle mismatches, and EMEA routing gaps." />
+  <title>Marketo Nurture Audit: Diagnose Why Leads Don't Enter Nurture Programs | The Demand Engineer</title>
+  <meta name="description" content="Diagnose why leads fail to enter Marketo nurture programs. Python + Claude audit surfaces suppression list exclusions, stale unsubscribes, and routing gaps." />
   <meta name="author" content="Matt Danese" />
-  <meta property="og:title" content="Marketo Lead Routing Audit: How to Diagnose Why Leads Don't Enter Nurture Programs" />
-  <meta property="og:description" content="A step-by-step workflow for diagnosing why leads from LinkedIn Ads fail to enter Marketo nurture programs. Covers Master Send List exclusions, stale unsubscribes, lifecycle mismatches, and EMEA routing gaps." />
+  <meta property="og:title" content="The Marketo Black Box: How I Diagnose Why Leads Don't Enter Nurture Programs" />
+  <meta property="og:description" content="Diagnose why leads fail to enter Marketo nurture programs. Python + Claude audit surfaces suppression list exclusions, stale unsubscribes, and routing gaps." />
+  <meta property="og:url" content="https://thedemandengineer.com/blog/marketo-nurture-diagnostic.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="The Marketo Black Box: How I Diagnose Why Leads Don't Enter Nurture Programs" />
+  <meta name="twitter:description" content="Diagnose why leads fail to enter Marketo nurture programs. Python + Claude audit surfaces suppression list exclusions, stale unsubscribes, and routing gaps." />
+  <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://thedemandengineer.com/blog/marketo-nurture-diagnostic.html" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
@@ -389,6 +396,64 @@
       text-decoration: underline;
     }
 
+
+    /* ========= POST SUBTITLE ========= */
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong {
+      font-weight: 600;
+      color: var(--color-accent-dark);
+    }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item {
+      margin-bottom: 28px;
+    }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+
     /* ========= MOBILE ========= */
     @media (max-width: 768px) {
       html { font-size: 16px; }
@@ -411,6 +476,71 @@
   gtag('config', 'G-N24QM0NQG6');
 </script>
 <!-- End Google Analytics -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Marketo Black Box: How I Diagnose Why Leads Don't Enter Nurture Programs",
+  "description": "Diagnose why leads fail to enter Marketo nurture programs. Python + Claude audit surfaces suppression list exclusions, stale unsubscribes, and routing gaps.",
+  "author": {
+    "@type": "Person",
+    "name": "Matt Danese",
+    "jobTitle": "Senior Demand Generation Manager",
+    "url": "https://thedemandengineer.com",
+    "sameAs": [
+      "https://linkedin.com/in/matthew-danese"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Demand Engineer",
+    "url": "https://thedemandengineer.com"
+  },
+  "url": "https://thedemandengineer.com/blog/marketo-nurture-diagnostic.html",
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-26",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://thedemandengineer.com/blog/marketo-nurture-diagnostic.html"
+  },
+  "keywords": "Marketo nurture audit, Marketo lead routing, lead nurture diagnostic, Marketo suppression list, marketing operations audit, B2B marketing ops",
+  "articleSection": "Marketing Ops",
+  "inLanguage": "en-US"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the most common reasons leads silently fail to enroll in Marketo nurture?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The three most common failure modes are Master Send List exclusions (stale suppression entries from old competitive campaigns), stale unsubscribes (leads permanently blocked from all email due to a single old unsubscribe), and routing gaps (leads that match no territory criteria and fall through to no nurture program)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you audit a Marketo instance for silent nurture enrollment failures?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Export Marketo activity logs, join them with lead profile data using Python, and pass the joined records to Claude. Claude reads the activity chain for each lead, identifies where enrollment should have happened but did not, and classifies each failure as suppression, unsubscribe block, or routing gap \u2014 then generates a prioritized remediation plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does silent nurture failure affect paid media attribution?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When leads fail to enter nurture, they generate no email engagement, no MQL progression, and no pipeline attribution \u2014 even if the originating campaign was high-quality. This causes demand gen teams to underreport campaign performance and misallocate budget away from programs whose leads are disproportionately falling into ops gaps."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -447,21 +577,24 @@
       <div class="post-hero__inner">
         <span class="post-category">Marketing Ops</span>
         <h1 class="post-title">The Marketo Black Box: How I Diagnose Why Leads Don't Enter Nurture Programs</h1>
-        <p class="post-meta">6 min read · Matt Danese · April 2026</p>
+        <h2 class="post-subtitle">Marketo Nurture Audit: A Step-by-Step Diagnostic for Broken Lead Enrollment</h2>
+        <p class="post-meta">6 min read · Matt Danese · April 2026 · <span style="color:var(--color-accent);">Last updated: April 2026</span></p>
       </div>
     </section>
 
     <!-- AUTHOR BIO -->
-    <div class="author-bio">
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
       <div class="author-bio__avatar" aria-hidden="true">MD</div>
       <div>
-        <p class="author-bio__name">Matt Danese</p>
-        <p class="author-bio__desc">Demand gen leader. AI builder. 8+ years at Meta, Webflow, Medely, Octus, and Regal.ai.</p>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
       </div>
     </div>
 
     <!-- POST BODY -->
     <article class="post-body">
+
+      <div class="direct-answer"><strong>Marketo lead nurture not working:</strong> Export Marketo activity logs, join with lead profile data using Python, and pass to Claude to classify each failure as a suppression list block, stale unsubscribe, or routing gap. In one campaign audit, 23% of leads had silently failed to enroll in any nurture program — invisible to every standard Marketo report.</div>
 
       <p>There is a category of problem in marketing operations that almost nobody talks about publicly because it makes your team look bad when you find it. I'm going to talk about it anyway, because it's the most common and most expensive silent failure mode I've encountered in every Marketo instance I've ever audited.</p>
 
@@ -498,6 +631,24 @@
 
       <p><strong>Fix the ops infrastructure first. Then measure the campaigns.</strong></p>
 
+
+      <!-- FAQ SECTION -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <h3>What are the most common reasons leads silently fail to enroll in Marketo nurture?</h3>
+          <p>The three most common failure modes are Master Send List exclusions (stale suppression entries from old competitive campaigns), stale unsubscribes (leads permanently blocked from all email due to a single old unsubscribe), and routing gaps (leads that match no territory criteria and fall through to no nurture program).</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you audit a Marketo instance for silent nurture enrollment failures?</h3>
+          <p>Export Marketo activity logs, join them with lead profile data using Python, and pass the joined records to Claude. Claude reads the activity chain for each lead, identifies where enrollment should have happened but did not, and classifies each failure as suppression, unsubscribe block, or routing gap — then generates a prioritized remediation plan.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does silent nurture failure affect paid media attribution?</h3>
+          <p>When leads fail to enter nurture, they generate no email engagement, no MQL progression, and no pipeline attribution — even if the originating campaign was high-quality. This causes demand gen teams to underreport campaign performance and misallocate budget away from programs whose leads are disproportionately falling into ops gaps.</p>
+        </div>
+      </section>
+
       <!-- RELATED READING -->
       <div class="related-reading">
         <p class="related-reading__heading">Related Reading</p>
@@ -514,7 +665,7 @@
       <div class="post-cta">
         <p class="post-cta__heading">Want the full system PRD?</p>
         <p class="post-cta__body">Subscribe to The Demand Engine(er) — free — and get instant access to all 5 system PRDs.</p>
-        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#">Get the PRDs →</a>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter">Get the PRDs →</a>
       </div>
 
     </article>
