@@ -1430,12 +1430,16 @@
           <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="#" style="width: 100%; max-width: 400px; display: flex;">Subscribe now →</a>
         </div>
 
-        <!-- Issue preview teaser card -->
+        <!-- Newsletter value proposition -->
         <div class="newsletter__teaser animate">
-          <p class="teaser__label">Coming in Issue #1</p>
-          <h3 class="teaser__title">How I automated a week of media reporting in 20 minutes</h3>
-          <p class="teaser__body">Claude + Python + a handful of CSV exports. I'll walk through the exact system, the prompts, and what broke the first time.</p>
-          <p class="teaser__cta">→ Subscribe above to get it when it drops.</p>
+          <p class="teaser__label">Every week in your inbox</p>
+          <h3 class="teaser__title">The systems, not the takes.</h3>
+          <ul class="teaser__body" style="margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+            <li>— One AI system breakdown — the stack, the prompt, what broke, what the output was. Always includes real numbers.</li>
+            <li>— One reusable Claude prompt you can drop into your own workflow today.</li>
+            <li>— One number from Matt's actual work that week — not a sourced stat, a live result.</li>
+          </ul>
+          <p class="teaser__cta">→ Built for in-house demand gen managers at B2B SaaS companies.</p>
         </div>
 
       </div>
@@ -1579,6 +1583,10 @@
       // =========================================================
       var track = document.getElementById('blogCarouselTrack');
       var cardWidth = 300; // 280px card + 20px gap
+
+      // Always start at the first card (prevents browser scroll-restoration
+      // from landing on a card that isn't the most recent post)
+      track.scrollLeft = 0;
 
       document.getElementById('carouselPrev').addEventListener('click', function () {
         track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
