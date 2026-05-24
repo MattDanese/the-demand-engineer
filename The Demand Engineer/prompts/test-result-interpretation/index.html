@@ -285,13 +285,48 @@ Begin.</pre>
       <!-- TODO: Matt to list specific {variables} this prompt expects -->
 
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Test: Enterprise LP — Pain-led headline vs. value-prop control
+Duration: 16 days
+Variant A (control): "The Website Experience Platform" — 4,140 sessions, 78 form completions (1.88% CVR)
+Variant B (treatment): "Launch enterprise landing pages 4x faster — without writing code." — 4,108 sessions, 102 form completions (2.48% CVR)
+
+Statistical Verdict
+Winner: Variant B.
+Lift: +0.60 absolute conversion points, +32% relative lift.
+Significance: Reaches 95% confidence at p=0.02. Sample size is adequate (>3,000 sessions per variant) — this is not a small-sample artifact.
+
+Practical Verdict
+Strong practical winner. The 0.60 point lift, projected against current monthly enterprise LP traffic of ~17,000 sessions, would generate approximately 100 additional form completions per month. At current MQL pull-through, that's roughly 40-50 incremental MQLs/month. Worth deploying immediately.
+
+Secondary Metric Check
+- Bounce rate: dropped from 62% to 51% on Variant B (significant improvement, supports the headline win)
+- Downstream MQL pull-through: held at 41% across both variants (treatment did not attract lower-quality leads)
+- Time on page (above the fold): up 22 seconds on Variant B (visitors engaged longer with the pain-led message)
+
+No inverse relationships flagged. Variant B is a clean win across primary and secondary metrics.
+
+What to Test Next (Autogrowth Mutations)
+
+1. Number specificity: Replace "4x faster" with "from 6 weeks to 6 days" (autoresearch panel scored this variant comparably; worth a live read)
+2. CTA tweak: Test "Book My Enterprise Demo" vs. current "Get Started"
+3. Social proof position: Add the existing logo bar directly under the headline vs. its current position
+4. Subhead refinement: Test current subhead vs. one that names a specific competitor frustration
+
+Each mutation should adjust a single element. Variant B is the new control; mutations are tested against it weekly.
+
+Plateau Check
+Not yet at plateau. Enterprise LP has only had one major copy test in the last 90 days. Recommend running autogrowth weekly for the next 6-8 weeks before evaluating whether the page has plateaued at its new conversion rate.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's autoresearch/autogrowth framework. Will be replaced with a redacted live result interpretation from an upcoming test cycle.</p>
       </div>
 
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Calling a winner on thin data.</strong> First version declared a winner on 600 sessions because the variant hit 95% statistical confidence. 600 sessions at sub-2% CVR is not adequate — small-sample wins often fail to replicate. The judgment rule now treats sample size and confidence together; the model is forced to flag when the sample is too thin to trust the verdict.</li>
+        <li><strong>Missing the secondary-metric degradation.</strong> A test "win" that lifts form completions by 25% but tanks downstream MQL conversion by 30% is not a real win — you just attracted lower-quality leads. Without the secondary metric check, the model would have shipped the variant with confidence and broken the funnel downstream. Always paste secondary metrics in the inputs when you have them.</li>
+        <li><strong>Mistaking "no significance" for "no signal."</strong> A test that runs 4 weeks and reaches only p=0.08 is not a "loser" — it's possibly real, just not yet measurable at current traffic. But the judgment rule also enforces the opposite: if a test has been running 4+ weeks with no significance, the variant is probably not meaningfully different from control. Kill it and test something more aggressive.</li>
+      </ul>
 
       <h2>Variations</h2>
       <p>Two variations of this prompt are worth knowing.</p>

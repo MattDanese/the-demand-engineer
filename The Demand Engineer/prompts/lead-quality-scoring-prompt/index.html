@@ -809,14 +809,38 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Lead Quality Audit — March LinkedIn Lead Gen (43 leads)
+
+Aggregate Rates
+- True ICP: 14 leads (33%)
+- Near-Miss: 9 leads (21%)
+- Wrong Title: 12 leads (28%)
+- Noise: 8 leads (19%)
+
+Quality Lead Rate (True ICP + Near-Miss): 54%
+
+Campaign-Level Breakdown
+- LinkedIn — Doc Ad — Enterprise Decision-Makers: 67% True ICP (highest quality)
+- LinkedIn — Conv Ad — Marketing Operators: 41% True ICP
+- LinkedIn — Sponsored Content — Broad Marketing: 12% True ICP (lowest quality, 45% Noise)
+
+Recommendations
+1. Pause LinkedIn Sponsored Content — Broad Marketing — 45% Noise rate. The audience definition is too wide; small-business marketers are filling the form and the BDR team is burning cycles on them.
+2. Tighten company-size filter on LinkedIn Conv Ad — Marketing Operators — Near-Miss rate is 28%, indicating SMB leakage. Apply 200+ employee filter.
+3. Scale LinkedIn Doc Ad — Enterprise Decision-Makers — 67% True ICP rate justifies increased spend. Watch for diminishing returns as we scale.
+4. Review the 12 Wrong-Title leads from across campaigns — 9 of 12 are Manager-level at companies of 500+. The title filter on LinkedIn isn't excluding "Manager" cleanly; add as explicit exclusion.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD-documented 4-bucket rubric. Will be replaced with a redacted live audit from an upcoming monthly LinkedIn quality review.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Inferring company size from company name.</strong> First version classified a lead from "Acme Solutions" as a 200+ employee company because the name sounded enterprise. Acme Solutions had 14 employees. The judgment rule "Do not infer company size from company name alone" is the fix, but the model still occasionally drifts here — if a company-size field is missing in your data, the lead goes to Noise, period.</li>
+        <li><strong>Treating senior-in-wrong-function as True ICP.</strong> A VP of Engineering at a 1,000-person SaaS company is not your ICP if you're selling a marketing platform. Title seniority alone isn't enough — function matters as much as level. Without explicit function criteria in your ICP definition, the model defaults to seniority-only and inflates the True ICP count.</li>
+        <li><strong>Glossing over data integrity issues.</strong> Real lead exports always have a few unreadable rows: missing titles, garbled company names, blank size fields. Early versions silently excluded these. The current rule forces the model to flag the data integrity issue in the output, so you know whether the 33% True ICP rate is on 43 leads or on the 37 readable leads of 43.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

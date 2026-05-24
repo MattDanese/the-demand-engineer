@@ -308,13 +308,65 @@ Begin.</pre>
       <!-- TODO: Matt to list specific {variables} this prompt expects -->
 
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Demand Gen Support Brief — Brand Campaign: "Built for Marketing Teams That Ship"
+Audience: VP Marketing, CMO, Brand team — review pre-launch
+
+1. Campaign Summary
+The Brand campaign positions the platform as the only enterprise website system built for marketing teams to ship without an engineering bottleneck. The core message lands the contrast between marketing speed and engineering dependency. Target audience: senior marketing and web ops leaders (Director+ in Marketing, Web, Design, Growth) at 200+ employee B2B SaaS companies.
+
+Campaign timeline: 12-week flight, structured in three phases. Phase 1 (weeks 1-4): broad awareness through video and CTV. Phase 2 (weeks 5-8): consideration through Document Ads, webinars, and Conversation Ads. Phase 3 (weeks 9-12): conversion through targeted demo asks and Brand Search support.
+
+The brand goal is shifting "Marketing teams that ship" from an aspiration to an identifiable category — creating demand that mid-funnel Demand Gen then captures via Document Ad downloads and demo requests.
+
+2. Paid Media Strategy (per channel)
+
+| Channel                   | Role             | Audience                    | Format         | Messaging Angle               | KPI                  | % of Budget |
+|---------------------------|------------------|-----------------------------|----------------|-------------------------------|----------------------|-------------|
+| LinkedIn Sponsored Content| TOF awareness    | Director+ marketing, 200+ co| Video (15-30s) | Brand campaign theme          | View rate, reach     | 25%         |
+| LinkedIn Doc Ads          | MOF consideration| Same + retargeting          | Document Ad    | Specific marketing ops pain   | MQLs, CPL            | 30%         |
+| Google YouTube            | TOF awareness    | In-market for web platforms | TrueView       | Brand campaign hero           | Brand search lift    | 15%         |
+| Google NonBrand Search    | BOF conversion   | Existing in-market queries  | RSA            | Pain-led headline             | MQL to SAO           | 15%         |
+| Google Brand Search       | BOF capture      | Brand searchers             | RSA            | Direct value prop             | CTR, CPL             | 5%          |
+| Meta Retargeting          | Retargeting      | 50%+ LinkedIn video viewers | Image/Video    | Demo CTA                      | Lower-funnel CVR     | 5%          |
+| StackAdapt CTV            | TOF awareness    | Tier 1/2 enterprise         | 15s non-skip   | Brand campaign hero           | VCR, unique reach    | 5%          |
+
+3. Landing Page &amp; CRO Strategy
+Dedicated LP recommended. Above-the-fold messaging must mirror the brand campaign theme — visitors who saw the LinkedIn video and click through to a mismatched page will bounce. Form: 5-field (work email, name, company, role, optional platform field). Phone deferred to post-form follow-up. A/B tests for launch: pain-led vs. value-prop hero headline; "Book My Enterprise Demo" vs. "See a Live Walkthrough" CTA; logo bar above vs. below the fold.
+
+4. Conversion &amp; Retargeting Architecture
+Funnel: Awareness (video views, CTV) → Consideration (Doc Ad downloads, webinars) → Decision (demo requests, MQL form completion). Tracking: UTM convention follows fy27 standard. GCLID capture must be verified on the LP form before launch. Retargeting segments: 50%+ LinkedIn video viewers, Doc Ad downloaders without demo request, LP visitors without form completion, form openers without submission.
+
+5. Experimentation Roadmap
+
+| # | Hypothesis                                  | Test Design          | Success Metric         | Timeline    |
+|---|---------------------------------------------|----------------------|------------------------|-------------|
+| 1 | Pain-led LP headline outperforms value-prop | A/B at 50/50         | Form completion rate   | Weeks 1-3   |
+| 2 | Founder-led video outperforms produced spot | Split in Campaign Mgr| CTR + MQL pull-through | Weeks 3-6   |
+| 3 | Conversation Ad vs. Doc Ad for mid-funnel   | Audience split       | Lead-to-MQL rate       | Weeks 5-8   |
+| 4 | StackAdapt CTV lift on Brand Search volume  | Geo-controlled       | Brand search lift      | Weeks 1-12  |
+
+Priority by Impact × Confidence × Ease: #1, #2, #4, #3.
+
+6. Measurement Framework
+Primary KPIs: SAOs sourced, pipeline generated, influenced pipeline. Secondary KPIs: CTR, CVR, CPL by channel, MQL-to-SAO rate, brand search lift. Reporting: weekly in-flight, biweekly cross-channel synthesis, end-of-campaign readout with Kantar brand lift study. Attribution: GCLID-based for Google; UTM-based for LinkedIn; brand lift study for CTV.
+
+7. Dependencies &amp; Risks
+- Brand: final creative approval needed 2 weeks before Phase 1 launch
+- Web: dedicated LP build and GCLID capture verification needed 1 week before launch
+- Sales: BDR enablement on 4-hour demo request follow-up SLA
+- RevOps: OCI conversion event for SAO must be live for late-cycle measurement
+- Risks: Brand creative timeline slip delays Phase 1; StackAdapt CTV measurement requires geo holdouts that Brand team may object to</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented 7-section brief structure. Will be replaced with a redacted live brief from an upcoming brand campaign cycle.</p>
       </div>
 
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Channel role drift.</strong> First version put Google NonBrand Search as a "top of funnel awareness" channel because the campaign was about brand awareness. NonBrand Search captures existing demand; it doesn't create it. The judgment rule "channel role assignments matter" is the fix — but the model still drifts if the brand brief is heavily TOF-themed and you don't reinforce the funnel architecture.</li>
+        <li><strong>Padding the experimentation roadmap.</strong> Model wanted to propose 8-12 experiments per brief because more felt more thorough. More than 5 signals indecision and dilutes execution focus. The 3-5 cap is enforced now.</li>
+        <li><strong>Skipping dependencies and risks.</strong> This is the section that gets cut when the model is under length pressure. It's also the section that prevents launches from failing. The judgment rule makes it non-optional, but you may need to review every brief to make sure dependencies aren't generic ("approvals needed from leadership") — they should name specific teams and specific blockers.</li>
+      </ul>
 
       <h2>Variations</h2>
       <p>Two variations of this prompt are worth knowing.</p>

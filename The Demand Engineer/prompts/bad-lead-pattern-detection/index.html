@@ -802,10 +802,52 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Outbound Coverage Drop Analysis — Q1 FY27 (90-day window)
+
+Overview
+- Total campaign members: 2,847 across 12 campaigns
+- Peak month: January (1,142 members)
+- Current-month run rate: 412 members (March, partial month — projected 580)
+- Peak to current: -49% on projection
+
+Monthly Breakdown
+
+| Month  | LinkedIn Doc Ad | LinkedIn Conv Ad | Google PMax | Webinar | Other | Total |
+|--------|-----------------|------------------|-------------|---------|-------|-------|
+| Jan    | 502             | 287              | 198         | 88      | 67    | 1,142 |
+| Feb    | 461             | 244              | 187         | 0       | 75    | 967   |
+| Mar*   | 218             | 119              | 79          | 0       | 24    | 580   |
+
+*March projected
+
+Campaign-Level Detail
+- LinkedIn Doc Ad: 502 → 218 (-57%). Two specific campaigns drove the drop — "Doc Ad — Q1 State of Web Report" and "Doc Ad — AEO Playbook." Both flighted out at end of February.
+- Webinar: 88 → 0 — January FlowTV event ran, no event in Feb or Mar.
+- Google PMax: held relatively flat (-21% Jan to Mar) — likely seasonal Mar slowdown, not a structural issue.
+
+Drop-Off Signals
+- Campaign flight ending: STRONGLY SUPPORTED. The two LinkedIn Doc Ad flights ending accounts for ~70% of the observed drop. This is the primary cause.
+- Webinar absence: SUPPORTED. The single FlowTV event drove 88 members in January; no subsequent event explains the Webinar bucket going to zero.
+- Audience saturation: NOT SUPPORTED. No frequency data provided, but the surviving Doc Ad campaigns are holding CTR within normal variance.
+- Tracking issue: NOT SUPPORTED. Cross-campaign UTM convention appears consistent in the data.
+- Seasonality: PARTIALLY SUPPORTED for Google. Q1 normally shows a Mar slowdown of 15-20%.
+
+Recommendations
+1. Reactivate the Doc Ad — State of the Web Report flight as evergreen. It accounted for 30% of peak-month volume and has been off for 6 weeks. The asset is still relevant; flighting it out was a timing decision, not a quality decision.
+2. Build a Q2 webinar pipeline. Webinar/event contribution went to zero in Feb and Mar — this is a structural gap.
+3. Investigate the AEO Playbook Doc Ad before reactivating. The asset performed well in Q1 but may benefit from a refreshed thumbnail and intro slide before re-flighting.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented outbound coverage drop pattern. Will be replaced with a redacted live analysis from an upcoming quarterly review.</p>
       </div>
+
+      <!-- COMMON FAILURE MODES -->
+      <h2>Common Failure Modes</h2>
+      <ul>
+        <li><strong>Defaulting to "audience saturation" without evidence.</strong> Saturation is the most-cited cause in generic marketing analysis because it sounds sophisticated. But saturation has specific data signals (rising frequency, falling CTR, declining unique reach). Without those, the explanation is just a guess. The judgment rule forces the model to require evidence before claiming saturation.</li>
+        <li><strong>Missing flighted-out campaigns.</strong> First version reported a "mysterious 57% drop in Doc Ad volume" when in fact two major campaigns had simply flighted out at end-of-month. Flighting is the most common cause of large drops and the easiest to miss in raw data — the model now explicitly checks whether peak-month campaigns are still running.</li>
+        <li><strong>Using seasonality as a catch-all.</strong> "Some of the drop is seasonal" became the model's default hedge when it didn't have a real explanation. The judgment rule restricts seasonality to known patterns (December holiday slowdown, August enterprise pause) and forces explicit data support before invoking it elsewhere.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

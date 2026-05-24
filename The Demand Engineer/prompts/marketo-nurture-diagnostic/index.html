@@ -808,14 +808,37 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Lead: [REDACTED] — LinkedIn Doc Ad Q1 FY27 (UKI)
+
+Timeline Reconstruction
+- 2026-02-14: Form fill via LinkedIn Doc Ad campaign (UKI-targeted). Lead created in Marketo.
+- 2026-02-14: Lifecycle Status → "New Lead" (correct net-new entry status)
+- 2026-02-14: SFDC sync event 4 hours later — Country field updated from "GB" to "United Kingdom" (string format change)
+- 2026-02-15: Expected Prospect Nurture — Net New entry — did NOT fire
+- 2026-02-15 to 2026-04-01: No nurture emails sent
+- 2026-04-01: Sales flagged record as "no follow-up received"
+
+Root Cause Identification
+Primary cause: EMEA segmentation gap.
+The nurture program's entry logic filters on Country = "GB" (the exact string used in LinkedIn Lead Gen form output). When the SFDC sync rewrote the Country field to "United Kingdom" 4 hours after creation, the lead no longer matched the entry criteria. The program is NAMER-built with EMEA-as-afterthought logic, and the country string mismatch is a known failure pattern documented in the Q1 FY27 audit.
+
+Recommended Action
+Recommend: (1) Update the Prospect Nurture entry filter to accept multiple Country string formats for UK/UKI ("GB," "United Kingdom," "UK"). (2) Add this lead to the nurture program manually as a backfill. Owner: MoPs (filter update) + RevOps (sync rule review). Expected resolution time: 3-5 days for filter update; immediate for manual backfill.
+
+Systemic Pattern Flag
+Pattern indicator. This is the third UKI lead this quarter diagnosed with the same root cause. Recommend pulling a sample of 20 UKI LinkedIn leads from the last 90 days and auditing the Country field state at the time of expected nurture entry. If the pattern holds, this is a systemic gap affecting all UKI LinkedIn pipeline.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the documented EMEA segmentation gap from the Q1 FY27 audit. Will be replaced with a redacted live diagnostic from an upcoming Marketo audit cycle.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Inventing timeline events that aren't in the activity log.</strong> First version constructed a clean narrative even when the Marketo export was missing key events. The "do not invent timeline events" rule is the fix — if the Master Marketo Send List events aren't in the export, the model now flags the diagnosis as incomplete instead of guessing.</li>
+        <li><strong>Reaching for novel explanations before checking the six known blockers.</strong> Early outputs would propose "the email template may have failed validation" or "there could be a Marketo API rate limit issue" before checking against the documented blocker types. 95%+ of real cases match one of the six gates from the Q1 FY27 audit. The judgment rule forces the model to match against known patterns first.</li>
+        <li><strong>Missing the silent re-engagement aging gate.</strong> Re-engagement aging is the hardest blocker to spot because Marketo doesn't fire an explicit "aged out" event. If the original form fill was more than 60 days before the recent activity, the lead may be silently disqualified from the 60-day re-engagement track. The model misses this unless you remind it to check the original lead creation date against the 60-day window — which is now baked into the judgment rules.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

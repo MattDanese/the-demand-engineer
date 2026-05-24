@@ -807,10 +807,44 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Attribution Audit — Last 30 Days
+
+1. GCLID Population Rate
+58% of paid Salesforce leads have GCLID populated. Threshold is 70%. FLAGGED. Below-threshold GCLID rate means roughly 4 in 10 paid leads cannot be matched back through Offline Conversion Import. Smart Bidding is training on an incomplete signal.
+
+2. OCI Match Rate
+51% of uploaded records matched. Threshold is 60%. FLAGGED. Some of the gap is downstream of issue #1 (no GCLID means no match), but match rate is also under-performing relative to GCLID-populated records. Likely a secondary timing or format issue.
+
+3. Conversion Volume Discrepancies
+- Google Ads NonBrand: 142 reported conversions vs. 94 SFDC MQLs (-34%). Concerning gap.
+- Google Ads Brand: 38 reported conversions vs. 36 SFDC MQLs (-5%). Within normal variance.
+- LinkedIn paid social: 67 reported MQLs vs. 71 SFDC MQLs (+6%). Healthy.
+
+4. Campaigns with Zero Attributed SAOs Despite Significant Spend
+Google PMax — Enterprise: $8,400 spent in period, 0 attributed SAOs. Top 15% of spend. Either an attribution gap (likely given the GCLID rate above) or this campaign is generating no pipeline. Cannot distinguish without fixing the GCLID issue first.
+
+5. Sudden Volume Drops
+LinkedIn Document Ads MQL count dropped 24% week-over-week 8 days ago. Spend was flat. Traffic was flat. This pattern indicates a tracking break, not a performance shift. The recent-changes section noted that the form layout was updated on the same day.
+
+6. Prioritized Action List
+| # | Problem                                                | Root Cause                                         | Fix                                                                  | Owner            |
+|---|--------------------------------------------------------|----------------------------------------------------|----------------------------------------------------------------------|------------------|
+| 1 | LinkedIn MQL drop coincides with form layout change    | Hidden GCLID field likely lost in form rewrite     | Audit the LinkedIn form for the GCLID hidden field; restore mapping  | Web + RevOps     |
+| 2 | GCLID population at 58% across all paid forms          | Form-side capture issue                            | Run hidden-field audit across all paid LP forms; verify auto-tagging | RevOps           |
+| 3 | Google NonBrand conversion volume discrepancy          | Likely tied to GCLID issue above                   | Resolve GCLID issue, then re-audit at 2-week mark                    | Paid + RevOps    |
+| 4 | Google PMax Enterprise shows zero SAOs at high spend   | Cannot diagnose until attribution is fixed         | Hold budget decision; re-evaluate after fixes                        | Paid (deferred)  |</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the documented attribution failure patterns in the PRD. Will be replaced with redacted live output from the next monthly audit cycle.</p>
       </div>
+
+      <!-- COMMON FAILURE MODES -->
+      <h2>Common Failure Modes</h2>
+      <ul>
+        <li><strong>Confidently calculating rates from incomplete data.</strong> Early version of this prompt produced a "GCLID population rate" even when the provided dataset had no GCLID column at all — it inferred from lead sources. The fix in JUDGMENT RULES forces the model to flag missing columns rather than fabricate calculations. If your data export is partial, you'll get an "insufficient data" response instead of a confident wrong answer — which is the right behavior.</li>
+        <li><strong>Recommending channel-level budget cuts before attribution is verified.</strong> First version surfaced "Google NonBrand is underperforming, recommend 20% budget reduction" when the real story was that GCLID capture had broken on the NonBrand landing pages. The "do not blame a channel until attribution integrity is verified" rule is the most important guardrail in this prompt — without it, the audit becomes a budget-cut justification engine.</li>
+        <li><strong>Conflating attribution gaps and attribution breaks.</strong> These look similar but require different responses. A gap (zero SAOs at high spend) might be a tracking issue OR the campaign genuinely produces no pipeline. A break (sudden volume drop without traffic drop) is almost always tracking. The model used to treat both the same; the explicit distinction in section 3 and JUDGMENT RULES fixed it.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

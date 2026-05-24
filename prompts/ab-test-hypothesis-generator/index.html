@@ -375,13 +375,56 @@ Begin.</pre>
       <!-- TODO: Matt to list specific {variables} this prompt expects -->
 
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Page: Enterprise landing page
+Current state: 1.8% form completion rate, 62% bounce rate, hero headline "The Website Experience Platform"
+Observed problem: Senior visitors bouncing without scrolling past the hero; headline scored 64 on autoresearch panel (below 85 deploy threshold)
+
+5 Hypotheses
+
+1. (Hero headline) If we replace the generic value-prop headline with a pain-led headline that names enterprise marketing bottlenecks, we expect form completion to increase by 20-30% because the panel scoring showed pain-led variants outperformed value-prop variants by an average of 18 points.
+
+2. (CTA copy) If we change the CTA from "Get Started" to "Book My Enterprise Demo," we expect form completion to increase by 10-15% because the CTA specificity effect is approximately 14 points on the panel scale.
+
+3. (Social proof) If we add a logo bar of 6 named enterprise customers above the fold, we expect bounce rate to decrease by 10-15% because heat-map data on similar pages shows logo bars retain senior visitors during the first scroll.
+
+4. (Form fields) If we move the phone number field from position 2 to position 5 in the form, we expect form completion to increase by 20-30% because high-friction fields early in a form depress completion by a measured 20-30 points.
+
+5. (Above-the-fold layout) If we tighten the hero to a single CTA above the fold (currently has two competing CTAs), we expect form completion to increase by 5-10% because dual-CTA designs split visitor attention.
+
+Prioritization
+
+| # | Hypothesis                  | Impact | Conf | Ease | Score |
+|---|-----------------------------|--------|------|------|-------|
+| 1 | Hero headline (pain-led)    | 5      | 4    | 4    | 80    |
+| 4 | Move phone to position 5    | 4      | 5    | 5    | 100   |
+| 2 | CTA specificity change      | 3      | 5    | 5    | 75    |
+| 3 | Logo bar above fold         | 3      | 3    | 4    | 36    |
+| 5 | Single CTA above fold       | 2      | 4    | 4    | 32    |
+
+Ranked top to bottom by Impact × Confidence × Ease.
+
+Test Design for Top Hypothesis (#4 — Form Field Order)
+
+- Variant A (control): Phone number at position 2 of form
+- Variant B (treatment): Phone number at position 5 of form
+- Primary success metric: Form completion rate
+- Secondary metrics: Phone field abandonment rate, downstream MQL pull-through (verify treatment doesn't degrade lead quality by attracting form-completers who would have abandoned)
+- Required sample size: ~1,600 visitors per variant (assumes 1.8% baseline, +20% expected lift, 95% confidence)
+- Estimated test duration: 14 days at current traffic
+
+Pre-Launch Validation Recommendation
+This hypothesis does not require autoresearch panel scoring — the change is a structural/layout test, not a copy test. Deploy directly to a 50/50 split. If the test wins, follow up with autoresearch on the hero headline (hypothesis #1) which is copy-dependent.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented field-order friction effect. Will be replaced with a redacted live hypothesis brief.</p>
       </div>
 
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Vague hypotheses dressed up as specific.</strong> First version produced "If we improve the headline, we expect higher conversion because the headline is the most important element on the page." That's a guess, not a hypothesis. The "Replace [specific thing] with [specific thing] to drive [specific outcome] because [specific evidence]" structure is enforced now, but if your input is vague, the output will drift back to vague.</li>
+        <li><strong>Confidence inflation without evidence.</strong> The model wanted to assign 5/5 confidence to every hypothesis based on "best practices." Best practices aren't evidence. The judgment rule requires explicit evidence (heat maps, session recordings, panel scoring, competitor analysis) before a 4 or 5 confidence score. If the hypothesis is pure opinion, the score caps at 2.</li>
+        <li><strong>Ignoring soft constraints.</strong> A "hero imagery" hypothesis might be 5/5 on impact and confidence but 1/5 on ease if Brand team approval is required for any hero change. The model defaults to engineering time as the only ease dimension; the judgment rule now forces it to account for approvals, dependencies, and stakeholder politics.</li>
+      </ul>
 
       <h2>Variations</h2>
       <p>Two variations of this prompt are worth knowing.</p>

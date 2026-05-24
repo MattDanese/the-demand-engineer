@@ -285,13 +285,105 @@ Begin.</pre>
       <!-- TODO: Matt to list specific {variables} this prompt expects -->
 
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Sales Enablement Package — "2026 State of the Website Report" (MOF asset)
+
+1. One-Pager: Offer Summary for Sales
+
+What it is: Research report on the state of enterprise website operations in 2026 — survey data from 400+ marketing and web ops leaders on platform pain, build velocity, and AI adoption.
+
+Pain point: Enterprise marketing teams shipping at engineering's pace, not marketing's pace. Report quantifies the velocity gap.
+
+Who downloads it: Director+ in Marketing, Web Ops, Design, and Growth at 200+ employee B2B SaaS companies. Heavy skew toward people responsible for marketing site KPIs but dependent on engineering for execution.
+
+What it signals: Research/consideration-stage signal — the lead is benchmarking their own situation against industry peers. Not yet ready to evaluate platforms, but explicitly thinking about the velocity problem.
+
+Top qualifying questions:
+- Which of the report findings most lined up with what you're seeing on your team?
+- What's the current bottleneck when your marketing team wants to ship a new landing page?
+- Is your team measuring time-to-launch as an internal KPI today?
+
+Recommended opener: "I noticed you downloaded the 2026 State of the Website Report. The finding most of our enterprise customers react to first is the data on average time-to-launch — would love to hear if that pattern matches your team's experience."
+
+2. Outreach Sequence Copy
+
+Email 1 (80-120 words):
+Subject: Quick question on the State of the Website Report
+
+Hi [First Name],
+
+I noticed you grabbed the 2026 State of the Website Report. The finding most of our enterprise customers act on first is the data showing that 73% of marketing teams now wait 4+ weeks for landing page launches — and that the leaders who broke that pattern shared two specific approaches.
+
+If you have 20 minutes in the next two weeks, I'd love to hear what your team is seeing on time-to-launch and share what's working at companies like [Customer Example] who closed that gap.
+
+No demo. Just a conversation.
+
+[Signature]
+
+Email 2 (60-100 words):
+Subject: How [Customer] cut their time-to-launch by 71%
+
+Hi [First Name],
+
+Following up on the State of the Website Report. Wanted to share this case study from [Customer] — they're a similar enterprise SaaS company and the team went from 6 weeks to 6 days on enterprise landing pages.
+
+The first principle they applied is in section 3 of the case study. It's the same principle the report flagged as the biggest velocity unlock.
+
+Worth a look if you're sizing up the same opportunity for your team.
+
+[Signature]
+
+Email 3 (50-80 words):
+Subject: Worth a 20-minute conversation?
+
+Hi [First Name],
+
+Last note from me on the State of the Website report. If the findings on time-to-launch matched what you're seeing internally, the next step that's been most useful for our enterprise customers is a 20-minute working session with our team on what would move the needle on your specific bottleneck.
+
+Available this week or next?
+
+[Signature]
+
+LinkedIn message variants:
+1. Saw you grabbed the State of the Website report. Most of our enterprise customers act on the time-to-launch data first. Open to a quick conversation on what your team is seeing?
+2. Quick share — [Customer] cut their time-to-launch by 71% using the principle from section 3 of the report. Their case study breaks down what worked. Worth a 5-minute read.
+3. Last note. If the time-to-launch findings match what your team is dealing with, would 20 minutes this week or next work to walk through what's been moving the needle for our enterprise customers?
+
+3. Objection Handling Card
+
+Objection 1: "We just signed a renewal with [competitor] — we're locked in."
+Response: That makes total sense — most enterprise teams aren't able to switch mid-contract. Our enterprise customers typically use the renewal window to evaluate; understanding the option before that window is what gives them leverage. Worth keeping the conversation open for when you start evaluating?
+
+Objection 2: "We have an internal team building our website — we don't need a platform."
+Response: That's actually exactly the velocity pattern the report flagged — enterprise teams with strong internal builds still hit the marketing-can't-ship bottleneck. Our enterprise customers who looked like you 18 months ago found that the platform unlocked their internal team to focus on the harder builds while marketing shipped routine pages without engineering. Different from "no-code" — purpose-built for enterprise.
+
+Objection 3: "I'm just doing research right now, not actively evaluating."
+Response: Got it — most of the people who download this report are in the same place. The most useful thing we can do at this stage isn't a demo, it's sharing what other enterprise teams in research mode found most valuable to compare. Happy to do that in 15 minutes whenever it's helpful.
+
+4. Campaign Brief Annotation for Paid
+
+LinkedIn promotion:
+- Format: Document Ads (the report is the document)
+- Audience: Director+ in Marketing, Web, Design, Product, Growth at 200+ employee B2B SaaS, NAMER + UKI
+- UTM: utm_source=linkedin / utm_medium=paid-social / utm_campaign=fy27-state-of-website-q2 / utm_content=docad-[creative-variant]
+- Secondary: LinkedIn Sponsored Content with video teaser driving to gated form
+
+Retargeting audiences to build:
+- Form openers without submission (highest-intent pool)
+- 50%+ Sponsored Content video viewers (warm, not yet downloaded)
+- Document downloaders without subsequent demo request (active consideration)
+
+Down-funnel MQL expectation: Unknown for this specific asset (first launch). Recommend tracking MQL pull-through at 4-week mark to set benchmark for future MOF asset planning. Comparable MOF reports historically convert ~18-25% to MQL within 60 days.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented sales enablement workflow (15-20 min vs 2-4 hour benchmark). Will be replaced with a redacted live package from an upcoming asset launch.</p>
       </div>
 
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Generic openers that don't reference the offer.</strong> First version produced openers like "Saw you downloaded our content — would love to chat." That's the version BDRs ignore. The fix: every opener and email body must reference a specific insight from the asset. The model still drifts to generic if your input doesn't include the 2-3 specific insights — the input quality drives the output specificity.</li>
+        <li><strong>Email 3 asking for a demo on a MOF asset.</strong> Default behavior is to ask for a demo at the end of every sequence. A MOF asset means the lead is researching, not buying. The right ask is a working conversation, not a sales meeting. The judgment rule forces the model to match the ask to the buying-stage signal — but if you don't tell it whether the asset is MOF or BOF, it defaults to BOF behavior and over-asks.</li>
+        <li><strong>Fabricating MQL conversion benchmarks.</strong> Model wanted to say "this asset type typically converts 23% to MQL" even when it had no data to support the number. The judgment rule explicitly bans invented benchmarks; the model now says "unknown — set up tracking to capture" instead. If you see a confident benchmark in the paid annotation section, double-check whether the model invented it.</li>
+      </ul>
 
       <h2>Variations</h2>
       <p>Two variations of this prompt are worth knowing.</p>

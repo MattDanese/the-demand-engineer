@@ -792,10 +792,34 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Subject: Paid Week of [date] — LinkedIn delivered, Google flat, Meta needs work
+
+LinkedIn Document Ads produced the best MQL week of Q2 — 34 MQLs at a $147 CPL, both ahead of plan. Google held steady. Meta retargeting underperformed and we're rotating creative this week.
+
+Wins
+• LinkedIn Doc Ads: 34 MQLs at $147 CPL (target: 28 / $160). The new founder-led video creative is outperforming the prior generation by 22% on CTR — feels like a pattern, not a one-week spike.
+• Brand search volume up 18% week-over-week. Likely the StackAdapt CTV flight feeding the demand. Worth watching for another two weeks to confirm.
+• MQL-to-SAO conversion held at 11% even with higher MQL volume — quality is not degrading as we scale.
+
+Misses
+• Meta retargeting CPL spiked to $94 vs. a $65 target. Audience frequency is at 5.2; we're rotating to a fresh creative pool this week.
+• Google PMax produced 9 MQLs vs. a 14 target. Asset Group A is doing all the work; Asset Group B is dormant. Pausing B and reallocating to A.
+• One LinkedIn campaign is showing 31% Wrong-Title leads (Manager-level at 200+ employee companies). Tightening title filter Thursday.
+
+Looking Ahead
+Next week we'll see the first read on the new ABM motion that launched 8 days ago — too early to call but pacing positively. The Meta creative rotation should land by Wednesday. Watching LinkedIn frequency cap closely as we increase Doc Ads spend.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on a representative B2B SaaS weekly performance set. Will be replaced with a redacted live exec summary from an upcoming Monday cycle.</p>
       </div>
+
+      <!-- COMMON FAILURE MODES -->
+      <h2>Common Failure Modes</h2>
+      <ul>
+        <li><strong>Burying the lead.</strong> The first version started every summary with "This week we spent $X across Y channels and generated Z leads." That's methodology, not a headline. The fix in section 1 explicitly bans this opening — but the model still drifts back if the inputs are presented in that order. Tip: paste the most interesting metric first in your inputs, not the totals.</li>
+        <li><strong>Padding a weak third bullet.</strong> When asked for "top 3 wins," the model will produce 3 even when only 2 are real. Common third bullet failures: "Spend pacing was on track," "CTR remained stable," "No major creative changes this week." None of those are wins. The JUDGMENT RULES now explicitly say to cut weak bullets, but the model will still pad if you don't reinforce it.</li>
+        <li><strong>Over-hedging on misses.</strong> Default output softens misses with phrases like "Meta retargeting underperformed slightly relative to where we'd hoped to be at this point in the period." That's the kind of corporate hedge VPs see through. The "execs trust honesty more than they trust spin" instruction helps, but you may need to rewrite hedges yourself before sending.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

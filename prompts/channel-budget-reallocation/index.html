@@ -802,14 +802,38 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Pacing Status (Wednesday, Day 17 of 30)
+
+| Channel          | Budget  | Spent   | Required Rate | Current Rate | Pace          |
+|------------------|---------|---------|---------------|--------------|---------------|
+| Google NonBrand  | $45,000 | $19,800 | $1,938/day    | $1,165/day   | Underspending |
+| LinkedIn Doc Ads | $30,000 | $22,400 | $585/day      | $1,318/day   | Overspending  |
+| Meta Retargeting | $8,000  | $4,200  | $292/day      | $247/day     | On Pace       |
+
+Performance Context
+- Google NonBrand: underspending but CPL at $171 vs. $160 target — slightly inefficient. Forcing the full $13k catch-up is risky.
+- LinkedIn Document Ads: overspending but CPL at $124 vs. $145 target — efficient channel, justifies the overage.
+
+Reallocation Recommendations
+1. Pull $5,000 from Google NonBrand → push to LinkedIn Document Ads
+   Justification: LinkedIn is pacing 30% ahead at CPL 14% below target. Marginal efficiency suggests room to scale before saturation.
+   Risk: LinkedIn CPL may rise as we scale beyond the natural audience. Cap incremental spend at $5k for the period and re-evaluate next week.
+
+2. Hold $3,000 of Google NonBrand budget for the final week
+   Justification: Better to underspend than to push budget into an inefficient channel mid-period. The $3k can be deployed against a search query report refresh if SQRs surface new high-intent terms.
+   Risk: Underspending the period total by 7%. Acceptable trade-off given efficiency context.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on a representative mid-month pacing check. Will be replaced with redacted live output from a real Wednesday pacing run.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Recommending budget shifts on under-volume channels.</strong> The model wanted to pull budget from a Reddit campaign because its CPL was $340 vs. a $200 target. Reddit had produced 7 leads that month — not a statistically reliable basis for any reallocation call. The sample-size judgment rule now forces the model to flag low-volume channels before recommending big moves on them.</li>
+        <li><strong>Ignoring priority notes when efficiency data is strong.</strong> Early runs would mechanically pull budget from a strategically-protected channel (e.g., LinkedIn Document Ads during a quarterly content campaign) because the pacing math said it was overspending. Adding the explicit priority-notes weight in JUDGMENT RULES fixed this, but only if you remember to paste in the strategic constraints.</li>
+        <li><strong>Conflating "overspending" with "wasteful."</strong> A channel can be both overspending and the most efficient destination for incremental dollars. Without the efficiency-context layer in section 2, the model defaults to "overspending = bad" and recommends cuts that destroy working pipeline.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

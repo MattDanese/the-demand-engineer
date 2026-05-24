@@ -805,14 +805,32 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">🟡 Yellow — LinkedIn Sponsored Content
+
+What Changed
+- CPL: $187 yesterday vs. $142 7-day rolling average (+32%)
+- Lead volume: 14 leads vs. 19 leads 7-day average (-26%)
+- Spend: $2,612 vs. $2,698 7-day average (-3%) — efficiency drop, not spend drop
+
+Likely Cause (ranked)
+1. Creative fatigue — top-performing Document Ad has been live 21 days, CTR has decayed 18% over the last week. Yesterday's CPL spike aligns with the next-step CTR collapse curve.
+2. Frequency saturation — top audience is at 4.2 frequency in the last 7 days. Above 4 is where B2B fatigue typically appears.
+3. Day-of-week — yesterday was a Friday, which historically shows 8-12% CPL inflation. Some of the deviation is structural; not all of it.
+
+Recommended Next Step
+Recommend: rotate top Document Ad into retargeting-only, promote the #2 variant to primary placement, and refresh creative for prospecting. Approve to proceed.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on a representative B2B SaaS LinkedIn campaign. Will be replaced with redacted live output once the next anomaly fires.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Confidently flagging noise on small-volume channels.</strong> Early runs flagged a 40% CPL spike on a Reddit campaign that had produced 6 leads in the comparison week — pure statistical noise on a small denominator. The fix is the sample-size guardrail in JUDGMENT RULES. If your channel volume is small, the model now flags the volume issue before commenting on CPL.</li>
+        <li><strong>Missing the day-of-week pattern.</strong> First version treated every Monday's volume drop as an anomaly. Mondays are structurally lower across most B2B paid programs and should be context, not alarm. Adding the explicit day-of-week instruction fixed this, but only when the analyst remembers to flag whether yesterday was a Monday or Friday in the inputs.</li>
+        <li><strong>Generic root-cause lists when the real cause is in the data.</strong> The model defaults to "budget exhaustion / creative fatigue / auction pressure" as its standard three causes — even when the inputs explicitly mention a recent change like a new audience launch. The <code>{OPTIONAL_PASTE_RECENT_CHANGES_HERE}</code> field exists specifically to override this; paste in known changes and the model will weight them above the generic causes.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

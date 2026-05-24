@@ -819,15 +819,68 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Element tested: Enterprise landing page hero headline
+Audience: Senior marketing and web ops leaders at 500+ employee B2B SaaS companies
+Channel: Enterprise landing page (direct + paid)
+
+10 Variants Generated
+
+1. (Pain-agitate-solve) Tired of waiting six weeks for every landing page launch?
+2. (Before/after) Your enterprise sites, built without the engineering bottleneck.
+3. (Provocative question) Why is your marketing team still blocked by your codebase?
+4. (Social proof) The website platform 14,000+ enterprise teams trust.
+5. (Specific outcome) Launch enterprise landing pages 4x faster — without writing code.
+6. (Authority) Built for marketing teams that ship as fast as product teams.
+7. (Contrarian) Most "no-code" platforms can't handle enterprise. We can.
+8. (Direct) Enterprise-grade websites. Marketing-owned.
+9. (Problem-first) Engineering shouldn't be your bottleneck for every landing page.
+10. (Specific outcome) Cut your time-to-launch from 6 weeks to 6 days.
+
+Expert Panel Scoring
+
+| #  | CMO | Skeptical | CRO | Copywriter | CEO | Avg  |
+|----|-----|-----------|-----|------------|-----|------|
+| 1  | 78  | 52        | 71  | 64         | 58  | 64.6 |
+| 2  | 82  | 71        | 84  | 79         | 81  | 79.4 |
+| 3  | 88  | 49        | 76  | 81         | 62  | 71.2 |
+| 4  | 71  | 78        | 68  | 54         | 76  | 69.4 |
+| 5  | 84  | 81        | 89  | 86         | 88  | 85.6 |
+| 6  | 74  | 68        | 71  | 78         | 72  | 72.6 |
+| 7  | 81  | 64        | 79  | 84         | 71  | 75.8 |
+| 8  | 69  | 78        | 81  | 67         | 79  | 74.8 |
+| 9  | 79  | 72        | 82  | 81         | 76  | 78.0 |
+| 10 | 86  | 82        | 88  | 84         | 87  | 85.4 |
+
+Top 3 Winners
+
+1. Variant 5 — "Launch enterprise landing pages 4x faster — without writing code." (85.6)
+   Strongest: CRO (89) — clearest action and outcome in the set.
+   Weakest: Skeptical Buyer (81) — still believes it, just wants proof. Pair with specific case study below the fold.
+
+2. Variant 10 — "Cut your time-to-launch from 6 weeks to 6 days." (85.4)
+   Strongest: CEO (87) — concrete business impact, easy to defend to a board.
+   Weakest: Copywriter (84) — sharp but the "6 to 6" phrasing is slightly twee. Still high overall.
+
+3. Variant 2 — "Your enterprise sites, built without the engineering bottleneck." (79.4)
+   Strongest: CRO (84) — clean and direct.
+   Weakest: Copywriter (79) — solid but lacks a specific outcome. Better as subhead than headline.
+
+Recommendation
+Deploy Variant 5: "Launch enterprise landing pages 4x faster — without writing code."
+
+It edges Variant 10 on panel average (85.6 vs 85.4) but more importantly has the highest CRO score in the set (89). The "4x faster" framing is tied to a measurable benefit that the Skeptical Buyer can pressure-test against a case study. Variant 10's "6 to 6" is sharper rhetorically but slightly harder to substantiate. Recommend pairing Variant 5 as hero headline with Variant 2 as subheadline.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented autoresearch methodology (62→87 score benchmark, CTA specificity effect). Will be replaced with a redacted live autoresearch run.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
-      <p>Failure modes will be added as this prompt is run in production.</p>
+      <ul>
+        <li><strong>Compressing all scores into 80-90.</strong> First version was too generous — every variant scored 80+, which defeats the point of the panel as a forcing function. The "do not score every variant in the 80-90 range" rule pulled distributions back to realistic 40-90 spreads. If you see all your scores cluster high, re-run with the constraint emphasized.</li>
+        <li><strong>Treating average as the only signal.</strong> Two variants can both average 80, but one scores (90, 80, 80, 80, 70) and the other scores (80, 80, 80, 80, 80). The first one has a real weakness (Skeptical Buyer at 70 = credibility gap) that needs fixing. The spread is at least as informative as the average — the model now surfaces both.</li>
+        <li><strong>Defaulting to generic CTAs.</strong> When asked to generate CTA variants, the model still drifts toward "Get Started" and "Learn More" if you don't explicitly ban them. The CTA specificity effect is documented as ~14 points on the panel scale — naming the principle in JUDGMENT RULES helps, but you may need to add "do not include generic CTAs" to the input itself.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>

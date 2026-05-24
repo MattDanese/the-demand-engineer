@@ -295,13 +295,61 @@ Begin.</pre>
       <!-- TODO: Matt to list specific {variables} this prompt expects -->
 
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Pipeline Response Brief — Q1 FY27
+Reported: Pipeline at 70% of plan ($25.2M vs. $36.7M target)
+
+1. Signal Diagnosis
+
+| Signal                                   | Classification       | Reasoning                                                                                                                                                    |
+|------------------------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Warm channel MQL volume down 40% QoQ    | TRACKING ARTIFACT    | Warm tracking has been miscounting for 6 weeks per RevOps. Underlying Warm performance is healthy; the number is broken, not the channel.                     |
+| Hot SAO win rate dropped 12.8% to 8.8%  | SALES PROCESS ISSUE  | Win rate is downstream of sales execution, not lead quality. Paid can support indirectly via late-stage creative but cannot fix this directly.               |
+| SDR SAO creation down 60%+ QoQ          | CAPACITY CONSTRAINT  | SDR team had two departures and one new hire ramping. This is a headcount issue, not a paid issue.                                                           |
+| Enterprise pipeline coverage down 18%   | PAID-ADDRESSABLE     | Enterprise paid program can be tuned: shift toward higher-intent BoFu messaging, build LinkedIn retargeting of open Enterprise pipeline accounts.             |
+
+2. Paid Response Plan
+
+1. LinkedIn retargeting of open Enterprise pipeline accounts (Stages 5 and 7)
+   Channel: LinkedIn — ABM audience build from Salesforce account list
+   Tactic: Multi-threading creative with customer story and social proof angles
+   Timeline: Audience build week 1, campaigns live week 2, measurement at week 6
+   Targeting: Win rate lift on existing pipeline
+
+2. Enterprise BoFu messaging shift
+   Channel: LinkedIn Doc Ads + Google NonBrand Search
+   Tactic: Replace "Get a demo" CTA with "Talk to our enterprise team" for Director+ audiences; replace generic LP hero with pain-led variant (autoresearch panel score 87 vs. control 64)
+   Trade-off: Lead volume drops ~15-25%; SAO conversion rate expected to rise to compensate
+   Timeline: Creative refresh week 1-2, live week 3, measurement at week 6
+
+3. Enterprise audience tightening on LinkedIn
+   Channel: LinkedIn Sponsored Content
+   Tactic: Add explicit job function filter (Marketing, Web, Design, Product, Growth)
+   Timeline: Filter update week 1, measurement at week 4
+   Targeting: Lift Quality Lead Rate (True ICP + Near-Miss) above current 54%
+
+3. What NOT to Do
+
+- DO NOT shift budget away from Warm channels due to the reported 40% MQL drop. Warm tracking is miscounting; the channel isn't broken. Any reallocation based on this metric will hurt pipeline once tracking is fixed.
+- DO NOT cut Hot SAO budget because of the win rate drop. Win rate is downstream of sales execution. Cutting demand gen budget will reduce SAO volume without fixing the win rate.
+- DO NOT read SDR SAO creation as a paid quality signal. The drop is headcount-driven. Paid lead quality has not degraded; the team capacity to create SAOs from those leads has.
+
+4. Framing Guidance for Leadership
+
+Before any Q2 budget reallocation is made:
+1. Confirm Warm tracking fix timeline with RevOps. No Q-over-Q Warm budget decisions until tracking is repaired and the last 6 weeks of data are re-stated.
+2. SAO win rate is a sales process discussion, not a paid budget discussion.
+3. SDR capacity normalizes in ~6 weeks as new hire ramps. Avoid reading paid contribution against the distorted SAO creation rate during this window.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented Q1 FY27 pipeline response (the $25.2M vs $36.7M gap). Will be replaced with a redacted live brief from an upcoming pipeline review.</p>
       </div>
 
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Misclassifying tracking artifacts as paid problems.</strong> This is the single most consequential mistake the model can make. First version would treat a "Warm MQL volume down 40%" signal as a paid problem and recommend creative refreshes. The actual cause was a 6-week tracking miscount. Without the explicit "tracking artifact" classification in step 1, the model defaults to "any drop is a paid issue" and produces wrong recommendations. The <code>{OPTIONAL_PASTE_KNOWN_TRACKING_ISSUES_HERE}</code> field is critical — fill it in.</li>
+        <li><strong>Skipping the "What NOT to Do" section.</strong> When the model is asked for a response plan, it produces a list of actions. The wrong actions are at least as important to call out. Without the explicit "What NOT to Do" structure, the brief looks complete but leadership will still make the wrong call based on instinct. The PRD-documented Q1 FY27 case showed this — the wrong budget call was prevented specifically because the brief led with the wrong moves to avoid.</li>
+        <li><strong>Treating sales process issues as paid issues.</strong> Win rate is downstream of sales execution. SDR capacity is a headcount issue. The model wants to recommend paid responses for both because it was asked for a paid response. The classification framework forces it to flag what paid cannot fix — and to recommend separate conversations for those signals instead of paid actions.</li>
+      </ul>
 
       <h2>Variations</h2>
       <p>Two variations of this prompt are worth knowing.</p>

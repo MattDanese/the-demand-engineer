@@ -798,14 +798,41 @@ Begin.</pre>
 
       <!-- EXAMPLE OUTPUT -->
       <h2>Example Output</h2>
-      <div class="example-output example-output--pending">
+      <div class="example-output">
         <span class="example-output__label">Live Example</span>
-        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:13px;line-height:1.6;color:var(--color-text);margin:0 0 16px;overflow-wrap:break-word;">Creative Leaderboard (3-week window)
+
+| Rank | Creative                              | Channel  | View Rate | 50%/Play Rate | CPL   | MQL Pull-Through | Composite |
+|------|---------------------------------------|----------|-----------|---------------|-------|------------------|-----------|
+| 1    | Founder Talking Head — Pain Pitch     | LinkedIn | 31%       | 18%           | $142  | 28%              | 87        |
+| 2    | Influencer A — Product Walkthrough    | LinkedIn | 24%       | 12%           | $156  | 24%              | 76        |
+| 3    | Animated Explainer — Generic          | LinkedIn | 38%       | 22%           | $128  | 14%              | 71        |
+| 4    | Meta Video — UGC Style                | Meta     | n/a       | 47% play      | $52   | 18%              | 68        |
+| 5    | Meta Video — Branded Spot             | Meta     | n/a       | 38% play      | $44   | 7%               | 51        |
+
+Scaling Recommendations
+1. Founder Talking Head — Pain Pitch: Increase LinkedIn budget by 40% (~$2,000/week additional). Composite score 87 with strong MQL pull-through (28%) — the rare creative where top-funnel AND down-funnel both work. Watch frequency closely as we scale.
+2. Influencer A — Product Walkthrough: Expand to a second audience. Maintain current spend until composite holds on the broader audience.
+
+Kill List
+1. Meta Video — Branded Spot: $44 CPL looks healthy in isolation, but MQL pull-through is 7% — the cheapest leads in the set are also the worst. Kill or recut with sharper hook.
+
+Insufficient Data
+- Influencer C — running 9 days. Composite score not yet meaningful. Re-evaluate at 14-day mark.
+
+Pattern Observations
+- Founder-led talking-head content outperforms produced and animated content on MQL pull-through across LinkedIn. 1st and 2nd-place creatives are both human-led; the 3rd place is technically higher on top-funnel but loses on quality.
+- Meta cheap CPL is a trap. Top performer on CPL has the worst MQL pull-through in the set. The composite score (weighted toward MQL) flips the ranking — which is the correct read.</pre>
+        <p style="font-style:italic;font-size:13px;color:var(--color-text-muted);margin:0;">Illustrative example based on the PRD's documented influencer/video audit methodology. Will be replaced with a redacted live audit from an upcoming creative review.</p>
       </div>
 
       <!-- COMMON FAILURE MODES -->
       <h2>Common Failure Modes</h2>
-      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+      <ul>
+        <li><strong>Killing creative on a small sample.</strong> First version put a creative on the kill list after 6 days because its CPL was high. Six days is noise. The 2-week minimum rule in JUDGMENT RULES forced the model to add an "Insufficient Data" section instead of premature kill calls — short-run creatives get parked, not cut.</li>
+        <li><strong>Cheap CPL trap on Meta.</strong> Meta consistently produces the lowest CPLs in any cross-channel audit and the worst MQL pull-through. Without the composite scoring that weights MQL pull-through at 40%, the model would systematically recommend scaling the worst-quality creative because the CPL looked great. The composite rank is the fix.</li>
+        <li><strong>Treating high View Rate as a win signal.</strong> Early version put the "Animated Explainer — Generic" at the top because its top-funnel metrics were strongest. Top-funnel metrics describe attention, not quality. The 14% MQL pull-through on that same creative is the down-funnel truth. The composite ranking corrects for this, but you'll see the model still defaults to top-funnel intuition in its written commentary if you don't enforce the framework.</li>
+      </ul>
 
       <!-- VARIATIONS -->
       <h2>Variations</h2>
