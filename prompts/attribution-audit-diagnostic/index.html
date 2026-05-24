@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Claude Prompt for Paid Media Attribution Audit and Diagnostic | The Demand Engineer</title>
+  <meta name="description" content="A production-ready Claude prompt for auditing B2B paid media attribution. Checks GCLID population rate (70% threshold), OCI match rate (60% threshold), and flags conversion discrepancies — the diagnostic that prevented a $36.7M pipeline misread." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/prompts/attribution-audit-diagnostic/" />
+
+  <!-- ===== OPEN GRAPH ===== -->
+  <meta property="og:title" content="Claude Prompt for Paid Media Attribution Audit and Diagnostic" />
+  <meta property="og:description" content="A production-ready Claude prompt for auditing B2B paid media attribution. Checks GCLID population rate (70% threshold), OCI match rate (60% threshold), and flags conversion discrepancies — the diagnostic that prevented a $36.7M pipeline misread." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/prompts/attribution-audit-diagnostic/" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude Prompt for Paid Media Attribution Audit and Diagnostic" />
+  <meta name="twitter:description" content="A production-ready Claude prompt for auditing B2B paid media attribution. Checks GCLID population rate (70% threshold), OCI match rate (60% threshold), and flags conversion discrepancies — the diagnostic that prevented a $36.7M pipeline misread." />
+
+  <!-- ===== FONTS + KIT ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <!-- ===== GA4 ===== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N24QM0NQG6');
+  </script>
+
+  <!-- ===== SCHEMA: Article ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Prompt for Paid Media Attribution Audit and Diagnostic",
+    "description": "A production-ready Claude prompt for auditing B2B paid media attribution. Checks GCLID population rate (70% threshold), OCI match rate (60% threshold), and flags conversion discrepancies — the diagnostic that prevented a $36.7M pipeline misread.",
+    "author": {
+      "@type": "Person",
+      "name": "Matt Danese",
+      "jobTitle": "Senior Demand Generation Manager",
+      "url": "https://thedemandengineer.com",
+      "sameAs": ["https://linkedin.com/in/matthew-danese"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Demand Engineer",
+      "url": "https://thedemandengineer.com"
+    },
+    "url": "https://thedemandengineer.com/prompts/attribution-audit-diagnostic/",
+    "datePublished": "2026-05-24",
+    "dateModified": "2026-05-24",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://thedemandengineer.com/prompts/attribution-audit-diagnostic/"
+    },
+    "keywords": "claude prompt, paid media attribution audit, GCLID population rate, OCI match rate, B2B attribution diagnostic, Salesforce attribution",
+    "articleSection": "Attribution & Tracking",
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <!-- ===== SCHEMA: FAQPage ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What data do I need to run this audit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three inputs: (1) A Google Ads conversion report for the last 30 days — campaign, clicks, conversions, conversion rate. (2) A Salesforce lead report for the same period — lead source, GCLID populated Y/N, MQL date, SAO date. (3) An OCI upload log — records uploaded, matched, unmatched. You can run a partial audit with just the Google Ads and Salesforce data if the OCI log isn't available; the prompt will flag that the match rate check is incomplete."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does \"GCLID population rate\" mean and why does 70% matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GCLID is the click ID Google attaches to paid search and display clicks. When a lead fills out a form after a paid click, Salesforce should capture that GCLID in a hidden field — that's what allows Offline Conversion Import (OCI) to match the lead back to the original ad click. If your GCLID population rate is below 70%, you're losing attribution on more than 30% of paid leads. The 70% threshold is a practical benchmark: below it, OCI-based optimization is unreliable and Smart Bidding is training on noisy signal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this work with platforms other than Google Ads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The prompt is written for the Google Ads and Salesforce stack because GCLID and OCI are Google-specific mechanisms. If you're running LinkedIn or Meta, the attribution chain is different — LinkedIn uses its own Insight Tag and conversion API, Meta uses CAPI. This prompt won't diagnose LinkedIn or Meta attribution directly, but the pattern-level logic (checking for conversion discrepancies, identifying campaigns with spend and zero attributed pipeline) applies across platforms if you adapt the inputs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I run this instead of just pulling a standard pipeline report?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Run this attribution audit before any significant budget reallocation or channel cut decision — especially if a channel or campaign appears to be underperforming. A standard pipeline report tells you what was attributed; this prompt tells you whether the attribution data is trustworthy. The Q1 example in this prompt's PRD source ($25.2M vs. $36.7M pipeline gap) is a case where running the attribution audit first prevented a wrong channel cut. Run the audit, fix the breaks, then read the pipeline report."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ===== SCHEMA: BreadcrumbList ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Prompt Library", "item": "https://thedemandengineer.com/prompts/" },
+      { "@type": "ListItem", "position": 3, "name": "Attribution Audit Diagnostic", "item": "https://thedemandengineer.com/prompts/attribution-audit-diagnostic/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__links { display: flex; align-items: center; gap: 24px; }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary { background-color: var(--color-accent); color: #fff; }
+    .btn--primary:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+
+    /* ========= BREADCRUMB ========= */
+    .breadcrumb { margin-bottom: 20px; }
+    .breadcrumb__list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    .breadcrumb__list li {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+    }
+    .breadcrumb__list li + li::before {
+      content: '›';
+      margin: 0 8px;
+      color: var(--color-border);
+    }
+    .breadcrumb__list a { color: var(--color-accent); }
+    .breadcrumb__list a:hover { text-decoration: underline; }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 56px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.35rem, 3vw, 1.7rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-top: 56px;
+      margin-bottom: 16px;
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong { font-weight: 600; color: var(--color-accent-dark); }
+
+    /* ========= PROMPT BLOCK + COPY BUTTON ========= */
+    .prompt-block {
+      background: var(--color-accent-dark);
+      border-radius: 8px;
+      padding: 18px 22px 24px;
+      margin: 24px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      color: #c9d4e8;
+      line-height: 1.75;
+      position: relative;
+    }
+    .prompt-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b8cba;
+      display: block;
+      margin-bottom: 14px;
+    }
+    .prompt-text {
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      line-height: inherit;
+      white-space: pre-wrap;
+      background: none;
+      border: none;
+      padding: 0;
+      overflow-wrap: break-word;
+    }
+    .prompt-copy-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #a8bbd4;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .prompt-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.32);
+      color: #c9d4e8;
+    }
+    .prompt-copy-btn.copied {
+      background: rgba(45, 91, 227, 0.25);
+      border-color: rgba(45, 91, 227, 0.45);
+      color: #a8c0ff;
+    }
+    .prompt-block--placeholder { opacity: 0.65; }
+    .prompt-block--placeholder .prompt-text { color: #6b8cba; font-style: italic; }
+
+    /* ========= VARIABLE BLOCKS ========= */
+    .var-block {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .var-name {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .var-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    /* ========= EXAMPLE OUTPUT ========= */
+    .example-output {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .example-output__label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .example-output--pending p {
+      font-style: italic;
+      color: var(--color-text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list { list-style: none; padding: 0; margin: 0; }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover { color: var(--color-accent-hover); text-decoration: underline; }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item { margin-bottom: 28px; }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p { margin-bottom: 0; }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy { font-size: 12px; color: var(--color-text-muted); text-align: center; }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+      .prompt-block { padding: 14px 16px 20px; font-size: 12px; }
+      .prompt-copy-btn { top: 10px; right: 10px; font-size: 10px; padding: 4px 8px; }
+      .var-block { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="../../">← Back to Site</a></li>
+        <li><a href="../../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../blog/">Blog</a></li>
+        <li><a href="../">Prompts</a></li>
+        <li><a href="../../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MOBILE NAV ===== -->
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../" class="mobile-nav-link">← Back to Site</a>
+    <a href="../../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../../blog/" class="mobile-nav-link">Blog</a>
+    <a href="../" class="mobile-nav-link">Prompts</a>
+    <a href="../../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- ===== POST HERO ===== -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li><a href="../../">Home</a></li>
+            <li><a href="../">Prompt Library</a></li>
+            <li aria-current="page">Attribution Audit Diagnostic</li>
+          </ol>
+        </nav>
+        <span class="post-category">Attribution &amp; Tracking</span>
+        <h1 class="post-title">Claude Prompt for Paid Media Attribution Audit and Diagnostic</h1>
+        <h2 class="post-subtitle">Run a systematic attribution audit across your Google Ads, Salesforce, and OCI pipeline — flagging GCLID population below 70%, OCI match rates below 60%, and campaigns with spend but zero attributed SAOs — before you make a budget call on broken data.</h2>
+        <p class="post-meta">8 min read · Matt Danese · May 2026 · <span style="color:var(--color-accent);">Last updated: May 2026</span></p>
+      </div>
+    </section>
+
+    <!-- ===== AUTHOR BIO ===== -->
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <!-- ===== POST BODY ===== -->
+    <article class="post-body">
+
+      <!-- DIRECT ANSWER BLOCK -->
+      <div class="direct-answer">
+        <strong>Paid media attribution audit:</strong> Audit your paid media attribution chain by pasting Google Ads conversion data, Salesforce lead records, and your OCI upload log into Claude with this prompt. It checks GCLID population against a 70% threshold, OCI match rate against 60%, flags conversion volume discrepancies above 20%, and surfaces zero-SAO campaigns — returning a prioritized action list ranked by impact.
+      </div>
+
+      <!-- THE PROMPT -->
+      <h2>The Prompt</h2>
+      <div class="prompt-block">
+        <span class="prompt-label">Production Prompt — Copy and use verbatim</span>
+        <button class="prompt-copy-btn" onclick="copyPrompt(this,'prompt-main','attribution-audit-diagnostic')" aria-label="Copy prompt to clipboard">Copy prompt</button>
+        <pre class="prompt-text" id="prompt-main">You are a senior B2B paid media attribution analyst. You understand the difference between a fast loop (Enhanced Conversions on MQL events) and a slow loop (Offline Conversion Import on SAO events), and you know that B2B teams optimizing toward form fills are training Smart Bidding on the wrong signal. You also know that attribution breaks quietly — and that the worst budget decisions are made when broken tracking is mistaken for poor performance.
+
+INPUTS
+
+I will paste three datasets below. Include at minimum:
+- Google Ads conversion report (last 30 days): campaign, clicks, conversions, conversion rate
+- Salesforce lead report (last 30 days): lead source, GCLID populated Y/N, MQL date, SAO date
+- OCI upload log (last 30 days): records uploaded, matched, unmatched
+
+{PASTE_GOOGLE_ADS_DATA_HERE}
+
+{PASTE_SALESFORCE_DATA_HERE}
+
+{PASTE_OCI_LOG_HERE}
+
+{OPTIONAL_PASTE_RECENT_CHANGES_HERE}
+(Examples: "Form layout updated last Wednesday," "New OCI conversion action added 10 days ago," "Salesforce sync rules changed by RevOps team." Leave blank if no known changes.)
+
+WHAT I NEED FROM YOU
+
+Audit the attribution chain and identify breaks. Produce the output in this exact order:
+
+1. GCLID Population Rate
+Calculate the percentage of paid Salesforce leads that have GCLID populated. Flag if below 70%. State the rate, the threshold, and the implication if it's below target.
+
+2. OCI Match Rate
+Calculate the OCI match rate from the upload log. Flag if below 60%. State the rate, the threshold, and the implication if it's below target.
+
+3. Conversion Volume Discrepancies
+Compare Google Ads reported conversions to Salesforce MQL/SAO counts by lead source. Flag any source where the gap is greater than 20%. State the gap in absolute terms and percentage terms.
+
+4. Campaigns with Zero Attributed SAOs Despite Significant Spend
+Identify campaigns that have spent meaningfully (define meaningfully relative to the dataset — e.g., top 25% of spend) but show zero attributed SAOs in the period. Flag as potential attribution gap, not necessarily performance failure.
+
+5. Sudden Volume Drops
+Identify any conversion volume drop greater than 20% week-over-week. For each: state the drop, note whether spend or traffic also dropped (if so, it's likely a performance shift), and if not, flag as a likely tracking break.
+
+6. Prioritized Action List
+3-5 specific issues from the above, ranked by impact. For each:
+- The problem (state plainly)
+- The likely root cause
+- The recommended fix
+- Who owns the fix (Paid, RevOps, Sales Ops, Web)
+
+JUDGMENT RULES
+
+- Do not blame a channel for underperformance until attribution integrity is verified. A channel that appears to be failing may simply have a tracking break. Always recommend integrity verification before any significant budget call.
+- Distinguish between an attribution gap (no SAOs attributed despite spend) and an attribution break (drop in attributed events without a corresponding performance change). They have different causes and different fixes.
+- If recent changes were provided, weight those heavily as candidate causes. Most attribution breaks trace to a recent system change.
+- GCLID population below 70% almost always traces to form-side issues (hidden field not capturing, field mapping broken, page not receiving the auto-tagged URL parameter). OCI match rate below 60% almost always traces to GCLID quality or timing issues (uploads happening before GCLIDs are written, GCLID format mismatch, conversion window expired).
+- If you don't have enough data to diagnose a flagged issue, say so explicitly. Do not hallucinate metrics. "OCI match rate cannot be calculated from the provided log — the matched/unmatched column is missing" is the correct response. Be honest with me — fabricated diagnostics cause real budget mistakes.
+
+OUTPUT FORMAT
+
+Return as {OUTPUT_FORMAT}.
+
+If "markdown": full structure with ## headings per section and a final prioritized action table.
+If "html": semantic HTML with clear section breaks, suitable for handing off to RevOps or executive review.
+
+Begin.</pre>
+      </div>
+
+      <!-- HOW TO USE IT -->
+      <h2>How to Use It</h2>
+
+      <p>This prompt exists because the most expensive attribution mistakes happen when teams misread broken tracking as poor performance — and then cut spend on a channel that was actually working. The real-world trigger was a Q1 pipeline report showing $25.2M vs. a $36.7M plan: before acting on that gap, the right first question is whether the attribution chain is intact. This prompt answers that question systematically, across GCLID capture, OCI match rate, and conversion volume discrepancy. Claude handles the cross-dataset analysis more reliably than ChatGPT in this context — Claude is better calibrated about surfacing "I can't calculate this from the data provided" rather than inventing a match rate from incomplete inputs.</p>
+
+      <p>The three thresholds are specific for a reason. GCLID population below 70% almost always traces to a form-side issue — the hidden field isn't capturing, the field mapping is broken, or the page isn't receiving the auto-tagged URL parameter. OCI match rate below 60% almost always traces to GCLID quality or timing (uploads before GCLIDs are written, GCLID format mismatch, conversion window expired). These are documented patterns from production attribution audits; the prompt tells Claude to use them before reaching for novel explanations.</p>
+
+      <p>The prioritized action list at the end of the output is the most actionable part — each issue gets a root cause, a recommended fix, and a named owner (Paid, RevOps, Sales Ops, Web). That owner assignment matters when attribution fixes require cross-functional coordination. The output works best in "markdown" format when sharing with RevOps for a joint fix sprint; use "html" when presenting to an exec who needs to approve the remediation plan.</p>
+
+      <!-- EXAMPLE OUTPUT -->
+      <h2>Example Output</h2>
+      <div class="example-output example-output--pending">
+        <span class="example-output__label">Live Example</span>
+        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+      </div>
+
+      <!-- VARIATIONS -->
+      <h2>Variations</h2>
+      <p>Two variations of this prompt are worth knowing.</p>
+
+      <h3>Variation 1: Post-Change Audit Version</h3>
+      <p>Focused specifically on attribution integrity after a system change — new form, OCI conversion action added, Salesforce sync rule change, or landing page update. Weights recent changes much more heavily as candidate causes, reducing false-positive flags on stable, healthy parts of the attribution chain.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <h3>Variation 2: Campaign-Level Attribution Drill-Down</h3>
+      <p>Scoped to a single campaign — when you suspect one specific campaign has attribution issues (zero SAOs despite significant spend) and need a detailed diagnosis of that campaign's conversion path rather than a full-account audit.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <!-- RELATED PROMPTS -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Prompts</p>
+        <ul class="related-reading__list">
+          <li><a href="../marketo-nurture-diagnostic/">Claude Prompt for Marketo Lead Nurture Routing Diagnostic</a></li>
+          <li><a href="../pipeline-gap-analysis/">Claude Prompt for Pipeline Gap Diagnostic and Paid Media Response Plan</a></li>
+          <li><a href="../channel-budget-reallocation/">Claude Prompt for Paid Channel Budget Reallocation</a></li>
+          <li><a href="../../blog/b2b-paid-media-attribution-tracking.html">B2B Paid Media Attribution and Tracking</a></li>
+        </ul>
+      </div>
+
+      <!-- NEWSLETTER CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Get one new prompt every Monday.</p>
+        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'attribution-audit-diagnostic'})}">Subscribe free →</a>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h3>What data do I need to run this audit?</h3>
+          <p>Three inputs: (1) A Google Ads conversion report for the last 30 days — campaign, clicks, conversions, conversion rate. (2) A Salesforce lead report for the same period — lead source, GCLID populated Y/N, MQL date, SAO date. (3) An OCI upload log — records uploaded, matched, unmatched. You can run a partial audit with just the Google Ads and Salesforce data if the OCI log isn't available; the prompt will flag that the match rate check is incomplete.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What does "GCLID population rate" mean and why does 70% matter?</h3>
+          <p>GCLID is the click ID Google attaches to paid search and display clicks. When a lead fills out a form after a paid click, Salesforce should capture that GCLID in a hidden field — that's what allows Offline Conversion Import (OCI) to match the lead back to the original ad click. If your GCLID population rate is below 70%, you're losing attribution on more than 30% of paid leads. The 70% threshold is a practical benchmark: below it, OCI-based optimization is unreliable and Smart Bidding is training on noisy signal.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does this work with platforms other than Google Ads?</h3>
+          <p>The prompt is written for the Google Ads and Salesforce stack because GCLID and OCI are Google-specific mechanisms. If you're running LinkedIn or Meta, the attribution chain is different — LinkedIn uses its own Insight Tag and conversion API, Meta uses CAPI. This prompt won't diagnose LinkedIn or Meta attribution directly, but the pattern-level logic (checking for conversion discrepancies, identifying campaigns with spend and zero attributed pipeline) applies across platforms if you adapt the inputs.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>When should I run this instead of just pulling a standard pipeline report?</h3>
+          <p>Run this attribution audit before any significant budget reallocation or channel cut decision — especially if a channel or campaign appears to be underperforming. A standard pipeline report tells you what was attributed; this prompt tells you whether the attribution data is trustworthy. The Q1 example in this prompt's PRD source ($25.2M vs. $36.7M pipeline gap) is a case where running the attribution audit first prevented a wrong channel cut. Run the audit, fix the breaks, then read the pipeline report.</p>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="post-footer">
+    <a href="../" class="post-footer__back">← Back to Prompt Library</a>
+    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================
+      // 1. PROMPT COPY BUTTON
+      // =========================================================
+      function copyPrompt(btn, targetId, slug) {
+        var text = document.getElementById(targetId).textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copied ✓';
+            btn.classList.add('copied');
+            setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+            if (typeof gtag !== 'undefined') { gtag('event', 'prompt_copy', { prompt_slug: slug }); }
+          }).catch(function () { fallbackCopy(btn, text); });
+        } else {
+          fallbackCopy(btn, text);
+        }
+      }
+      function fallbackCopy(btn, text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+      }
+      window.copyPrompt = copyPrompt;
+
+      // =========================================================
+      // 2. NAV HIDE / SHOW ON SCROLL DIRECTION
+      // =========================================================
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) { nav.classList.add('nav--hidden'); }
+            else { nav.classList.remove('nav--hidden'); }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      // =========================================================
+      // 3. HAMBURGER MENU TOGGLE
+      // =========================================================
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+      hamburger.addEventListener('click', function () {
+        var isOpen = hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>

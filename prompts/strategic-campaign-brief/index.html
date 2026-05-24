@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan | The Demand Engineer</title>
+  <meta name="description" content="A production-ready Claude prompt for writing a paid media support plan for a brand-led B2B campaign. Produces a 7-section brief covering paid strategy per channel, LP and CRO plan, conversion architecture, experimentation roadmap, measurement framework, and dependencies." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/prompts/strategic-campaign-brief/" />
+  <meta property="og:title" content="Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan" />
+  <meta property="og:description" content="A production-ready Claude prompt for writing a paid media support plan for a brand-led B2B campaign. Produces a 7-section brief covering paid strategy per channel, LP and CRO plan, conversion architecture, experimentation roadmap, measurement framework, and dependencies." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/prompts/strategic-campaign-brief/" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan" />
+  <meta name="twitter:description" content="A production-ready Claude prompt for writing a paid media support plan for a brand-led B2B campaign. Produces a 7-section brief covering paid strategy per channel, LP and CRO plan, conversion architecture, experimentation roadmap, measurement framework, and dependencies." />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-N24QM0NQG6');</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan",
+    "description": "A production-ready Claude prompt for writing a paid media support plan for a brand-led B2B campaign. Produces a 7-section brief covering paid strategy per channel, LP and CRO plan, conversion architecture, experimentation roadmap, measurement framework, and dependencies.",
+    "author": { "@type": "Person", "name": "Matt Danese", "jobTitle": "Senior Demand Generation Manager", "url": "https://thedemandengineer.com", "sameAs": ["https://linkedin.com/in/matthew-danese"] },
+    "publisher": { "@type": "Organization", "name": "The Demand Engineer", "url": "https://thedemandengineer.com" },
+    "url": "https://thedemandengineer.com/prompts/strategic-campaign-brief/",
+    "datePublished": "2026-05-24", "dateModified": "2026-05-24",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://thedemandengineer.com/prompts/strategic-campaign-brief/" },
+    "keywords": "claude prompt, strategic campaign brief, B2B campaign brief, paid media strategy, multi-channel campaign plan, demand gen brief",
+    "articleSection": "Strategic Briefs & Pipeline", "inLanguage": "en-US"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How detailed does the brand campaign brief need to be to get a good output?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The brief should include the campaign theme and core message, the target audience (role, function, company size), the campaign timeline and major phases, and the brand goal (awareness, consideration, brand favorability). If you have creative direction or messaging frameworks, include those too. The prompt explicitly handles the case where the brand brief is too thin — it will flag what's missing rather than inventing information to fill gaps." }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between brand-level metrics and demand gen metrics in the measurement framework?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Brand-level metrics measure whether the campaign is changing how the target audience perceives the company — aided and unaided awareness, ad recall, consideration lift, brand favorability. Demand gen metrics measure whether the campaign is generating pipeline — SAOs, pipeline contribution, CPL, MQL-to-SAO rate. Both matter for a brand-led campaign, but they're measured differently and on different timelines. The prompt builds a measurement framework that includes both." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this for a campaign that's already running rather than pre-launch?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, but the most leverage is pre-launch. The 7-section structure is designed to answer questions before the campaign starts. If the campaign is already running, use the Measurement Framework and Dependencies & Risks sections to audit what's in place and flag gaps. Use the Experimentation Roadmap section to build the optimization backlog for the campaign's current flight." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does this prompt connect to the Pipeline Gap Analysis prompt?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Strategic Campaign Brief builds the plan before the campaign; the Pipeline Gap Analysis diagnoses what went wrong during or after. If you build the brief with this prompt at launch and then run the Pipeline Gap Analysis prompt mid-quarter when pipeline coverage is underperforming, the brief becomes the reference point — what was the plan, what actually happened, and what paid actions should respond. They're designed to work in sequence." }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Prompt Library", "item": "https://thedemandengineer.com/prompts/" },
+      { "@type": "ListItem", "position": 3, "name": "Strategic Campaign Brief", "item": "https://thedemandengineer.com/prompts/strategic-campaign-brief/" }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{--color-bg:#F4F6FB;--color-bg-card:#FFFFFF;--color-text:#0D1117;--color-text-muted:#64748B;--color-accent:#2D5BE3;--color-accent-hover:#1E46C7;--color-accent-dark:#0A1628;--color-border:#DDE3F0;--color-chip-bg:#EEF2FF;--color-chip-text:#3B5CC4;--font-heading:'Fraunces',serif;--font-body:'DM Sans',system-ui,sans-serif;--max-width:760px;--nav-height:56px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;font-size:17px;}
+    body{background-color:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;}
+    img{display:block;max-width:100%;}a{color:inherit;text-decoration:none;}ul{list-style:none;}button{font-family:var(--font-body);}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-height);background:rgba(244,246,251,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);transition:transform 0.3s ease;}
+    .nav--hidden{transform:translateY(-100%);}
+    .nav__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+    .nav__links{display:flex;align-items:center;gap:24px;}
+    .nav__links a{position:relative;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-text-muted);transition:color 0.2s ease;padding-bottom:2px;}
+    .nav__links a::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background-color:var(--color-accent);transform:scaleX(0);transform-origin:left;transition:transform 0.2s ease;}
+    .nav__links a:hover{color:var(--color-accent);}.nav__links a:hover::after{transform:scaleX(1);}
+    .nav__hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;cursor:pointer;background:none;border:none;padding:0;}
+    .nav__hamburger span{display:block;width:22px;height:2px;background-color:var(--color-accent-dark);border-radius:2px;transition:all 0.25s ease;}
+    .nav__hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav__hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+    .nav__hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav__mobile{display:none;position:fixed;top:var(--nav-height);left:0;right:0;background:rgba(244,246,251,0.97);border-bottom:1px solid var(--color-border);padding:20px 24px;z-index:99;flex-direction:column;gap:20px;}
+    .nav__mobile.open{display:flex;}.nav__mobile a{font-family:var(--font-body);font-weight:500;font-size:17px;color:var(--color-text);transition:color 0.2s ease;}.nav__mobile a:hover{color:var(--color-accent);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:6px;font-family:var(--font-body);font-weight:600;font-size:15px;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s ease;white-space:nowrap;}
+    .btn--primary{background-color:var(--color-accent);color:#fff;}.btn--primary:hover{background-color:var(--color-accent-hover);transform:translateY(-1px);}
+    .breadcrumb{margin-bottom:20px;}.breadcrumb__list{display:flex;align-items:center;list-style:none;padding:0;flex-wrap:wrap;}
+    .breadcrumb__list li{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);display:flex;align-items:center;}
+    .breadcrumb__list li+li::before{content:'›';margin:0 8px;color:var(--color-border);}
+    .breadcrumb__list a{color:var(--color-accent);}.breadcrumb__list a:hover{text-decoration:underline;}
+    .post-hero{padding-top:calc(var(--nav-height) + 56px);padding-bottom:40px;background:var(--color-bg);border-bottom:1px solid var(--color-border);}
+    .post-hero__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;}
+    .post-category{display:inline-block;background-color:var(--color-chip-bg);color:var(--color-chip-text);font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:20px;}
+    .post-title{font-family:var(--font-heading);font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-bottom:20px;}
+    .post-subtitle{font-family:var(--font-body);font-weight:500;font-size:1.05rem;color:var(--color-text-muted);line-height:1.45;margin-top:-10px;margin-bottom:16px;}
+    .post-meta{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);}
+    .author-bio{max-width:680px;margin:0 auto;padding:20px 24px;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);display:flex;align-items:center;gap:16px;}
+    .author-bio__avatar{width:48px;height:48px;border-radius:50%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .author-bio__name{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-text);margin-bottom:3px;}
+    .author-bio__desc{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);line-height:1.5;}
+    .post-body{max-width:680px;margin:48px auto 0;padding:0 24px 80px;}
+    .post-body p{font-size:17px;line-height:1.75;margin-bottom:24px;color:var(--color-text);}
+    .post-body h2{font-family:var(--font-heading);font-weight:700;font-size:clamp(1.35rem,3vw,1.7rem);line-height:1.2;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-top:56px;margin-bottom:16px;}
+    .post-body h3{font-family:var(--font-heading);font-weight:700;font-size:1.2rem;line-height:1.25;letter-spacing:-0.01em;color:var(--color-accent-dark);margin-top:40px;margin-bottom:12px;}
+    .post-body ul{list-style:disc;padding-left:20px;margin-bottom:24px;}.post-body ul li{line-height:1.8;margin-bottom:8px;font-size:17px;color:var(--color-text);}
+    .post-body strong{font-weight:600;}
+    .direct-answer{background:var(--color-chip-bg);border-left:3px solid var(--color-accent);border-radius:6px;padding:20px 24px;margin-bottom:32px;font-size:16px;line-height:1.65;color:var(--color-text);}
+    .direct-answer strong{font-weight:600;color:var(--color-accent-dark);}
+    .prompt-block{background:var(--color-accent-dark);border-radius:8px;padding:18px 22px 24px;margin:24px 0;font-family:'Courier New',Courier,monospace;font-size:13px;color:#c9d4e8;line-height:1.75;position:relative;}
+    .prompt-label{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#6b8cba;display:block;margin-bottom:14px;}
+    .prompt-text{margin:0;font-family:inherit;font-size:inherit;color:inherit;line-height:inherit;white-space:pre-wrap;background:none;border:none;padding:0;overflow-wrap:break-word;}
+    .prompt-copy-btn{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#a8bbd4;font-family:var(--font-body);font-size:11px;font-weight:500;padding:5px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s ease;z-index:2;white-space:nowrap;}
+    .prompt-copy-btn:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.32);color:#c9d4e8;}
+    .prompt-copy-btn.copied{background:rgba(45,91,227,0.25);border-color:rgba(45,91,227,0.45);color:#a8c0ff;}
+    .prompt-block--placeholder{opacity:0.65;}.prompt-block--placeholder .prompt-text{color:#6b8cba;font-style:italic;}
+    .example-output{background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:8px;padding:20px 24px;margin:24px 0;}
+    .example-output__label{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:12px;}
+    .example-output--pending p{font-style:italic;color:var(--color-text-muted);font-size:15px;line-height:1.65;margin:0;}
+    .post-cta{background:var(--color-chip-bg);border-left:3px solid var(--color-accent);border-radius:8px;padding:28px 32px;margin-top:48px;}
+    .post-cta__heading{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-accent-dark);margin-bottom:8px;}
+    .post-cta__body{font-family:var(--font-body);font-size:14px;color:var(--color-text-muted);line-height:1.6;margin-bottom:20px;}
+    .related-reading{border-top:1px solid var(--color-border);padding-top:32px;margin-top:40px;}
+    .related-reading__heading{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+    .related-reading__list{list-style:none;padding:0;margin:0;}.related-reading__list li{line-height:2;}
+    .related-reading__list a{font-family:var(--font-body);font-weight:500;font-size:15px;color:var(--color-accent);transition:color 0.15s ease;}
+    .related-reading__list a:hover{color:var(--color-accent-hover);text-decoration:underline;}
+    .faq-section{border-top:1px solid var(--color-border);padding-top:32px;margin-top:40px;}
+    .faq-section>h2{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:24px;}
+    .faq-item{margin-bottom:28px;}.faq-item h3{font-family:var(--font-heading);font-weight:700;font-size:1.1rem;color:var(--color-accent-dark);margin-top:0!important;margin-bottom:10px;}
+    .faq-item p{margin-bottom:0;}
+    .post-footer{max-width:680px;margin:0 auto;padding:24px 24px 48px;border-top:1px solid var(--color-border);}
+    .post-footer__back{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-accent);margin-bottom:16px;transition:color 0.2s ease;}
+    .post-footer__back:hover{color:var(--color-accent-hover);}
+    .post-footer__copy{font-size:12px;color:var(--color-text-muted);text-align:center;}
+    @media(max-width:768px){html{font-size:16px;}.post-title{font-size:clamp(1.5rem,4vw,2rem);}.post-body{padding:0 20px 60px;}.post-hero__inner{padding:0 20px;}.post-footer{padding:24px 20px 40px;}.nav__links{display:none;}.nav__hamburger{display:flex;}.post-cta{padding:24px;}.prompt-block{padding:14px 16px 20px;font-size:12px;}.prompt-copy-btn{top:10px;right:10px;font-size:10px;padding:4px 8px;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="../../">← Back to Site</a></li>
+        <li><a href="../../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../blog/">Blog</a></li>
+        <li><a href="../">Prompts</a></li>
+        <li><a href="../../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../" class="mobile-nav-link">← Back to Site</a>
+    <a href="../../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../../blog/" class="mobile-nav-link">Blog</a>
+    <a href="../" class="mobile-nav-link">Prompts</a>
+    <a href="../../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li><a href="../../">Home</a></li>
+            <li><a href="../">Prompt Library</a></li>
+            <li aria-current="page">Strategic Campaign Brief</li>
+          </ol>
+        </nav>
+        <span class="post-category">Strategic Briefs &amp; Pipeline</span>
+        <h1 class="post-title">Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan</h1>
+        <h2 class="post-subtitle">Turn a brand campaign brief into a complete paid media support plan — with channel role assignments, landing page strategy, conversion architecture, a prioritized experimentation roadmap, and a measurement framework that separates brand-level metrics from demand gen metrics.</h2>
+        <p class="post-meta">9 min read · Matt Danese · May 2026 · <span style="color:var(--color-accent);">Last updated: May 2026</span></p>
+      </div>
+    </section>
+
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <article class="post-body">
+
+      <div class="direct-answer">
+        <strong>Strategic campaign brief:</strong> Build a complete paid media support plan for a brand campaign by pasting the brand brief, target ICP, and any channel constraints into Claude with this prompt. It produces a 7-section brief covering channel role assignments, landing page strategy, conversion and retargeting architecture, an Impact × Confidence × Ease experimentation roadmap, and a measurement framework with attribution approach.
+      </div>
+
+      <h2>The Prompt</h2>
+      <div class="prompt-block">
+        <span class="prompt-label">Production Prompt — Copy and use verbatim</span>
+        <button class="prompt-copy-btn" onclick="copyPrompt(this,'prompt-main','strategic-campaign-brief')" aria-label="Copy prompt to clipboard">Copy prompt</button>
+        <pre class="prompt-text" id="prompt-main">You are a senior B2B SaaS demand gen director building a paid media support plan for a brand-led campaign. You know that brand campaigns create demand and demand gen captures it — and that the connection between the two has to be architected, not assumed. Your audience for this brief is the VP of Marketing, the CMO, and the Brand team; they will use it to align before campaign launch.
+
+INPUTS
+
+I will paste the brand campaign overview below — typically as a briefing doc, deck excerpt, or messaging framework from the Brand team.
+
+{PASTE_BRAND_CAMPAIGN_BRIEF_HERE}
+
+{PASTE_TARGET_ICP_HERE}
+(Example: "Senior decision-makers in [function] at [company stage / size] companies evaluating [product category].")
+
+{OPTIONAL_PASTE_CHANNEL_CONSTRAINTS_HERE}
+(Examples: "LinkedIn budget is fixed at $X/month," "Reddit not approved for this audience," "Google PMax not yet running." Leave blank if no constraints.)
+
+WHAT I NEED FROM YOU
+
+Produce a structured demand gen support brief in this exact order:
+
+1. Campaign Summary (2-3 paragraphs)
+- The brand campaign's core theme and message in plain language
+- The target audience (ICP: role, function, company size, intent signals)
+- The campaign timeline and major phases
+- The brand goal (awareness, consideration, brand favorability) and how it sets up the demand gen handoff
+
+2. Paid Media Strategy (per channel)
+For each channel that will support the campaign, state:
+- Channel role (top of funnel awareness / mid-funnel consideration / bottom of funnel conversion / retargeting)
+- Audience targeting approach (who, on which signals)
+- Recommended ad format
+- Messaging angle aligned to the brand theme
+- Primary KPI for this channel's contribution
+- Estimated budget allocation as a percentage of total
+
+Channels to consider: Google Ads (NonBrand Search, Brand Search, Display, YouTube), LinkedIn (Sponsored Content, Document Ads, Message Ads, Conversation Ads), Meta (Prospecting + Retargeting), Reddit if applicable.
+
+3. Landing Page &amp; CRO Strategy
+- Recommend dedicated LP vs. existing page (state which)
+- Above-the-fold messaging aligned to brand campaign theme
+- Form optimization recommendations
+- 2-3 A/B test hypotheses to deploy at campaign launch
+
+4. Conversion &amp; Retargeting Architecture
+- Funnel stages: Awareness → Consideration → Decision
+- Pixel and tracking requirements (UTM convention, conversion events, GCLID capture)
+- Retargeting audience segments to build
+- Nurture touchpoint plan (email, ad retargeting, sales follow-up)
+
+5. Experimentation Roadmap (3-5 experiments)
+Each experiment: hypothesis, test design, success metric, estimated timeline. Prioritized by impact × confidence × ease.
+
+6. Measurement Framework
+- Primary KPIs (SAOs, pipeline generated, influenced pipeline)
+- Secondary KPIs (CTR, CVR, CPL, MQL-to-SAO rate)
+- Reporting cadence (weekly, biweekly, end-of-campaign)
+- Attribution approach (last-touch, multi-touch, brand lift study)
+
+7. Dependencies &amp; Risks
+- What's needed from Brand, Web, Sales, RevOps
+- Timeline risks
+- Budget constraints
+- Risks specific to this campaign architecture
+
+JUDGMENT RULES
+
+- The brief must tie every paid media decision back to the brand campaign theme. If a paid channel recommendation doesn't connect to the brand message, it's the wrong channel for this campaign — even if it's a high-performing channel in general.
+- Channel role assignments matter. Google NonBrand Search is not an awareness channel; YouTube can be. LinkedIn Document Ads are mid-funnel, not top-of-funnel. Get the roles right or the funnel architecture fails.
+- The experimentation roadmap should propose 3-5 experiments maximum. More than that signals indecision; fewer than that under-scopes the optimization opportunity.
+- The measurement framework must distinguish between brand-level metrics (aided/unaided awareness, ad recall, consideration) and demand gen metrics (SAOs, pipeline, CPL). Both belong in the brief.
+- Dependencies &amp; Risks is not optional. A brief that omits cross-functional dependencies sets up the launch to fail when a missing approval blocks a critical step.
+- If the brand campaign brief is too thin to inform the demand gen plan, say so explicitly. "The brand brief does not specify the campaign timeline — recommend confirming with Brand team before finalizing paid media flight dates" is better than inventing a timeline.
+
+OUTPUT FORMAT
+
+Return as {OUTPUT_FORMAT}.
+
+If "markdown": full structure with ## headers per section.
+If "html": semantic HTML structured as an exec-ready brief with clear navigation between sections.
+
+Begin.</pre>
+      </div>
+
+      <h2>How to Use It</h2>
+
+      <p>This prompt is designed for the handoff moment between the Brand team and the demand gen team — when a brand campaign is scoped and you need to build the paid media support architecture before launch. The 7-section brief structure (Campaign Summary, Paid Strategy, LP/CRO, Conversion Architecture, Experimentation Roadmap, Measurement, Dependencies &amp; Risks) is directly usable as a pre-launch alignment document with your VP and CMO. In production use, Claude produces more coherent channel role assignments than ChatGPT — Claude correctly distinguishes YouTube and LinkedIn video as awareness channels from Google NonBrand Search as a consideration channel, while ChatGPT occasionally conflates these roles.</p>
+
+      <p>The channel role assignments are the most critical section to get right. The brief should clarify whether each channel is performing a top-of-funnel awareness function, a mid-funnel consideration function, or a bottom-of-funnel conversion function — because the KPIs, creative formats, and optimization logic are different for each role. Google NonBrand Search is not an awareness channel; it captures existing demand. LinkedIn Document Ads are mid-funnel, not top-of-funnel. The prompt explicitly instructs Claude to assign roles correctly before specifying creative formats or KPIs.</p>
+
+      <p>The Dependencies &amp; Risks section at the end is the one that prevents launch failures. A brief that doesn't list what's needed from Brand (approved copy and imagery), Web (landing page build), RevOps (UTM convention and tracking setup), and Sales (MQL routing and BDR enablement) creates a situation where the campaign launches half-built and the paid team takes the blame for a late-stage coordination failure. Include this section in every pre-launch review.</p>
+
+      <!-- TODO: Matt to list specific {variables} this prompt expects -->
+
+      <h2>Example Output</h2>
+      <div class="example-output example-output--pending">
+        <span class="example-output__label">Live Example</span>
+        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+      </div>
+
+      <h2>Common Failure Modes</h2>
+      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+
+      <h2>Variations</h2>
+      <p>Two variations of this prompt are worth knowing.</p>
+
+      <h3>Variation 1: ABM Campaign Brief Version</h3>
+      <p>Adapted for account-based marketing campaign briefs — focuses on named account targeting, multi-threading across buying committee roles, and stage-based progression rather than broad-reach channel architecture. For when the campaign is targeting a defined list of high-value accounts rather than an audience segment.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <h3>Variation 2: Product Launch Brief Version</h3>
+      <p>Scoped specifically to a product launch — adds a launch-day paid activation plan, a coverage gap analysis against competitor keywords triggered by the announcement, and a post-launch measurement framework with a 30/60/90 day attribution window for tracking awareness-to-pipeline conversion.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Prompts</p>
+        <ul class="related-reading__list">
+          <li><a href="../pipeline-gap-analysis/">Claude Prompt for Pipeline Gap Diagnostic and Paid Media Response Plan</a></li>
+          <li><a href="../sales-enablement-package/">Claude Prompt for Sales Enablement Package from New B2B Content Offers</a></li>
+          <li><a href="../ad-copy-variant-generator/">Claude Prompt for Ad Copy Variant Generation with Expert Panel Scoring</a></li>
+          <li><a href="../../blog/ai-b2b-demand-generation-strategies-2026.html">AI B2B Demand Generation Strategies 2026</a></li>
+        </ul>
+      </div>
+
+      <div class="post-cta">
+        <p class="post-cta__heading">Get one new prompt every Monday.</p>
+        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'strategic-campaign-brief'})}">Subscribe free →</a>
+      </div>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h3>How detailed does the brand campaign brief need to be to get a good output?</h3>
+          <p>The brief should include the campaign theme and core message, the target audience (role, function, company size), the campaign timeline and major phases, and the brand goal (awareness, consideration, brand favorability). If you have creative direction or messaging frameworks, include those too. The prompt explicitly handles the case where the brand brief is too thin — it will flag what's missing ("the brand brief does not specify the campaign timeline") rather than inventing information to fill gaps.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What's the difference between brand-level metrics and demand gen metrics in the measurement framework?</h3>
+          <p>Brand-level metrics measure whether the campaign is changing how the target audience perceives the company — aided and unaided awareness, ad recall, consideration lift, brand favorability. These are typically measured through brand lift studies or post-campaign surveys. Demand gen metrics measure whether the campaign is generating pipeline — SAOs, pipeline contribution, CPL, MQL-to-SAO rate. Both matter for a brand-led campaign, but they're measured differently and on different timelines. The prompt builds a measurement framework that includes both.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I use this for a campaign that's already running rather than pre-launch?</h3>
+          <p>Yes, but the most leverage is pre-launch. The 7-section structure is designed to answer questions before the campaign starts — channel roles, LP strategy, tracking setup, dependencies. If the campaign is already running, use the Measurement Framework and Dependencies &amp; Risks sections to audit what's in place and flag gaps. Use the Experimentation Roadmap section to build the optimization backlog for the campaign's current flight.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How does this prompt connect to the Pipeline Gap Analysis prompt?</h3>
+          <p>The Strategic Campaign Brief builds the plan before the campaign; the Pipeline Gap Analysis diagnoses what went wrong during or after. If you build the brief with this prompt at launch and then run the Pipeline Gap Analysis prompt mid-quarter when pipeline coverage is underperforming, the brief becomes the reference point — what was the plan, what actually happened, and what paid actions should respond. They're designed to work in sequence.</p>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <a href="../" class="post-footer__back">← Back to Prompt Library</a>
+    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  </footer>
+
+  <script>
+    (function(){
+      'use strict';
+      function copyPrompt(btn,targetId,slug){var text=document.getElementById(targetId).textContent.trim();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied ✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy prompt';btn.classList.remove('copied');},2000);if(typeof gtag!=='undefined'){gtag('event','prompt_copy',{prompt_slug:slug});}}).catch(function(){fallbackCopy(btn,text);});}else{fallbackCopy(btn,text);}}
+      function fallbackCopy(btn,text){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);btn.textContent='Copied ✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy prompt';btn.classList.remove('copied');},2000);}
+      window.copyPrompt=copyPrompt;
+      var nav=document.getElementById('nav');var lastScrollY=window.scrollY;var scrollTick=false;
+      window.addEventListener('scroll',function(){if(!scrollTick){window.requestAnimationFrame(function(){var y=window.scrollY;if(y>lastScrollY&&y>80){nav.classList.add('nav--hidden');}else{nav.classList.remove('nav--hidden');}lastScrollY=y;scrollTick=false;});scrollTick=true;}});
+      var hamburger=document.getElementById('hamburger');var mobileNav=document.getElementById('mobileNav');
+      hamburger.addEventListener('click',function(){var isOpen=hamburger.classList.toggle('open');mobileNav.classList.toggle('open',isOpen);hamburger.setAttribute('aria-expanded',String(isOpen));mobileNav.setAttribute('aria-hidden',String(!isOpen));});
+      document.querySelectorAll('.mobile-nav-link').forEach(function(link){link.addEventListener('click',function(){hamburger.classList.remove('open');mobileNav.classList.remove('open');hamburger.setAttribute('aria-expanded','false');mobileNav.setAttribute('aria-hidden','true');});});
+    })();
+  </script>
+
+</body>
+</html>

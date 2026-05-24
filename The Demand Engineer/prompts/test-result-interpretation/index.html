@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Prompt for A/B Test Result Interpretation and Next Steps | The Demand Engineer</title>
+  <meta name="description" content="A production-ready Claude prompt for interpreting A/B test results in B2B paid media. Delivers a statistical verdict, a practical business verdict, a secondary metric check, and a next-test roadmap — including autogrowth mutations when the variant wins." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/prompts/test-result-interpretation/" />
+  <meta property="og:title" content="Claude Prompt for A/B Test Result Interpretation and Next Steps" />
+  <meta property="og:description" content="A production-ready Claude prompt for interpreting A/B test results in B2B paid media. Delivers a statistical verdict, a practical business verdict, a secondary metric check, and a next-test roadmap — including autogrowth mutations when the variant wins." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/prompts/test-result-interpretation/" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude Prompt for A/B Test Result Interpretation and Next Steps" />
+  <meta name="twitter:description" content="A production-ready Claude prompt for interpreting A/B test results in B2B paid media. Delivers a statistical verdict, a practical business verdict, a secondary metric check, and a next-test roadmap — including autogrowth mutations when the variant wins." />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-N24QM0NQG6');</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Prompt for A/B Test Result Interpretation and Next Steps",
+    "description": "A production-ready Claude prompt for interpreting A/B test results in B2B paid media. Delivers a statistical verdict, a practical business verdict, a secondary metric check, and a next-test roadmap — including autogrowth mutations when the variant wins.",
+    "author": { "@type": "Person", "name": "Matt Danese", "jobTitle": "Senior Demand Generation Manager", "url": "https://thedemandengineer.com", "sameAs": ["https://linkedin.com/in/matthew-danese"] },
+    "publisher": { "@type": "Organization", "name": "The Demand Engineer", "url": "https://thedemandengineer.com" },
+    "url": "https://thedemandengineer.com/prompts/test-result-interpretation/",
+    "datePublished": "2026-05-24", "dateModified": "2026-05-24",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://thedemandengineer.com/prompts/test-result-interpretation/" },
+    "keywords": "claude prompt, AB test result interpretation, conversion rate optimization, statistical significance, B2B SaaS testing, autogrowth mutations",
+    "articleSection": "A/B Testing & Creative", "inLanguage": "en-US"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's the difference between statistical significance and practical significance?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Statistical significance means the result is unlikely to be explained by chance — typically at 95% confidence. Practical significance means the lift is meaningful in business terms. A test can be statistically significant with a lift that's too small to matter: a 3% lift on a 1% conversion rate is 0.03 absolute points — statistically real but possibly not worth the deployment effort. The prompt evaluates both and flags cases where statistical significance doesn't translate into a meaningful business outcome." }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I kill a test vs. extend it?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Kill it if it's been running four or more weeks without reaching statistical significance. At that point, the variant probably isn't meaningfully different from the control. Extend it if you're at week two or three with directional results and the traffic is insufficient to call significance. Don't run tests indefinitely chasing significance." }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the secondary metric check and why does it matter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It checks whether the test variant improved the primary metric at the cost of a secondary one. The most common failure mode: form completions go up but downstream MQL conversion goes down — the variant attracted more leads but lower-quality leads. That's not a real win; it's a CPL optimization that destroys pipeline economics. The secondary metric check flags this before you deploy a winner that makes your CPL look better while making your pipeline worse." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are autogrowth mutations and how do I use the next-test recommendations?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Autogrowth mutations are minor variations on the winning variant — single sub-element adjustments designed to incrementally push the conversion rate higher over successive weekly test cycles. The prompt gives you three to five specific mutations when the variant wins. Each mutation tests one change against the new control. The winning mutation becomes the new control, and the cycle repeats — producing compounding gains over four to six weeks rather than one big lift." }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Prompt Library", "item": "https://thedemandengineer.com/prompts/" },
+      { "@type": "ListItem", "position": 3, "name": "Test Result Interpretation", "item": "https://thedemandengineer.com/prompts/test-result-interpretation/" }
+    ]
+  }
+  </script>
+
+  <style>
+    :root { --color-bg:#F4F6FB;--color-bg-card:#FFFFFF;--color-text:#0D1117;--color-text-muted:#64748B;--color-accent:#2D5BE3;--color-accent-hover:#1E46C7;--color-accent-dark:#0A1628;--color-border:#DDE3F0;--color-chip-bg:#EEF2FF;--color-chip-text:#3B5CC4;--font-heading:'Fraunces',serif;--font-body:'DM Sans',system-ui,sans-serif;--max-width:760px;--nav-height:56px; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;font-size:17px;}
+    body{background-color:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;}
+    img{display:block;max-width:100%;}a{color:inherit;text-decoration:none;}ul{list-style:none;}button{font-family:var(--font-body);}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-height);background:rgba(244,246,251,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);transition:transform 0.3s ease;}
+    .nav--hidden{transform:translateY(-100%);}
+    .nav__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+    .nav__links{display:flex;align-items:center;gap:24px;}
+    .nav__links a{position:relative;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-text-muted);transition:color 0.2s ease;padding-bottom:2px;}
+    .nav__links a::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background-color:var(--color-accent);transform:scaleX(0);transform-origin:left;transition:transform 0.2s ease;}
+    .nav__links a:hover{color:var(--color-accent);}.nav__links a:hover::after{transform:scaleX(1);}
+    .nav__hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;cursor:pointer;background:none;border:none;padding:0;}
+    .nav__hamburger span{display:block;width:22px;height:2px;background-color:var(--color-accent-dark);border-radius:2px;transition:all 0.25s ease;}
+    .nav__hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav__hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+    .nav__hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav__mobile{display:none;position:fixed;top:var(--nav-height);left:0;right:0;background:rgba(244,246,251,0.97);border-bottom:1px solid var(--color-border);padding:20px 24px;z-index:99;flex-direction:column;gap:20px;}
+    .nav__mobile.open{display:flex;}.nav__mobile a{font-family:var(--font-body);font-weight:500;font-size:17px;color:var(--color-text);transition:color 0.2s ease;}.nav__mobile a:hover{color:var(--color-accent);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:6px;font-family:var(--font-body);font-weight:600;font-size:15px;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s ease;white-space:nowrap;}
+    .btn--primary{background-color:var(--color-accent);color:#fff;}.btn--primary:hover{background-color:var(--color-accent-hover);transform:translateY(-1px);}
+    .breadcrumb{margin-bottom:20px;}.breadcrumb__list{display:flex;align-items:center;list-style:none;padding:0;flex-wrap:wrap;}
+    .breadcrumb__list li{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);display:flex;align-items:center;}
+    .breadcrumb__list li+li::before{content:'›';margin:0 8px;color:var(--color-border);}
+    .breadcrumb__list a{color:var(--color-accent);}.breadcrumb__list a:hover{text-decoration:underline;}
+    .post-hero{padding-top:calc(var(--nav-height) + 56px);padding-bottom:40px;background:var(--color-bg);border-bottom:1px solid var(--color-border);}
+    .post-hero__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;}
+    .post-category{display:inline-block;background-color:var(--color-chip-bg);color:var(--color-chip-text);font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:20px;}
+    .post-title{font-family:var(--font-heading);font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-bottom:20px;}
+    .post-subtitle{font-family:var(--font-body);font-weight:500;font-size:1.05rem;color:var(--color-text-muted);line-height:1.45;margin-top:-10px;margin-bottom:16px;}
+    .post-meta{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);}
+    .author-bio{max-width:680px;margin:0 auto;padding:20px 24px;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);display:flex;align-items:center;gap:16px;}
+    .author-bio__avatar{width:48px;height:48px;border-radius:50%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .author-bio__name{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-text);margin-bottom:3px;}
+    .author-bio__desc{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);line-height:1.5;}
+    .post-body{max-width:680px;margin:48px auto 0;padding:0 24px 80px;}
+    .post-body p{font-size:17px;line-height:1.75;margin-bottom:24px;color:var(--color-text);}
+    .post-body h2{font-family:var(--font-heading);font-weight:700;font-size:clamp(1.35rem,3vw,1.7rem);line-height:1.2;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-top:56px;margin-bottom:16px;}
+    .post-body h3{font-family:var(--font-heading);font-weight:700;font-size:1.2rem;line-height:1.25;letter-spacing:-0.01em;color:var(--color-accent-dark);margin-top:40px;margin-bottom:12px;}
+    .post-body ul{list-style:disc;padding-left:20px;margin-bottom:24px;}.post-body ul li{line-height:1.8;margin-bottom:8px;font-size:17px;color:var(--color-text);}
+    .post-body strong{font-weight:600;}
+    .direct-answer{background:var(--color-chip-bg);border-left:3px solid var(--color-accent);border-radius:6px;padding:20px 24px;margin-bottom:32px;font-size:16px;line-height:1.65;color:var(--color-text);}
+    .direct-answer strong{font-weight:600;color:var(--color-accent-dark);}
+    .prompt-block{background:var(--color-accent-dark);border-radius:8px;padding:18px 22px 24px;margin:24px 0;font-family:'Courier New',Courier,monospace;font-size:13px;color:#c9d4e8;line-height:1.75;position:relative;}
+    .prompt-label{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#6b8cba;display:block;margin-bottom:14px;}
+    .prompt-text{margin:0;font-family:inherit;font-size:inherit;color:inherit;line-height:inherit;white-space:pre-wrap;background:none;border:none;padding:0;overflow-wrap:break-word;}
+    .prompt-copy-btn{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);color:#a8bbd4;font-family:var(--font-body);font-size:11px;font-weight:500;padding:5px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s ease;z-index:2;white-space:nowrap;}
+    .prompt-copy-btn:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.32);color:#c9d4e8;}
+    .prompt-copy-btn.copied{background:rgba(45,91,227,0.25);border-color:rgba(45,91,227,0.45);color:#a8c0ff;}
+    .prompt-block--placeholder{opacity:0.65;}.prompt-block--placeholder .prompt-text{color:#6b8cba;font-style:italic;}
+    .example-output{background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:8px;padding:20px 24px;margin:24px 0;}
+    .example-output__label{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-muted);display:block;margin-bottom:12px;}
+    .example-output--pending p{font-style:italic;color:var(--color-text-muted);font-size:15px;line-height:1.65;margin:0;}
+    .post-cta{background:var(--color-chip-bg);border-left:3px solid var(--color-accent);border-radius:8px;padding:28px 32px;margin-top:48px;}
+    .post-cta__heading{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-accent-dark);margin-bottom:8px;}
+    .post-cta__body{font-family:var(--font-body);font-size:14px;color:var(--color-text-muted);line-height:1.6;margin-bottom:20px;}
+    .related-reading{border-top:1px solid var(--color-border);padding-top:32px;margin-top:40px;}
+    .related-reading__heading{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+    .related-reading__list{list-style:none;padding:0;margin:0;}.related-reading__list li{line-height:2;}
+    .related-reading__list a{font-family:var(--font-body);font-weight:500;font-size:15px;color:var(--color-accent);transition:color 0.15s ease;}
+    .related-reading__list a:hover{color:var(--color-accent-hover);text-decoration:underline;}
+    .faq-section{border-top:1px solid var(--color-border);padding-top:32px;margin-top:40px;}
+    .faq-section>h2{font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--color-text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:24px;}
+    .faq-item{margin-bottom:28px;}.faq-item h3{font-family:var(--font-heading);font-weight:700;font-size:1.1rem;color:var(--color-accent-dark);margin-top:0!important;margin-bottom:10px;}
+    .faq-item p{margin-bottom:0;}
+    .post-footer{max-width:680px;margin:0 auto;padding:24px 24px 48px;border-top:1px solid var(--color-border);}
+    .post-footer__back{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-accent);margin-bottom:16px;transition:color 0.2s ease;}
+    .post-footer__back:hover{color:var(--color-accent-hover);}
+    .post-footer__copy{font-size:12px;color:var(--color-text-muted);text-align:center;}
+    @media(max-width:768px){html{font-size:16px;}.post-title{font-size:clamp(1.5rem,4vw,2rem);}.post-body{padding:0 20px 60px;}.post-hero__inner{padding:0 20px;}.post-footer{padding:24px 20px 40px;}.nav__links{display:none;}.nav__hamburger{display:flex;}.post-cta{padding:24px;}.prompt-block{padding:14px 16px 20px;font-size:12px;}.prompt-copy-btn{top:10px;right:10px;font-size:10px;padding:4px 8px;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="../../">← Back to Site</a></li>
+        <li><a href="../../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../blog/">Blog</a></li>
+        <li><a href="../">Prompts</a></li>
+        <li><a href="../../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../" class="mobile-nav-link">← Back to Site</a>
+    <a href="../../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../../blog/" class="mobile-nav-link">Blog</a>
+    <a href="../" class="mobile-nav-link">Prompts</a>
+    <a href="../../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li><a href="../../">Home</a></li>
+            <li><a href="../">Prompt Library</a></li>
+            <li aria-current="page">Test Result Interpretation</li>
+          </ol>
+        </nav>
+        <span class="post-category">A/B Testing &amp; Creative</span>
+        <h1 class="post-title">Claude Prompt for A/B Test Result Interpretation and Next Steps</h1>
+        <h2 class="post-subtitle">Interpret your A/B test results with both a statistical verdict and a practical business verdict — catching cases where a statistical winner degrades a secondary metric, recommending weekly mutations when the variant wins, and knowing when to kill an inconclusive test rather than extending it indefinitely.</h2>
+        <p class="post-meta">7 min read · Matt Danese · May 2026 · <span style="color:var(--color-accent);">Last updated: May 2026</span></p>
+      </div>
+    </section>
+
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <article class="post-body">
+
+      <div class="direct-answer">
+        <strong>A/B test result interpretation:</strong> Interpret A/B test results by pasting variant traffic, conversion events, duration, and test context into Claude with this prompt. It delivers a statistical verdict, a practical business-terms verdict, a secondary metric check for inverse effects, and a next-step roadmap — including three to five weekly mutation recommendations when the variant wins, or a hypothesis audit when it loses.
+      </div>
+
+      <h2>The Prompt</h2>
+      <div class="prompt-block">
+        <span class="prompt-label">Production Prompt — Copy and use verbatim</span>
+        <button class="prompt-copy-btn" onclick="copyPrompt(this,'prompt-main','test-result-interpretation')" aria-label="Copy prompt to clipboard">Copy prompt</button>
+        <pre class="prompt-text" id="prompt-main">You are a senior B2B SaaS conversion optimization specialist interpreting A/B test results to decide what to do next. You know that the most common mistakes in A/B testing are calling winners too early on noisy data, dismissing wins as noise when they're real, and failing to learn from losers — and that all three lead to wasted test cycles.
+
+INPUTS
+
+I will paste the test results below. Required fields: variant name, traffic / sessions, conversion events, conversion rate, test duration, primary metric.
+
+{PASTE_TEST_RESULTS_HERE}
+
+{PASTE_TEST_CONTEXT_HERE}
+(Example: "Test ran on our primary landing page hero copy. Variant B tested a pain-led headline vs control's generic value prop. Goal: increase form completion rate.")
+
+{OPTIONAL_PASTE_SECONDARY_METRICS_HERE}
+(Bounce rate, scroll depth, time on page, downstream MQL conversion — leave blank if not available.)
+
+WHAT I NEED FROM YOU
+
+Interpret the results and produce the output in this exact order:
+
+1. Statistical Verdict
+- Winner / Loser / Inconclusive
+- Lift (or drop): variant vs. control, in absolute and percentage terms
+- Significance: whether the result is statistically meaningful given the sample size. Flag if traffic is insufficient to draw a conclusion.
+
+2. Practical Verdict
+A statistical winner is not always a practical winner. State whether the lift is meaningful in business terms — a 3% lift on a 1% conversion rate is only 0.03 absolute points, which may not justify the deployment effort.
+
+3. Secondary Metric Check
+If secondary metrics were provided: did the test variant improve the primary metric at the cost of a secondary one? (Example: form completions up, but downstream MQL conversion down — the test variant attracted lower-quality leads.) Flag any inverse relationship.
+
+4. What to Test Next
+Based on the result:
+- If variant won: recommend 3-5 mutations of the winner to test next week. Each mutation should adjust a single sub-element (specific word, layout shift, CTA tweak) — not a wholesale rewrite. This is the autogrowth phase: the winner becomes the new control, and weekly mutations compound the gains.
+- If variant lost: recommend what the loss tells us about the hypothesis. Was the hypothesis wrong, or was the execution wrong? A "wrong execution" loss is different from a "wrong hypothesis" loss — the first calls for re-testing; the second calls for a different hypothesis.
+- If inconclusive: recommend whether to extend the test (more traffic), kill it (move to a higher-priority test), or rework the variant (the difference between control and treatment may have been too subtle to produce a detectable effect).
+
+5. Plateau Check
+If you have access to recent test history (provided in context or known from prior runs), state whether the current conversion rate is approaching a plateau. Autogrowth compounding produces diminishing returns over time; recognize when to stop iterating on a page and move attention to a different one.
+
+JUDGMENT RULES
+
+- Statistical significance is a threshold, not a verdict. A result that reaches 95% confidence on a small sample size is often a result that won't replicate. Treat sample size and confidence together.
+- Practical significance is harder to call than statistical. Build the practical case in business terms, not statistical terms — "this lift would generate an additional 30 MQLs per month at current traffic" is a clearer call than "this lift is statistically significant at p=0.04."
+- A "winner" that improves the primary metric but degrades a secondary metric is often not a real winner. Always check the secondary metric direction.
+- A "loser" is information, not a failure. Document what the loss teaches about the hypothesis before moving on.
+- Do not recommend continuing a test indefinitely chasing significance. If a test has run 4+ weeks without reaching significance, the variant probably isn't meaningfully different from the control — kill it and move on.
+- If you don't have enough data to call a verdict, say so. "Sample size is too small to call this test — recommend extending another 2 weeks" is the right answer when the data is thin.
+
+OUTPUT FORMAT
+
+Return as {OUTPUT_FORMAT}.
+
+If "markdown": verdict, practical assessment, secondary check, next-test recommendations, plateau check.
+If "html": styled report with verdict and next-test recommendations clearly delineated.
+
+Begin.</pre>
+      </div>
+
+      <h2>How to Use It</h2>
+
+      <p>This prompt solves three recurring mistakes in A/B testing: calling winners too early on noisy data, dismissing real wins as noise, and failing to learn from losers. Claude handles the statistical and practical verdict distinction better than ChatGPT in production — Claude is more precise about when sample size is too small to call a test ("this result is not statistically meaningful — extend two weeks or kill and redirect traffic") and more careful about the secondary metric check (a form completion lift that comes with a downstream MQL degradation is not a real win). ChatGPT tends toward false confidence when data is thin.</p>
+
+      <p>The autogrowth framing is the most distinctive part of this prompt. When a variant wins, the output doesn't just say "deploy the winner" — it recommends three to five mutations of the winner to test the following week. Each mutation adjusts a single sub-element (a specific word, a layout shift, a CTA tweak) rather than a wholesale rewrite. That's the autogrowth phase: the winner becomes the new control, and weekly mutations compound the gains over time. The benchmark from the prompt's PRD source is pages moving from 60→85 quickly via initial testing, then from 85→95 slowly via autogrowth compounding over weeks.</p>
+
+      <p>The plateau check at the end is the safeguard against over-optimizing a single page. When the autogrowth compound gains start producing smaller lifts, the model flags that the page may be approaching its optimization ceiling — and recommends shifting attention to a higher-leverage page rather than continuing to test micro-variants that won't compound meaningfully. That plateau recognition is what distinguishes a testing program that learns from one that just runs tests.</p>
+
+      <!-- TODO: Matt to list specific {variables} this prompt expects -->
+
+      <h2>Example Output</h2>
+      <div class="example-output example-output--pending">
+        <span class="example-output__label">Live Example</span>
+        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+      </div>
+
+      <h2>Common Failure Modes</h2>
+      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+
+      <h2>Variations</h2>
+      <p>Two variations of this prompt are worth knowing.</p>
+
+      <h3>Variation 1: Multivariate Test Version</h3>
+      <p>Adapted for interpreting multivariate test results where more than two elements were tested simultaneously — producing interaction effect analysis alongside the individual element verdicts and a recommendation for which winning combinations to carry forward.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <h3>Variation 2: Early Stop Decision Version</h3>
+      <p>Scoped specifically to the early-stop decision — when a test is mid-flight and showing strong directional results, should you call it early or run to statistical significance? Frames the business risk of calling early vs. the cost of continuing a test that appears to have a clear winner.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Prompts</p>
+        <ul class="related-reading__list">
+          <li><a href="../ad-copy-variant-generator/">Claude Prompt for Ad Copy Variant Generation with Expert Panel Scoring</a></li>
+          <li><a href="../ab-test-hypothesis-generator/">Claude Prompt for A/B Test Hypothesis Generation</a></li>
+          <li><a href="../exec-summary-generator/">Claude Prompt for Weekly Exec Summary Generation</a></li>
+          <li><a href="../../blog/ab-testing-expert-panel.html">A/B Testing Expert Panel</a></li>
+        </ul>
+      </div>
+
+      <div class="post-cta">
+        <p class="post-cta__heading">Get one new prompt every Monday.</p>
+        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'test-result-interpretation'})}">Subscribe free →</a>
+      </div>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h3>What's the difference between statistical significance and practical significance?</h3>
+          <p>Statistical significance means the result is unlikely to be explained by chance — typically at 95% confidence (p &lt; 0.05). Practical significance means the lift is meaningful in business terms. A test can be statistically significant with a lift that's too small to matter: a 3% lift on a 1% conversion rate is 0.03 absolute points — statistically real but possibly not worth the deployment effort. The prompt evaluates both and flags cases where statistical significance doesn't translate into a meaningful business outcome. The key question is: "What does this lift mean in MQLs or pipeline per month at current traffic?"</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>When should I kill a test vs. extend it?</h3>
+          <p>Kill it if it's been running four or more weeks without reaching statistical significance. At that point, the variant probably isn't meaningfully different from the control — the effect size is too small to detect at your traffic volumes, which usually means the effect size is too small to matter. Extend it if you're at week two or three with directional results and the traffic is insufficient to call significance — more time is likely to produce a clear result. The prompt makes this call explicitly; don't run tests indefinitely chasing significance.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What's the "secondary metric check" and why does it matter?</h3>
+          <p>It checks whether the test variant improved the primary metric at the cost of a secondary one. The most common failure mode: form completions go up but downstream MQL conversion goes down — the variant attracted more leads but lower-quality leads. That's not a real win; it's a CPL optimization that destroys pipeline economics. The secondary metric check flags this before you deploy a "winner" that makes your CPL look better while making your pipeline worse.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What are "autogrowth mutations" and how do I use the next-test recommendations?</h3>
+          <p>Autogrowth mutations are minor variations on the winning variant — single sub-element adjustments designed to incrementally push the conversion rate higher over successive weekly test cycles. The prompt gives you three to five specific mutations when the variant wins (e.g., "change 'Book a Demo' to 'See It Live' in the CTA," or "move the social proof block above the form"). Each mutation tests one change against the new control. The winning mutation becomes the new control, and the cycle repeats — producing compounding gains over four to six weeks rather than one big lift.</p>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <a href="../" class="post-footer__back">← Back to Prompt Library</a>
+    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  </footer>
+
+  <script>
+    (function(){
+      'use strict';
+      function copyPrompt(btn,targetId,slug){var text=document.getElementById(targetId).textContent.trim();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){btn.textContent='Copied ✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy prompt';btn.classList.remove('copied');},2000);if(typeof gtag!=='undefined'){gtag('event','prompt_copy',{prompt_slug:slug});}}).catch(function(){fallbackCopy(btn,text);});}else{fallbackCopy(btn,text);}}
+      function fallbackCopy(btn,text){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);btn.textContent='Copied ✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy prompt';btn.classList.remove('copied');},2000);}
+      window.copyPrompt=copyPrompt;
+      var nav=document.getElementById('nav');var lastScrollY=window.scrollY;var scrollTick=false;
+      window.addEventListener('scroll',function(){if(!scrollTick){window.requestAnimationFrame(function(){var y=window.scrollY;if(y>lastScrollY&&y>80){nav.classList.add('nav--hidden');}else{nav.classList.remove('nav--hidden');}lastScrollY=y;scrollTick=false;});scrollTick=true;}});
+      var hamburger=document.getElementById('hamburger');var mobileNav=document.getElementById('mobileNav');
+      hamburger.addEventListener('click',function(){var isOpen=hamburger.classList.toggle('open');mobileNav.classList.toggle('open',isOpen);hamburger.setAttribute('aria-expanded',String(isOpen));mobileNav.setAttribute('aria-hidden',String(!isOpen));});
+      document.querySelectorAll('.mobile-nav-link').forEach(function(link){link.addEventListener('click',function(){hamburger.classList.remove('open');mobileNav.classList.remove('open');hamburger.setAttribute('aria-expanded','false');mobileNav.setAttribute('aria-hidden','true');});});
+    })();
+  </script>
+
+</body>
+</html>

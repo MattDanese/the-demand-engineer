@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Claude Prompt for A/B Test Hypothesis Generation | The Demand Engineer</title>
+  <meta name="description" content="A production-ready Claude prompt for generating prioritized A/B test hypotheses for B2B paid landing pages. Uses Impact × Confidence × Ease scoring from real experimentation programs to identify which test to run next." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/prompts/ab-test-hypothesis-generator/" />
+
+  <!-- ===== OPEN GRAPH ===== -->
+  <meta property="og:title" content="Claude Prompt for A/B Test Hypothesis Generation" />
+  <meta property="og:description" content="A production-ready Claude prompt for generating prioritized A/B test hypotheses for B2B paid landing pages. Uses Impact × Confidence × Ease scoring from real experimentation programs to identify which test to run next." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/prompts/ab-test-hypothesis-generator/" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude Prompt for A/B Test Hypothesis Generation" />
+  <meta name="twitter:description" content="A production-ready Claude prompt for generating prioritized A/B test hypotheses for B2B paid landing pages. Uses Impact × Confidence × Ease scoring from real experimentation programs to identify which test to run next." />
+
+  <!-- ===== FONTS + KIT ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <!-- ===== GA4 ===== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N24QM0NQG6');
+  </script>
+
+  <!-- ===== SCHEMA: Article ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Prompt for A/B Test Hypothesis Generation",
+    "description": "A production-ready Claude prompt for generating prioritized A/B test hypotheses for B2B paid landing pages. Uses Impact × Confidence × Ease scoring from real experimentation programs to identify which test to run next.",
+    "author": {
+      "@type": "Person",
+      "name": "Matt Danese",
+      "jobTitle": "Senior Demand Generation Manager",
+      "url": "https://thedemandengineer.com",
+      "sameAs": ["https://linkedin.com/in/matthew-danese"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Demand Engineer",
+      "url": "https://thedemandengineer.com"
+    },
+    "url": "https://thedemandengineer.com/prompts/ab-test-hypothesis-generator/",
+    "datePublished": "2026-05-24",
+    "dateModified": "2026-05-24",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://thedemandengineer.com/prompts/ab-test-hypothesis-generator/"
+    },
+    "keywords": "claude prompt, AB test hypothesis generator, landing page testing, conversion rate optimization, B2B SaaS testing, Impact Confidence Ease prioritization",
+    "articleSection": "A/B Testing & Creative",
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <!-- ===== SCHEMA: FAQPage ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What's the difference between Impact, Confidence, and Ease in the scoring?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Impact is how much the change could move the primary metric if the hypothesis is correct. Confidence is how strong the evidence is that this is the right lever — a hypothesis backed by heat map data and session recordings has higher Confidence than one based on opinion. Ease is how hard the test is to implement in practice, including soft constraints like Brand approval or engineering dependency. The three scores multiply, so a high-impact, high-confidence, hard test (5×5×1) scores lower than a high-impact, moderate-confidence, easy test (5×3×4)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How specific should my current state input be?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The more specific, the better the hypotheses. 'Enterprise landing page is converting at 1.8%. Hero headline reads The Website Experience Platform. Bounce rate is 62% for senior visitors from paid traffic' gives the model enough signal to generate hypotheses with real causal reasoning. 'Landing page performance isn't great' produces generic hypotheses with low actionability. Include your current conversion rate, the specific copy or layout you're testing against, any behavioral data you have, and any qualitative feedback from the panel or from sales."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use this prompt if I don't have heat map or session recording data?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, but the Confidence scores will be lower for all hypotheses, which is the correct output. A hypothesis based only on intuition has lower Confidence than one backed by data. The prompt marks low-confidence hypotheses explicitly — that's useful information, not a problem. It means you should consider a qualitative validation step before committing traffic."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does pre-launch validation mean and when should I do it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pre-launch validation means running copy variants through the Ad Copy Variant Generator's expert panel before you allocate live paid traffic to a test. It takes 10 minutes and eliminates weak copy variants before the 14-day live test window starts. Do it whenever the top hypothesis involves copy changes — headline variants, CTA variants, value prop framing. Skip it for structural changes (form placement, layout, visual hierarchy) since the panel doesn't score layout decisions reliably."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ===== SCHEMA: BreadcrumbList ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Prompt Library", "item": "https://thedemandengineer.com/prompts/" },
+      { "@type": "ListItem", "position": 3, "name": "A/B Test Hypothesis Generator", "item": "https://thedemandengineer.com/prompts/ab-test-hypothesis-generator/" }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --color-bg: #F4F6FB; --color-bg-card: #FFFFFF; --color-text: #0D1117;
+      --color-text-muted: #64748B; --color-accent: #2D5BE3; --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628; --color-border: #DDE3F0; --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF; --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif; --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px; --nav-height: 56px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body { background-color: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-weight: 400; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-height); background: rgba(244,246,251,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); transition: transform 0.3s ease; }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .nav__links { display: flex; align-items: center; gap: 24px; }
+    .nav__links a { position: relative; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--color-text-muted); transition: color 0.2s ease; padding-bottom: 2px; }
+    .nav__links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background-color: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease; }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 32px; height: 32px; cursor: pointer; background: none; border: none; padding: 0; }
+    .nav__hamburger span { display: block; width: 22px; height: 2px; background-color: var(--color-accent-dark); border-radius: 2px; transition: all 0.25s ease; }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile { display: none; position: fixed; top: var(--nav-height); left: 0; right: 0; background: rgba(244,246,251,0.97); border-bottom: 1px solid var(--color-border); padding: 20px 24px; z-index: 99; flex-direction: column; gap: 20px; }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--color-text); transition: color 0.2s ease; }
+    .nav__mobile a:hover { color: var(--color-accent); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 24px; border-radius: 6px; font-family: var(--font-body); font-weight: 600; font-size: 15px; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s ease; white-space: nowrap; }
+    .btn--primary { background-color: var(--color-accent); color: #fff; }
+    .btn--primary:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+    .breadcrumb { margin-bottom: 20px; }
+    .breadcrumb__list { display: flex; align-items: center; list-style: none; padding: 0; flex-wrap: wrap; }
+    .breadcrumb__list li { font-family: var(--font-body); font-size: 13px; color: var(--color-text-muted); display: flex; align-items: center; }
+    .breadcrumb__list li + li::before { content: '›'; margin: 0 8px; color: var(--color-border); }
+    .breadcrumb__list a { color: var(--color-accent); }
+    .breadcrumb__list a:hover { text-decoration: underline; }
+    .post-hero { padding-top: calc(var(--nav-height) + 56px); padding-bottom: 40px; background: var(--color-bg); border-bottom: 1px solid var(--color-border); }
+    .post-hero__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    .post-category { display: inline-block; background-color: var(--color-chip-bg); color: var(--color-chip-text); font-family: var(--font-body); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 4px; margin-bottom: 20px; }
+    .post-title { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.8rem,4vw,2.8rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--color-accent-dark); margin-bottom: 20px; }
+    .post-subtitle { font-family: var(--font-body); font-weight: 500; font-size: 1.05rem; color: var(--color-text-muted); line-height: 1.45; margin-top: -10px; margin-bottom: 16px; }
+    .post-meta { font-family: var(--font-body); font-size: 13px; color: var(--color-text-muted); }
+    .author-bio { max-width: 680px; margin: 0 auto; padding: 20px 24px; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 16px; }
+    .author-bio__avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .author-bio__name { font-family: var(--font-body); font-weight: 600; font-size: 15px; color: var(--color-text); margin-bottom: 3px; }
+    .author-bio__desc { font-family: var(--font-body); font-size: 13px; color: var(--color-text-muted); line-height: 1.5; }
+    .post-body { max-width: 680px; margin: 48px auto 0; padding: 0 24px 80px; }
+    .post-body p { font-size: 17px; line-height: 1.75; margin-bottom: 24px; color: var(--color-text); }
+    .post-body h2 { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.35rem,3vw,1.7rem); line-height: 1.2; letter-spacing: -0.02em; color: var(--color-accent-dark); margin-top: 56px; margin-bottom: 16px; }
+    .post-body h3 { font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-accent-dark); margin-top: 40px; margin-bottom: 12px; }
+    .post-body ul { list-style: disc; padding-left: 20px; margin-bottom: 24px; }
+    .post-body ul li { line-height: 1.8; margin-bottom: 8px; font-size: 17px; color: var(--color-text); }
+    .post-body strong { font-weight: 600; }
+    .direct-answer { background: var(--color-chip-bg); border-left: 3px solid var(--color-accent); border-radius: 6px; padding: 20px 24px; margin-bottom: 32px; font-size: 16px; line-height: 1.65; color: var(--color-text); }
+    .direct-answer strong { font-weight: 600; color: var(--color-accent-dark); }
+    .prompt-block { background: var(--color-accent-dark); border-radius: 8px; padding: 18px 22px 24px; margin: 24px 0; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #c9d4e8; line-height: 1.75; position: relative; }
+    .prompt-label { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #6b8cba; display: block; margin-bottom: 14px; }
+    .prompt-text { margin: 0; font-family: inherit; font-size: inherit; color: inherit; line-height: inherit; white-space: pre-wrap; background: none; border: none; padding: 0; overflow-wrap: break-word; }
+    .prompt-copy-btn { position: absolute; top: 14px; right: 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: #a8bbd4; font-family: var(--font-body); font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; z-index: 2; white-space: nowrap; }
+    .prompt-copy-btn:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.32); color: #c9d4e8; }
+    .prompt-copy-btn.copied { background: rgba(45,91,227,0.25); border-color: rgba(45,91,227,0.45); color: #a8c0ff; }
+    .prompt-block--placeholder { opacity: 0.65; }
+    .prompt-block--placeholder .prompt-text { color: #6b8cba; font-style: italic; }
+    .var-block { background: var(--color-bg-card); border: 1px solid var(--color-border); border-left: 3px solid var(--color-accent); border-radius: 6px; padding: 16px 20px; margin-bottom: 16px; }
+    .var-name { font-family: 'Courier New', Courier, monospace; font-size: 13px; font-weight: 600; color: var(--color-accent); display: block; margin-bottom: 8px; }
+    .var-desc { font-size: 15px; line-height: 1.65; color: var(--color-text); margin: 0; }
+    .example-output { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 8px; padding: 20px 24px; margin: 24px 0; }
+    .example-output__label { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); display: block; margin-bottom: 12px; }
+    .example-output--pending p { font-style: italic; color: var(--color-text-muted); font-size: 15px; line-height: 1.65; margin: 0; }
+    .post-cta { background: var(--color-chip-bg); border-left: 3px solid var(--color-accent); border-radius: 8px; padding: 28px 32px; margin-top: 48px; }
+    .post-cta__heading { font-family: var(--font-body); font-weight: 600; font-size: 15px; color: var(--color-accent-dark); margin-bottom: 8px; }
+    .post-cta__body { font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 20px; }
+    .related-reading { border-top: 1px solid var(--color-border); padding-top: 32px; margin-top: 40px; }
+    .related-reading__heading { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+    .related-reading__list { list-style: none; padding: 0; margin: 0; }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a { font-family: var(--font-body); font-weight: 500; font-size: 15px; color: var(--color-accent); transition: color 0.15s ease; }
+    .related-reading__list a:hover { color: var(--color-accent-hover); text-decoration: underline; }
+    .faq-section { border-top: 1px solid var(--color-border); padding-top: 32px; margin-top: 40px; }
+    .faq-section > h2 { font-family: var(--font-body); font-weight: 600; font-size: 14px; color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; }
+    .faq-item { margin-bottom: 28px; }
+    .faq-item h3 { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; color: var(--color-accent-dark); margin-top: 0 !important; margin-bottom: 10px; }
+    .faq-item p { margin-bottom: 0; }
+    .post-footer { max-width: 680px; margin: 0 auto; padding: 24px 24px 48px; border-top: 1px solid var(--color-border); }
+    .post-footer__back { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--color-accent); margin-bottom: 16px; transition: color 0.2s ease; }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy { font-size: 12px; color: var(--color-text-muted); text-align: center; }
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem,4vw,2rem); }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+      .prompt-block { padding: 14px 16px 20px; font-size: 12px; }
+      .prompt-copy-btn { top: 10px; right: 10px; font-size: 10px; padding: 4px 8px; }
+      .var-block { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="../../">← Back to Site</a></li>
+        <li><a href="../../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../blog/">Blog</a></li>
+        <li><a href="../">Prompts</a></li>
+        <li><a href="../../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../" class="mobile-nav-link">← Back to Site</a>
+    <a href="../../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../../blog/" class="mobile-nav-link">Blog</a>
+    <a href="../" class="mobile-nav-link">Prompts</a>
+    <a href="../../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li><a href="../../">Home</a></li>
+            <li><a href="../">Prompt Library</a></li>
+            <li aria-current="page">A/B Test Hypothesis Generator</li>
+          </ol>
+        </nav>
+        <span class="post-category">A/B Testing &amp; Creative</span>
+        <h1 class="post-title">Claude Prompt for A/B Test Hypothesis Generation</h1>
+        <h2 class="post-subtitle">Generate five prioritized A/B test hypotheses for your paid landing page or ad creative — each scored on Impact × Confidence × Ease, with a full test design for the top hypothesis and a recommendation on whether to run live traffic or pre-validate with panel scoring first.</h2>
+        <p class="post-meta">7 min read · Matt Danese · May 2026 · <span style="color:var(--color-accent);">Last updated: May 2026</span></p>
+      </div>
+    </section>
+
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <article class="post-body">
+
+      <div class="direct-answer">
+        <strong>A/B test hypothesis generation:</strong> Generate five structured A/B test hypotheses by describing your current page state, the observed problem, and any constraints to Claude with this prompt. Each hypothesis targets a different conversion lever, is scored on Impact × Confidence × Ease, and returns a complete test design for the top-ranked hypothesis — including success metric, sample size estimate, and pre-launch validation recommendation.
+      </div>
+
+      <h2>The Prompt</h2>
+      <div class="prompt-block">
+        <span class="prompt-label">Production Prompt — Copy and use verbatim</span>
+        <button class="prompt-copy-btn" onclick="copyPrompt(this,'prompt-main','ab-test-hypothesis-generator')" aria-label="Copy prompt to clipboard">Copy prompt</button>
+        <pre class="prompt-text" id="prompt-main">You are a senior B2B SaaS conversion optimization specialist generating A/B test hypotheses for paid landing pages and ad creative. You know that hypothesis quality determines test outcomes: vague hypotheses produce inconclusive results, while specific hypotheses produce wins or losses you can build on.
+
+INPUTS
+
+I will paste the current state below — what's running, what the performance is, and what change is being considered.
+
+{PASTE_CURRENT_STATE_HERE}
+(Example: "Enterprise landing page is converting at 1.8%. Hero headline reads 'The Website Experience Platform.' Bounce rate is 62%.")
+
+{PASTE_OBSERVED_PROBLEM_HERE}
+(Example: "Senior visitors are bouncing without scrolling past the hero. The headline tested poorly with our panel.")
+
+{OPTIONAL_PASTE_CONSTRAINTS_HERE}
+(Examples: "Cannot change form fields," "Brand team approval required for hero imagery." Leave blank if no constraints.)
+
+WHAT I NEED FROM YOU
+
+Generate 5 prioritized A/B test hypotheses. Produce the output in this exact order:
+
+1. Hypothesis List
+5 distinct hypotheses, each in the format: "If we change [variable], we expect [outcome] because [reasoning]." Each hypothesis should target a different lever:
+
+- Hero headline / value prop
+- CTA copy or placement
+- Social proof / trust signals
+- Form fields or form flow
+- Visual hierarchy or above-the-fold layout
+
+2. Prioritization
+Score each hypothesis on three dimensions (1-5 scale):
+- Impact: how much could this move the conversion rate if it wins?
+- Confidence: how strong is the evidence that this is the right lever?
+- Ease: how hard is this to test (engineering effort, design effort, approvals required)?
+
+Calculate the priority score: Impact × Confidence × Ease. Rank from highest to lowest.
+
+3. Test Design for Top Hypothesis
+For the highest-priority hypothesis:
+- Variant A (control): describe
+- Variant B (treatment): describe
+- Primary success metric: state explicitly (form completion rate, MQL pull-through, etc.)
+- Secondary metrics to monitor (bounce rate, scroll depth, etc.)
+- Required sample size: estimate based on current traffic and expected lift
+- Estimated test duration
+
+4. Pre-Launch Validation Recommendation
+Recommend whether this hypothesis is strong enough to deploy to live traffic, or whether it should first go through autoresearch panel scoring (see /prompts/ad-copy-variant-generator/) to validate the copy variants before allocating paid traffic.
+
+JUDGMENT RULES
+
+- A good hypothesis is specific. "Improve the headline" is not a hypothesis. "Replace the current generic value-prop headline with one that names a specific buyer pain to reduce senior-level bounce" is a hypothesis.
+- Hypotheses must tie to a primary metric, not just a directional improvement. "Increase trust" is not a measurable outcome; "Increase form completion rate by 15%" is.
+- Confidence comes from evidence: heat maps, session recordings, qualitative feedback, panel scoring results, competitor analysis. If a hypothesis has no evidence beyond opinion, mark its Confidence score low.
+- Ease is not the same as engineering time. A copy change might be "easy" technically but require Brand team approval, which lowers Ease in practice. Account for soft constraints.
+- Impact × Confidence × Ease prioritizes for compounding wins. A high-impact, high-confidence, hard-to-build test still might not be the right next test if a high-impact, high-confidence, easy-to-build test is also on the list.
+- If you don't have enough context to evaluate a hypothesis (especially Impact and Confidence), say so. Do not assign arbitrary scores to fill in the table.
+
+OUTPUT FORMAT
+
+Return as {OUTPUT_FORMAT}.
+
+If "markdown": hypothesis list, prioritization table, test design for top hypothesis, recommendation.
+If "html": styled report with the prioritization table prominently displayed and the top hypothesis detailed.
+
+Begin.</pre>
+      </div>
+
+      <h2>How to Use It</h2>
+
+      <p>This prompt is built for the question that follows every conversion rate problem: "what should we test first?" The Impact × Confidence × Ease prioritization framework comes from real experimentation program PRDs — it's designed to surface the tests that have the highest likelihood of producing a meaningful, replicable result, not just the tests that are easiest to run or feel intuitively right. Claude applies this framework more precisely than ChatGPT in production use — Claude is more disciplined about flagging low-confidence hypotheses ("there's no data to support this beyond opinion") rather than assigning high confidence scores across the board.</p>
+
+      <p>Each hypothesis follows the format "If we change [variable], we expect [outcome] because [reasoning]" — the "because" is the critical part. A hypothesis without a causal mechanism isn't a hypothesis; it's a guess. The five hypotheses in the output each target a different conversion lever: hero headline, CTA copy or placement, social proof and trust signals, form fields or form flow, and visual hierarchy. Covering all five levers with one run of the prompt gives you a ranked backlog, not just one test idea.</p>
+
+      <p>The pre-launch validation recommendation at the end is the most-overlooked part of the output. If the top hypothesis involves copy variants, the prompt recommends running those variants through the Ad Copy Variant Generator's expert panel before allocating live traffic — that pre-validation step can eliminate weak variants in minutes rather than after 14 days of test traffic. If the hypothesis involves layout or flow changes, it goes directly to live testing since panel scoring isn't calibrated for structural changes.</p>
+
+      <!-- TODO: Matt to list specific {variables} this prompt expects -->
+
+      <h2>Example Output</h2>
+      <div class="example-output example-output--pending">
+        <span class="example-output__label">Live Example</span>
+        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+      </div>
+
+      <h2>Common Failure Modes</h2>
+      <!-- TODO: Matt to fill in failure modes after running this prompt in production -->
+
+      <h2>Variations</h2>
+      <p>Two variations of this prompt are worth knowing.</p>
+
+      <h3>Variation 1: Ad Creative Hypothesis Version</h3>
+      <p>Adapted for generating hypotheses about ad creative variables rather than landing page elements — testing ad headline angles, visual formats, CTA specificity, and audience-signal alignment. Uses the same Impact × Confidence × Ease framework scoped to paid creative decisions.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <h3>Variation 2: Micro-Hypothesis Version (Single Element)</h3>
+      <p>Narrowed to a single element (e.g., just the CTA button copy or just the form placement) when the team has already identified the lever and needs five distinct hypotheses for that specific variable rather than five hypotheses across different levers.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Prompts</p>
+        <ul class="related-reading__list">
+          <li><a href="../ad-copy-variant-generator/">Claude Prompt for Ad Copy Variant Generation with Expert Panel Scoring</a></li>
+          <li><a href="../test-result-interpretation/">Claude Prompt for A/B Test Result Interpretation and Next Steps</a></li>
+          <li><a href="../strategic-campaign-brief/">Claude Prompt for Strategic B2B Campaign Brief and Multi-Channel Plan</a></li>
+          <li><a href="../../blog/ab-testing-expert-panel.html">A/B Testing Expert Panel</a></li>
+        </ul>
+      </div>
+
+      <div class="post-cta">
+        <p class="post-cta__heading">Get one new prompt every Monday.</p>
+        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'ab-test-hypothesis-generator'})}">Subscribe free →</a>
+      </div>
+
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h3>What's the difference between Impact, Confidence, and Ease in the scoring?</h3>
+          <p>Impact is how much the change could move the primary metric if the hypothesis is correct — a hero headline change on a high-traffic page has higher Impact than a CTA tweak on a low-traffic page. Confidence is how strong the evidence is that this is the right lever — a hypothesis backed by heat map data and session recordings has higher Confidence than one based on opinion. Ease is how hard the test is to implement in practice, including soft constraints like Brand approval or engineering dependency. The three scores multiply, so a high-impact, high-confidence, hard test (5×5×1) scores lower than a high-impact, moderate-confidence, easy test (5×3×4).</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How specific should my "current state" input be?</h3>
+          <p>The more specific, the better the hypotheses. "Enterprise landing page is converting at 1.8%. Hero headline reads 'The Website Experience Platform.' Bounce rate is 62% for senior visitors from paid traffic" gives the model enough signal to generate hypotheses with real causal reasoning. "Landing page performance isn't great" produces generic hypotheses with low actionability. Include your current conversion rate, the specific copy or layout you're testing against, any behavioral data you have (heat maps, scroll depth, session recordings), and any qualitative feedback from the panel or from sales.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Can I use this prompt if I don't have heat map or session recording data?</h3>
+          <p>Yes, but the Confidence scores will be lower for all hypotheses, which is the correct output. A hypothesis based only on intuition ("I think the headline is too generic") has lower Confidence than one backed by data ("72% of senior visitors from LinkedIn bounce without scrolling past the hero, and the panel scored the headline 52/100 on the Skeptical Buyer dimension"). The prompt marks low-confidence hypotheses explicitly — that's useful information, not a problem. It means you should consider a qualitative validation step before committing traffic.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What does "pre-launch validation" mean and when should I do it?</h3>
+          <p>Pre-launch validation means running copy variants through the Ad Copy Variant Generator's expert panel before you allocate live paid traffic to a test. It takes 10 minutes and eliminates weak copy variants before the 14-day live test window starts. Do it whenever the top hypothesis involves copy changes — headline variants, CTA variants, value prop framing. Skip it for structural changes (form placement, layout, visual hierarchy) since the panel doesn't score layout decisions reliably. The prompt makes this recommendation explicitly for the top hypothesis.</p>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="post-footer">
+    <a href="../" class="post-footer__back">← Back to Prompt Library</a>
+    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+      function copyPrompt(btn, targetId, slug) {
+        var text = document.getElementById(targetId).textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+            setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+            if (typeof gtag !== 'undefined') { gtag('event', 'prompt_copy', { prompt_slug: slug }); }
+          }).catch(function () { fallbackCopy(btn, text); });
+        } else { fallbackCopy(btn, text); }
+      }
+      function fallbackCopy(btn, text) {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+      }
+      window.copyPrompt = copyPrompt;
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY; var scrollTick = false;
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) { nav.classList.add('nav--hidden'); } else { nav.classList.remove('nav--hidden'); }
+            lastScrollY = y; scrollTick = false;
+          }); scrollTick = true;
+        }
+      });
+      var hamburger = document.getElementById('hamburger'); var mobileNav = document.getElementById('mobileNav');
+      hamburger.addEventListener('click', function () {
+        var isOpen = hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          hamburger.classList.remove('open'); mobileNav.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false'); mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

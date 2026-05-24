@@ -1,0 +1,39 @@
+# The Demand Engineer
+
+Matt Danese is a senior demand generation manager and AI systems builder. This site documents AI automation systems for B2B SaaS demand generation, with publicly available prompts, frameworks, and build breakdowns.
+
+## Author
+Matt Danese — Senior Demand Generation Manager
+Email: matthewjdanese@gmail.com
+LinkedIn: https://linkedin.com/in/matthew-danese
+
+## Key Pages
+- Homepage: https://thedemandengineer.com/
+- Newsletter: https://thedemandengineer.com/#newsletter
+- Blog: https://thedemandengineer.com/blog/
+- Prompt Library: https://thedemandengineer.com/prompts/
+
+## Prompt Library
+A free, ungated collection of 15 production-grade Claude prompts for B2B SaaS demand generation. Each prompt comes from a documented AI system used in real demand gen programs. Categories covered:
+
+- Paid Media Reporting & Analysis: weekly summaries, CPL anomaly detection, budget reallocation, exec summary generation
+- Attribution & Tracking: attribution audit and diagnostic
+- Lead Quality & ICP Analysis: ICP scoring rubric, ad creative audit, bad lead pattern detection
+- RevOps & Marketing Operations: Marketo nurture diagnostic, sales enablement package
+- A/B Testing & Creative: ad copy variant generation with expert panel scoring, hypothesis generation, test result interpretation
+- Strategic Briefs & Pipeline: campaign brief, pipeline gap analysis
+
+Full prompt library: https://thedemandengineer.com/prompts/
+
+## Topics Covered
+- AI-powered paid media automation
+- Lead scoring and ICP qualification using AI
+- B2B attribution tracking architecture (GCLID, OCI, Enhanced Conversions)
+- Marketo audit and lead routing diagnostics
+- A/B testing with AI-generated variants and pre-launch expert panel scoring
+- Demand gen reporting automation
+- Pipeline gap diagnostics
+- Sales enablement from new content offers
+
+## Editorial Approach
+All content is grounded in real production systems. Prompts include the actual rubrics, judgment rules, and failure modes from documented work. No theoretical AI content — only what's been built and used in B2B demand gen programs.

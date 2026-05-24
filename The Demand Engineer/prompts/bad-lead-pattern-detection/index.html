@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== PRIMARY SEO ===== -->
+  <title>Claude Prompt for Outbound Coverage and Bad Lead Pattern Detection | The Demand Engineer</title>
+  <meta name="description" content="A production-ready Claude prompt for diagnosing outbound coverage drops and bad lead patterns in B2B paid social. Analyzes Marketo Campaign Member data with MoM bucketing to distinguish real performance drops from campaign flights ending or tracking breaks." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/prompts/bad-lead-pattern-detection/" />
+
+  <!-- ===== OPEN GRAPH ===== -->
+  <meta property="og:title" content="Claude Prompt for Outbound Coverage and Bad Lead Pattern Detection" />
+  <meta property="og:description" content="A production-ready Claude prompt for diagnosing outbound coverage drops and bad lead patterns in B2B paid social. Analyzes Marketo Campaign Member data with MoM bucketing to distinguish real performance drops from campaign flights ending or tracking breaks." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/prompts/bad-lead-pattern-detection/" />
+  <meta property="og:image" content="https://thedemandengineer.com/og-default.png" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+
+  <!-- ===== TWITTER CARD ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claude Prompt for Outbound Coverage and Bad Lead Pattern Detection" />
+  <meta name="twitter:description" content="A production-ready Claude prompt for diagnosing outbound coverage drops and bad lead patterns in B2B paid social. Analyzes Marketo Campaign Member data with MoM bucketing to distinguish real performance drops from campaign flights ending or tracking breaks." />
+
+  <!-- ===== FONTS + KIT ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <!-- ===== GA4 ===== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N24QM0NQG6');
+  </script>
+
+  <!-- ===== SCHEMA: Article ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Claude Prompt for Outbound Coverage and Bad Lead Pattern Detection",
+    "description": "A production-ready Claude prompt for diagnosing outbound coverage drops and bad lead patterns in B2B paid social. Analyzes Marketo Campaign Member data with MoM bucketing to distinguish real performance drops from campaign flights ending or tracking breaks.",
+    "author": {
+      "@type": "Person",
+      "name": "Matt Danese",
+      "jobTitle": "Senior Demand Generation Manager",
+      "url": "https://thedemandengineer.com",
+      "sameAs": ["https://linkedin.com/in/matthew-danese"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Demand Engineer",
+      "url": "https://thedemandengineer.com"
+    },
+    "url": "https://thedemandengineer.com/prompts/bad-lead-pattern-detection/",
+    "datePublished": "2026-05-24",
+    "dateModified": "2026-05-24",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://thedemandengineer.com/prompts/bad-lead-pattern-detection/"
+    },
+    "keywords": "claude prompt, bad lead pattern detection, outbound coverage analysis, paid social lead patterns, Marketo campaign member data, B2B lead quality",
+    "articleSection": "Lead Quality & ICP Analysis",
+    "inLanguage": "en-US"
+  }
+  </script>
+
+  <!-- ===== SCHEMA: FAQPage ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What Marketo fields do I need for this analysis?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three required fields: Member First Responded Date (the timestamp that drives the monthly bucketing), Campaign Type (for the type-level breakdown), and Campaign Name (for the campaign-level detail). If you also have member status (Responded vs. Registered vs. just Member) and lead source, include them — the analysis gets sharper. Export a rolling 90-day window at minimum; 180 days is better if you're trying to distinguish seasonal patterns from structural drops."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I distinguish a tracking issue from a real performance drop?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The key signal is a drop that coincides with a known system change (UTM convention update, Campaign Member assignment rule change, a new form deployed) without a corresponding drop in spend or impressions. Real performance drops usually show correlated signals — lower spend, lower clicks, lower impression share. Measurement artifacts show a drop in Campaign Member count with flat or rising ad platform metrics. The prompt asks for known changes explicitly because that context is the fastest path to a confident diagnosis."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What's the difference between this and the Lead Quality Scoring prompt?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "They answer different questions. The Lead Quality Scoring prompt scores individual leads against an ICP rubric — it tells you whether the people you're getting are the right people. This prompt analyzes volume trends in your campaign program membership — it tells you whether the number of people entering your program is dropping and why. Run Lead Quality Scoring when the leads you're getting look wrong; run this prompt when the number of leads you're getting is dropping."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How should I use the \"recommendations\" section output?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The recommendations are specific and actionable — they reference named campaigns or campaign types and state what to do. \"Reactivate Campaign X — it accounted for 30% of peak-month volume and has been off for 6 weeks\" is a ready-to-act recommendation. Take each one and assign an owner with a deadline. The ones tagged as tracking issues go to MoPs or RevOps; the ones tagged as performance issues go to your paid team; the ones tagged as budget shifts go back into your channel allocation review."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- ===== SCHEMA: BreadcrumbList ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",           "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Prompt Library", "item": "https://thedemandengineer.com/prompts/" },
+      { "@type": "ListItem", "position": 3, "name": "Bad Lead Pattern Detection", "item": "https://thedemandengineer.com/prompts/bad-lead-pattern-detection/" }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ========= CSS CUSTOM PROPERTIES ========= */
+    :root {
+      --color-bg: #F4F6FB;
+      --color-bg-card: #FFFFFF;
+      --color-text: #0D1117;
+      --color-text-muted: #64748B;
+      --color-accent: #2D5BE3;
+      --color-accent-hover: #1E46C7;
+      --color-accent-dark: #0A1628;
+      --color-border: #DDE3F0;
+      --color-eyebrow: #2D5BE3;
+      --color-chip-bg: #EEF2FF;
+      --color-chip-text: #3B5CC4;
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --max-width: 760px;
+      --nav-height: 56px;
+    }
+
+    /* ========= RESET & BASE ========= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 17px; }
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { font-family: var(--font-body); }
+
+    /* ========= NAVIGATION ========= */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(244, 246, 251, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: transform 0.3s ease;
+    }
+    .nav--hidden { transform: translateY(-100%); }
+    .nav__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__links { display: flex; align-items: center; gap: 24px; }
+    .nav__links a {
+      position: relative;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      transition: color 0.2s ease;
+      padding-bottom: 2px;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 2px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+    .nav__links a:hover { color: var(--color-accent); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background-color: var(--color-accent-dark);
+      border-radius: 2px;
+      transition: all 0.25s ease;
+    }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height); left: 0; right: 0;
+      background: rgba(244, 246, 251, 0.97);
+      border-bottom: 1px solid var(--color-border);
+      padding: 20px 24px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .nav__mobile a:hover { color: var(--color-accent); }
+
+    /* ========= BUTTONS ========= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      padding: 0 24px;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn--primary { background-color: var(--color-accent); color: #fff; }
+    .btn--primary:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+
+    /* ========= BREADCRUMB ========= */
+    .breadcrumb { margin-bottom: 20px; }
+    .breadcrumb__list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+    .breadcrumb__list li {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+    }
+    .breadcrumb__list li + li::before {
+      content: '›';
+      margin: 0 8px;
+      color: var(--color-border);
+    }
+    .breadcrumb__list a { color: var(--color-accent); }
+    .breadcrumb__list a:hover { text-decoration: underline; }
+
+    /* ========= POST HERO ========= */
+    .post-hero {
+      padding-top: calc(var(--nav-height) + 56px);
+      padding-bottom: 40px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .post-hero__inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .post-category {
+      display: inline-block;
+      background-color: var(--color-chip-bg);
+      color: var(--color-chip-text);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-family: var(--font-heading);
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-bottom: 20px;
+    }
+    .post-subtitle {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      margin-top: -10px;
+      margin-bottom: 16px;
+    }
+    .post-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* ========= AUTHOR BIO ========= */
+    .author-bio {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .author-bio__avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-bio__name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-text);
+      margin-bottom: 3px;
+    }
+    .author-bio__desc {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========= POST BODY ========= */
+    .post-body {
+      max-width: 680px;
+      margin: 48px auto 0;
+      padding: 0 24px 80px;
+    }
+    .post-body p {
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+    .post-body h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: clamp(1.35rem, 3vw, 1.7rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--color-accent-dark);
+      margin-top: 56px;
+      margin-bottom: 16px;
+    }
+    .post-body h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--color-accent-dark);
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+    .post-body ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 24px;
+    }
+    .post-body ul li {
+      line-height: 1.8;
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: var(--color-text);
+    }
+    .post-body strong { font-weight: 600; }
+
+    /* ========= DIRECT ANSWER BLOCK ========= */
+    .direct-answer {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+    }
+    .direct-answer strong { font-weight: 600; color: var(--color-accent-dark); }
+
+    /* ========= PROMPT BLOCK + COPY BUTTON ========= */
+    .prompt-block {
+      background: var(--color-accent-dark);
+      border-radius: 8px;
+      padding: 18px 22px 24px;
+      margin: 24px 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      color: #c9d4e8;
+      line-height: 1.75;
+      position: relative;
+    }
+    .prompt-label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b8cba;
+      display: block;
+      margin-bottom: 14px;
+    }
+    .prompt-text {
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      line-height: inherit;
+      white-space: pre-wrap;
+      background: none;
+      border: none;
+      padding: 0;
+      overflow-wrap: break-word;
+    }
+    .prompt-copy-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #a8bbd4;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 2;
+      white-space: nowrap;
+    }
+    .prompt-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.32);
+      color: #c9d4e8;
+    }
+    .prompt-copy-btn.copied {
+      background: rgba(45, 91, 227, 0.25);
+      border-color: rgba(45, 91, 227, 0.45);
+      color: #a8c0ff;
+    }
+    .prompt-block--placeholder { opacity: 0.65; }
+    .prompt-block--placeholder .prompt-text { color: #6b8cba; font-style: italic; }
+
+    /* ========= VARIABLE BLOCKS ========= */
+    .var-block {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .var-name {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .var-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    /* ========= EXAMPLE OUTPUT ========= */
+    .example-output {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .example-output__label {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      display: block;
+      margin-bottom: 12px;
+    }
+    .example-output--pending p {
+      font-style: italic;
+      color: var(--color-text-muted);
+      font-size: 15px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ========= POST CTA BOX ========= */
+    .post-cta {
+      background: var(--color-chip-bg);
+      border-left: 3px solid var(--color-accent);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-top: 48px;
+    }
+    .post-cta__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--color-accent-dark);
+      margin-bottom: 8px;
+    }
+    .post-cta__body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ========= RELATED READING ========= */
+    .related-reading {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .related-reading__heading {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .related-reading__list { list-style: none; padding: 0; margin: 0; }
+    .related-reading__list li { line-height: 2; }
+    .related-reading__list a {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 15px;
+      color: var(--color-accent);
+      transition: color 0.15s ease;
+    }
+    .related-reading__list a:hover { color: var(--color-accent-hover); text-decoration: underline; }
+
+    /* ========= FAQ SECTION ========= */
+    .faq-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 32px;
+      margin-top: 40px;
+    }
+    .faq-section > h2 {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .faq-item { margin-bottom: 28px; }
+    .faq-item h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--color-accent-dark);
+      margin-top: 0 !important;
+      margin-bottom: 10px;
+    }
+    .faq-item p { margin-bottom: 0; }
+
+    /* ========= POST FOOTER ========= */
+    .post-footer {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+      border-top: 1px solid var(--color-border);
+    }
+    .post-footer__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+      transition: color 0.2s ease;
+    }
+    .post-footer__back:hover { color: var(--color-accent-hover); }
+    .post-footer__copy { font-size: 12px; color: var(--color-text-muted); text-align: center; }
+
+    /* ========= MOBILE ========= */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      .post-title { font-size: clamp(1.5rem, 4vw, 2rem); }
+      .post-body { padding: 0 20px 60px; }
+      .post-hero__inner { padding: 0 20px; }
+      .post-footer { padding: 24px 20px 40px; }
+      .nav__links { display: none; }
+      .nav__hamburger { display: flex; }
+      .post-cta { padding: 24px; }
+      .prompt-block { padding: 14px 16px 20px; font-size: 12px; }
+      .prompt-copy-btn { top: 10px; right: 10px; font-size: 10px; padding: 4px 8px; }
+      .var-block { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
+        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="../../">← Back to Site</a></li>
+        <li><a href="../../index.html#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../blog/">Blog</a></li>
+        <li><a href="../">Prompts</a></li>
+        <li><a href="../../index.html#newsletter">Newsletter</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== MOBILE NAV ===== -->
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../" class="mobile-nav-link">← Back to Site</a>
+    <a href="../../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
+    <a href="../../blog/" class="mobile-nav-link">Blog</a>
+    <a href="../" class="mobile-nav-link">Prompts</a>
+    <a href="../../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+
+  <main>
+
+    <!-- ===== POST HERO ===== -->
+    <section class="post-hero">
+      <div class="post-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol class="breadcrumb__list">
+            <li><a href="../../">Home</a></li>
+            <li><a href="../">Prompt Library</a></li>
+            <li aria-current="page">Bad Lead Pattern Detection</li>
+          </ol>
+        </nav>
+        <span class="post-category">Lead Quality &amp; ICP Analysis</span>
+        <h1 class="post-title">Claude Prompt for Outbound Coverage and Bad Lead Pattern Detection</h1>
+        <h2 class="post-subtitle">Diagnose outbound coverage drops and bad lead patterns from your Marketo Campaign Member data — bucketing month-over-month to distinguish campaign flights ending from real performance degradation, and surfacing the five most likely root causes with evidence from the data.</h2>
+        <p class="post-meta">8 min read · Matt Danese · May 2026 · <span style="color:var(--color-accent);">Last updated: May 2026</span></p>
+      </div>
+    </section>
+
+    <!-- ===== AUTHOR BIO ===== -->
+    <div class="author-bio" itemscope itemtype="https://schema.org/Person">
+      <div class="author-bio__avatar" aria-hidden="true">MD</div>
+      <div>
+        <p class="author-bio__name" itemprop="name">Matt Danese</p>
+        <p class="author-bio__desc"><span itemprop="jobTitle">Senior Demand Generation Manager</span> · <span itemprop="description">8+ years building B2B demand gen programs at Meta, Webflow, Medely, and Regal.ai. Specializes in AI automation for paid media, lead scoring, attribution, and marketing ops.</span> <a itemprop="url" href="https://thedemandengineer.com" style="color:var(--color-accent);">thedemandengineer.com</a> · <a itemprop="sameAs" href="https://linkedin.com/in/matthew-danese" style="color:var(--color-accent);">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <!-- ===== POST BODY ===== -->
+    <article class="post-body">
+
+      <!-- DIRECT ANSWER BLOCK -->
+      <div class="direct-answer">
+        <strong>Bad lead pattern detection:</strong> Diagnose outbound coverage drops and bad lead patterns by pasting your Marketo Campaign Member export into Claude with this prompt. It buckets members month-over-month, identifies which campaigns drove the peak and which dropped off, and classifies the most likely root cause from five candidate patterns — distinguishing real performance degradation from campaign flights ending or tracking breaks.
+      </div>
+
+      <!-- THE PROMPT -->
+      <h2>The Prompt</h2>
+      <div class="prompt-block">
+        <span class="prompt-label">Production Prompt — Copy and use verbatim</span>
+        <button class="prompt-copy-btn" onclick="copyPrompt(this,'prompt-main','bad-lead-pattern-detection')" aria-label="Copy prompt to clipboard">Copy prompt</button>
+        <pre class="prompt-text" id="prompt-main">You are a senior B2B demand gen analyst diagnosing outbound coverage drops and paid social lead pattern changes. You understand that lead-volume drops are often the visible symptom of a deeper cause — a campaign flight ending, a budget shift, an audience saturating, or a tracking break — and that misreading the cause leads to the wrong fix.
+
+INPUTS
+
+I will paste a Marketo Campaign Member export below. Required fields: Member First Responded Date, Campaign Type, Campaign Name, and the time range of interest (typically a rolling 90-day window).
+
+{PASTE_CAMPAIGN_MEMBER_DATA_HERE}
+
+{OPTIONAL_PASTE_KNOWN_CHANGES_HERE}
+(Examples: "Campaign X flight ended in March," "Budget shifted from LinkedIn to Google in Q2," "New audience launched on April 15." Leave blank if no known changes.)
+
+WHAT I NEED FROM YOU
+
+Analyze the data and produce the output in this exact order:
+
+1. Overview
+Top-line metrics: total members in the period, peak month, current-month run rate, month-over-month change from peak to current.
+
+2. Monthly Breakdown
+A table showing total members per month, broken down by campaign type. Highlight any month with a 20%+ drop from the prior month.
+
+3. Campaign-Level Detail
+For each campaign type that contributed at least 5% of members in the peak month, show its month-over-month trajectory. Identify which campaigns drove the peak and which campaigns dropped off.
+
+4. Drop-Off Signals
+Diagnose the likely root cause of any observed drop. Candidate causes:
+- Campaign flight ending (member generation stopped because the campaign stopped running)
+- Budget shift (budget moved to a different campaign or channel)
+- Audience saturation (frequency capped or pool exhausted)
+- Creative fatigue (CTR decay on aging creative)
+- Targeting drift (audience composition changed, no longer reaching ICP)
+- Tracking issue (UTM convention broke, Campaign Member assignment misfiring)
+- Seasonality (known industry pattern — flag and don't over-interpret)
+
+For each candidate cause: state the evidence in the data that supports or rejects it.
+
+5. Recommendations
+3-5 specific actions. Each should reference a campaign or campaign type and what to do about it. Examples: "Reactivate Campaign X — it accounted for 30% of peak-month volume and has been off for 6 weeks," "Audit UTM convention on Campaign Y — March-to-April drop coincides with reported tracking issues."
+
+JUDGMENT RULES
+
+- Volume drops can be real performance issues or measurement artifacts. Distinguish between the two before recommending budget changes. A drop in Campaign Member counts that coincides with a known UTM convention change is most likely a measurement artifact.
+- Campaign flights ending is the most common cause of large drops and the easiest to miss. If a major campaign appears in the peak month and disappears later, check whether it was actually running or just flighted out.
+- Do not over-attribute drops to "audience saturation" without evidence. Saturation has specific signals (rising frequency, falling CTR, declining unique reach). If those aren't in the data, don't claim saturation as the cause.
+- Seasonality is real but should not be a default explanation. Use it only when the pattern matches a known seasonal cycle (e.g., December holiday slowdown, August enterprise pause).
+- If you don't have enough data to diagnose a drop, say so. "March-to-April drop is unexplained by the data provided — recommend pulling spend and frequency data for the same period to confirm cause" is better than guessing.
+
+OUTPUT FORMAT
+
+Return as {OUTPUT_FORMAT}.
+
+If "markdown": Overview, monthly table, campaign detail, drop-off signals, recommendations.
+If "html": 5-tab artifact structure — Overview / Monthly Breakdown / Campaign Detail / Drop-off Signals / Feedback &amp; Log.
+
+Begin.</pre>
+      </div>
+
+      <!-- HOW TO USE IT -->
+      <h2>How to Use It</h2>
+
+      <p>This prompt is designed for the moment your BDR leader reports "outbound coverage is down" and you need to diagnose whether that's a paid performance issue, a campaign flight ending, a budget shift, or a tracking break — before you make any changes. The Marketo Campaign Member data is the right input because it captures actual program membership with timestamps, not just ad platform impressions or clicks. In production testing, Claude is significantly more reliable than ChatGPT for this analysis — Claude distinguishes between "campaign flight ending" and "audience saturation" with more precision and is more careful about flagging when the data doesn't support a confident diagnosis.</p>
+
+      <p>The output follows a five-section artifact structure: a top-line overview, a monthly breakdown table with campaign type split, a campaign-level trajectory view, a drop-off signal diagnosis, and specific recommendations. That structure maps to how this analysis gets used in practice — the monthly breakdown goes to your VP, the drop-off signal section goes to your paid team for remediation, and the recommendations go into your quarterly planning doc. The 20%+ month-over-month flag threshold filters out normal variance without missing real signals.</p>
+
+      <p>Three inputs: the Campaign Member export (with First Responded Date, Campaign Type, and Campaign Name at minimum), the time range (typically a rolling 90-day window), and an optional field for known changes during the period. That optional context field is the highest-leverage input — if you paste "Campaign X flight ended in March," the model immediately weights that as the primary candidate for a March-to-April drop rather than reaching for saturation or targeting drift explanations that require more evidence.</p>
+
+      <!-- EXAMPLE OUTPUT -->
+      <h2>Example Output</h2>
+      <div class="example-output example-output--pending">
+        <span class="example-output__label">Live Example</span>
+        <p>Example output coming soon — currently running this prompt against live data and will publish the redacted output once it's ready.</p>
+      </div>
+
+      <!-- VARIATIONS -->
+      <h2>Variations</h2>
+      <p>Two variations of this prompt are worth knowing.</p>
+
+      <h3>Variation 1: Single Campaign Type Deep-Dive</h3>
+      <p>Scoped to a single campaign type (e.g., LinkedIn Sponsored Content, Google Display, or a specific ABM motion) rather than the full program. For when a specific program family is underperforming and you need campaign-level detail rather than a cross-program overview.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <h3>Variation 2: Quarterly Coverage Retrospective Version</h3>
+      <p>Adapted for end-of-quarter retrospectives — extends the lookback window to 180 days, adds a QoQ comparison layer, and frames the output as a coverage story for a QBR slide rather than an operational diagnostic.</p>
+      <div class="prompt-block prompt-block--placeholder">
+        <span class="prompt-label">Coming soon</span>
+        <pre class="prompt-text"><!-- TODO: Matt to paste real prompt here -->
+[PROMPT GOES HERE]</pre>
+      </div>
+
+      <!-- RELATED PROMPTS -->
+      <div class="related-reading">
+        <p class="related-reading__heading">Related Prompts</p>
+        <ul class="related-reading__list">
+          <li><a href="../lead-quality-scoring-prompt/">Claude Prompt for B2B Lead Quality Scoring Rubric</a></li>
+          <li><a href="../marketo-nurture-diagnostic/">Claude Prompt for Marketo Lead Nurture Routing Diagnostic</a></li>
+          <li><a href="../attribution-audit-diagnostic/">Claude Prompt for Paid Media Attribution Audit and Diagnostic</a></li>
+          <li><a href="../../blog/icp-lead-quality-scoring.html">ICP Lead Quality Scoring</a></li>
+        </ul>
+      </div>
+
+      <!-- NEWSLETTER CTA -->
+      <div class="post-cta">
+        <p class="post-cta__heading">Get one new prompt every Monday.</p>
+        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+        <a class="btn btn--primary" id="newsletter-cta" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'bad-lead-pattern-detection'})}">Subscribe free →</a>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <h3>What Marketo fields do I need for this analysis?</h3>
+          <p>Three required fields: Member First Responded Date (the timestamp that drives the monthly bucketing), Campaign Type (for the type-level breakdown), and Campaign Name (for the campaign-level detail). If you also have member status (Responded vs. Registered vs. just Member) and lead source, include them — the analysis gets sharper. Export a rolling 90-day window at minimum; 180 days is better if you're trying to distinguish seasonal patterns from structural drops.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How do I distinguish a tracking issue from a real performance drop?</h3>
+          <p>The key signal is a drop that coincides with a known system change (UTM convention update, Campaign Member assignment rule change, a new form deployed) without a corresponding drop in spend or impressions. Real performance drops usually show correlated signals — lower spend, lower clicks, lower impression share. Measurement artifacts show a drop in Campaign Member count with flat or rising ad platform metrics. The prompt asks for known changes explicitly because that context is the fastest path to a confident diagnosis.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What's the difference between this and the Lead Quality Scoring prompt?</h3>
+          <p>They answer different questions. The Lead Quality Scoring prompt scores individual leads against an ICP rubric — it tells you whether the people you're getting are the right people. This prompt analyzes volume trends in your campaign program membership — it tells you whether the number of people entering your program is dropping and why. Run Lead Quality Scoring when the leads you're getting look wrong; run this prompt when the number of leads you're getting is dropping.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>How should I use the "recommendations" section output?</h3>
+          <p>The recommendations are specific and actionable — they reference named campaigns or campaign types and state what to do. "Reactivate Campaign X — it accounted for 30% of peak-month volume and has been off for 6 weeks" is a ready-to-act recommendation. Take each one and assign an owner with a deadline. The ones tagged as tracking issues go to MoPs or RevOps; the ones tagged as performance issues go to your paid team; the ones tagged as budget shifts go back into your channel allocation review.</p>
+        </div>
+
+      </div>
+
+    </article>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="post-footer">
+    <a href="../" class="post-footer__back">← Back to Prompt Library</a>
+    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // =========================================================
+      // 1. PROMPT COPY BUTTON
+      // =========================================================
+      function copyPrompt(btn, targetId, slug) {
+        var text = document.getElementById(targetId).textContent.trim();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = 'Copied ✓';
+            btn.classList.add('copied');
+            setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+            if (typeof gtag !== 'undefined') { gtag('event', 'prompt_copy', { prompt_slug: slug }); }
+          }).catch(function () { fallbackCopy(btn, text); });
+        } else {
+          fallbackCopy(btn, text);
+        }
+      }
+      function fallbackCopy(btn, text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+      }
+      window.copyPrompt = copyPrompt;
+
+      // =========================================================
+      // 2. NAV HIDE / SHOW ON SCROLL DIRECTION
+      // =========================================================
+      var nav = document.getElementById('nav');
+      var lastScrollY = window.scrollY;
+      var scrollTick = false;
+      window.addEventListener('scroll', function () {
+        if (!scrollTick) {
+          window.requestAnimationFrame(function () {
+            var y = window.scrollY;
+            if (y > lastScrollY && y > 80) { nav.classList.add('nav--hidden'); }
+            else { nav.classList.remove('nav--hidden'); }
+            lastScrollY = y;
+            scrollTick = false;
+          });
+          scrollTick = true;
+        }
+      });
+
+      // =========================================================
+      // 3. HAMBURGER MENU TOGGLE
+      // =========================================================
+      var hamburger = document.getElementById('hamburger');
+      var mobileNav = document.getElementById('mobileNav');
+      hamburger.addEventListener('click', function () {
+        var isOpen = hamburger.classList.toggle('open');
+        mobileNav.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', String(isOpen));
+        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          hamburger.classList.remove('open');
+          mobileNav.classList.remove('open');
+          hamburger.setAttribute('aria-expanded', 'false');
+          mobileNav.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
