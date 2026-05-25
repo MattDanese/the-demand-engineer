@@ -22,9 +22,12 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Free Claude Prompts for B2B Demand Gen Managers" />
   <meta name="twitter:description" content="15 production-ready prompts for paid media reporting, attribution audits, lead quality analysis, A/B testing, and demand gen operations." />
-
   <meta name="twitter:image" content="https://thedemandengineer.com/og-prompts-v2.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
@@ -87,179 +90,197 @@
 
   <style>
     :root {
-      --color-bg: #F4F6FB;
-      --color-bg-card: #FFFFFF;
-      --color-text: #0D1117;
-      --color-text-muted: #64748B;
-      --color-accent: #2D5BE3;
-      --color-accent-hover: #1E46C7;
-      --color-accent-dark: #0A1628;
-      --color-border: #DDE3F0;
-      --color-eyebrow: #2D5BE3;
-      --color-chip-bg: #EEF2FF;
-      --color-chip-text: #3B5CC4;
-      --font-heading: 'Fraunces', serif;
-      --font-body: 'DM Sans', system-ui, sans-serif;
-      --max-width: 1100px;
-      --nav-height: 56px;
+      --navy: #0B0F1A;
+      --navy-2: #11162a;
+      --light: #F4F5F7;
+      --white: #FFFFFF;
+      --ink: #1A1D2E;
+      --muted: #6B7280;
+      --rule: #DDE3F0;
+      --cobalt: #3B5BDB;
+      --cobalt-bright: #5577ec;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "DM Sans", system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --pad-x: clamp(20px, 5vw, 88px);
+      --max: 1320px;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 17px; }
-    body { background-color: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-weight: 400; line-height: 1.65; -webkit-font-smoothing: antialiased; }
-    img { display: block; max-width: 100%; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--navy); color: var(--white); font-family: var(--sans); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    button { font-family: var(--font-body); }
+    button { font-family: inherit; cursor: pointer; }
 
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-height); background: rgba(244,246,251,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--color-border); transition: transform 0.3s ease; }
-    .nav--hidden { transform: translateY(-100%); }
-    .nav__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
-    .nav__links { display: flex; align-items: center; gap: 24px; }
-    .nav__links a { position: relative; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--color-text-muted); transition: color 0.2s ease; padding-bottom: 2px; }
-    .nav__links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 2px; background-color: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease; }
-    .nav__links a:hover { color: var(--color-accent); }
-    .nav__links a:hover::after { transform: scaleX(1); }
-    .nav__links a.active { color: var(--color-accent); font-weight: 600; }
-    .nav__links a.active::after { transform: scaleX(1); }
-    .nav__hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 32px; height: 32px; cursor: pointer; background: none; border: none; padding: 0; }
-    .nav__hamburger span { display: block; width: 22px; height: 2px; background-color: var(--color-accent-dark); border-radius: 2px; transition: all 0.25s ease; }
-    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav__mobile { display: none; position: fixed; top: var(--nav-height); left: 0; right: 0; background: rgba(244,246,251,0.97); border-bottom: 1px solid var(--color-border); padding: 20px 24px; z-index: 99; flex-direction: column; gap: 20px; }
-    .nav__mobile.open { display: flex; }
-    .nav__mobile a { font-family: var(--font-body); font-weight: 500; font-size: 17px; color: var(--color-text); transition: color 0.2s ease; }
-    .nav__mobile a:hover { color: var(--color-accent); }
+    /* Grain */
+    .grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.09 0 0 0 0 0.13 0 0 0 0.42 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+    .dotgrid { position: absolute; inset: 0; pointer-events: none; opacity: 0.18; background-image: radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(ellipse 100% 70% at 50% 35%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 35%, #000 30%, transparent 75%); }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 24px; border-radius: 6px; font-family: var(--font-body); font-weight: 600; font-size: 15px; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s ease; white-space: nowrap; }
-    .btn--primary { background-color: var(--color-accent); color: #fff; }
-    .btn--primary:hover { background-color: var(--color-accent-hover); transform: translateY(-1px); }
+    /* Nav */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 22px var(--pad-x); display: flex; justify-content: space-between; align-items: center; transition: backdrop-filter 0.3s ease, background 0.3s ease, padding 0.3s ease; }
+    .nav.scrolled { padding: 14px var(--pad-x); background: rgba(11,15,26,0.72); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav.on-light:not(.scrolled) { color: var(--ink); }
+    .nav.on-light.scrolled { background: rgba(244,245,247,0.82); border-bottom-color: rgba(0,0,0,0.06); color: var(--ink); }
+    .lockup { display: inline-flex; align-items: baseline; gap: 14px; line-height: 1; }
+    .lockup .mark { width: 28px; height: 28px; transform: translateY(4px); }
+    .lockup .label { font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; }
+    .lockup .word { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: 22px; letter-spacing: -0.025em; }
+    .lockup .word .er { color: var(--cobalt-bright); font-style: italic; }
+    .nav.on-light .lockup .word .er { color: var(--cobalt); }
+    .navlinks { display: flex; gap: 36px; align-items: center; font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+    .navlinks a { position: relative; padding: 6px 0; opacity: 0.75; transition: opacity 0.2s; }
+    .navlinks a:hover { opacity: 1; }
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: currentColor; transition: right 0.25s ease; }
+    .navlinks a:hover::after { right: 0; }
+    .nav-subscribe { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; background: var(--cobalt); color: var(--white); border: none; padding: 10px 18px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; margin-left: 12px; }
+    .nav-subscribe:hover { background: var(--cobalt-bright); }
+    .nav-subscribe .arr { transition: transform 0.2s; }
+    .nav-subscribe:hover .arr { transform: translateX(3px); }
+    @media (max-width: 820px) { .navlinks { display: none; } .nav-subscribe { display: none; } }
 
-    .breadcrumb { margin-bottom: 20px; }
-    .breadcrumb__list { display: flex; align-items: center; list-style: none; padding: 0; flex-wrap: wrap; }
-    .breadcrumb__list li { font-family: var(--font-body); font-size: 13px; color: var(--color-text-muted); display: flex; align-items: center; }
-    .breadcrumb__list li + li::before { content: '›'; margin: 0 8px; color: var(--color-border); }
-    .breadcrumb__list a { color: var(--color-accent); }
-    .breadcrumb__list a:hover { text-decoration: underline; }
+    /* Hero */
+    .hero { position: relative; min-height: 56vh; padding: 160px var(--pad-x) 100px; overflow: hidden; background: var(--navy); }
+    .hero-inner { position: relative; max-width: var(--max); margin: 0 auto; z-index: 2; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+    .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobalt-bright); box-shadow: 0 0 12px var(--cobalt); animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero h1 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: clamp(48px, 8vw, 100px); line-height: 0.93; letter-spacing: -0.035em; margin: 0; color: var(--white); max-width: 900px; }
+    .hero h1 .ital { font-style: italic; color: var(--cobalt-bright); font-weight: 900; }
+    .hero-sub { margin-top: 32px; max-width: 560px; font-family: var(--sans); font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.72); }
 
-    .prompts-hero { padding-top: calc(var(--nav-height) + 56px); padding-bottom: 40px; background: var(--color-bg); border-bottom: 1px solid var(--color-border); }
-    .prompts-hero__inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
-    .page-eyebrow { display: inline-block; font-family: var(--font-body); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-eyebrow); margin-bottom: 16px; }
-    .page-h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--color-accent-dark); margin-bottom: 20px; }
-    .page-desc { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-text-muted); line-height: 1.6; max-width: 640px; margin-bottom: 16px; }
-    .post-meta { font-family: var(--font-body); font-size: 13px; color: var(--color-text-muted); }
+    /* Content section */
+    .content-section { background: var(--light); color: var(--ink); position: relative; clip-path: polygon(0 70px, 100% 0, 100% 100%, 0 100%); margin-top: -70px; padding-top: 70px; }
+    .content-inner { max-width: var(--max); margin: 0 auto; padding: 80px var(--pad-x) 120px; }
 
-    .prompts-container { max-width: var(--max-width); margin: 0 auto; padding: 56px 24px 80px; }
-    .category-section { margin-bottom: 56px; }
-    .category-heading { font-family: var(--font-body); font-weight: 600; font-size: 13px; color: var(--color-text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--color-border); }
+    /* Category section */
+    .category-section { margin-bottom: 64px; }
+    .category-heading { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cobalt); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); display: inline-flex; align-items: center; gap: 12px; }
+    .category-heading::before { content: ""; width: 22px; height: 1px; background: var(--cobalt); }
     .prompts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    @media (max-width: 600px) { .prompts-grid { grid-template-columns: 1fr; } }
 
-    .prompt-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 12px; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-    .prompt-card:hover { border-color: var(--color-accent); box-shadow: 0 4px 16px rgba(45,91,227,0.08); }
-    .prompt-card__chip { display: inline-block; background-color: var(--color-chip-bg); color: var(--color-chip-text); font-family: var(--font-body); font-weight: 600; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; width: fit-content; }
-    .prompt-card__title { font-family: var(--font-heading); font-weight: 700; font-size: 1.05rem; line-height: 1.25; letter-spacing: -0.01em; color: var(--color-accent-dark); }
-    .prompt-card__title a { color: inherit; transition: color 0.2s ease; }
-    .prompt-card__title a:hover { color: var(--color-accent); }
-    .prompt-card__desc { font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); line-height: 1.65; flex: 1; }
-    .prompt-card__action { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--color-accent); transition: color 0.2s ease; }
-    .prompt-card__action:hover { color: var(--color-accent-hover); text-decoration: underline; }
+    /* Prompt card */
+    .prompt-card { background: var(--white); border: 1px solid var(--rule); padding: 28px; display: flex; flex-direction: column; gap: 14px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .prompt-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -20px rgba(11,15,26,0.18); border-color: var(--ink); }
+    .prompt-card__chip { display: inline-flex; font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--cobalt); padding: 4px 10px; border: 1px solid var(--rule); align-self: flex-start; }
+    .prompt-card__title { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 700; font-size: 20px; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+    .prompt-card__title a { color: inherit; transition: color 0.2s; }
+    .prompt-card__title a:hover { color: var(--cobalt); }
+    .prompt-card__desc { font-family: var(--sans); font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .prompt-card__action { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobalt); display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--cobalt); padding-bottom: 2px; align-self: flex-start; transition: opacity 0.2s; }
+    .prompt-card__action:hover { opacity: 0.7; }
 
-    .post-cta { background: var(--color-chip-bg); border-left: 3px solid var(--color-accent); border-radius: 8px; padding: 28px 32px; margin-top: 16px; max-width: 680px; }
-    .post-cta__heading { font-family: var(--font-body); font-weight: 600; font-size: 15px; color: var(--color-accent-dark); margin-bottom: 8px; }
-    .post-cta__body { font-family: var(--font-body); font-size: 14px; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 20px; }
+    /* Newsletter CTA block */
+    .post-cta { background: var(--ink); color: var(--white); padding: 44px var(--pad-x); margin-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 32px; clip-path: polygon(0 12px, 100% 0, 100% calc(100% - 12px), 0 100%); margin-left: calc(var(--pad-x) * -1); margin-right: calc(var(--pad-x) * -1); }
+    .post-cta__heading { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 700; font-size: clamp(22px, 2.5vw, 32px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px; color: var(--white); }
+    .post-cta__body { font-family: var(--sans); font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.55; margin: 0 0 20px; max-width: 44ch; }
+    .btn--primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; background: var(--cobalt); color: var(--white); border: none; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+    .btn--primary:hover { background: var(--cobalt-bright); }
+    @media (max-width: 720px) { .post-cta { flex-direction: column; align-items: flex-start; } }
 
-    .prompts-footer { max-width: var(--max-width); margin: 0 auto; padding: 24px 24px 48px; border-top: 1px solid var(--color-border); }
-    .post-footer__back { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--color-accent); margin-bottom: 16px; transition: color 0.2s ease; }
-    .post-footer__back:hover { color: var(--color-accent-hover); }
-    .post-footer__copy { font-size: 12px; color: var(--color-text-muted); }
+    /* Footer */
+    .footer { background: var(--navy); color: var(--white); padding: 120px var(--pad-x) 60px; position: relative; overflow: hidden; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
+    .footer h2 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: clamp(72px, 14vw, 200px); line-height: 0.88; letter-spacing: -0.04em; margin: 0; color: var(--white); }
+    .footer h2 .ital { font-style: italic; color: var(--cobalt-bright); font-weight: 900; }
+    .footer-rule { height: 2px; width: 280px; background: var(--cobalt-bright); margin: -8px 0 48px; display: block; }
+    .footer .sub { margin-top: 28px; max-width: 520px; font-size: 18px; color: rgba(255,255,255,0.7); }
+    .footer .links { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 36px; }
+    .footer .link { display: flex; align-items: center; gap: 16px; padding: 24px 0; font-family: var(--serif); font-size: 26px; line-height: 1; color: var(--white); transition: color 0.2s, padding 0.2s; }
+    .footer .link:hover { color: var(--cobalt-bright); padding-left: 12px; }
+    .footer .link .ico { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; }
+    .footer .link .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-left: auto; }
+    .footer .bottom { margin-top: 72px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .footer .bottom .nav-list { display: flex; gap: 24px; }
+    .footer .bottom a { transition: color 0.2s; }
+    .footer .bottom a:hover { color: var(--white); }
+    @media (max-width: 720px) { .footer .links { grid-template-columns: 1fr; } }
 
-    @media (max-width: 768px) {
-      html { font-size: 16px; }
-      .page-h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); }
-      .prompts-container { padding: 40px 20px 60px; }
-      .prompts-hero__inner { padding: 0 20px; }
-      .prompts-footer { padding: 24px 20px 40px; }
-      .nav__links { display: none; }
-      .nav__hamburger { display: flex; }
-      .prompts-grid { grid-template-columns: 1fr; }
-      .post-cta { padding: 24px; }
-    }
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
   </style>
 </head>
 <body>
 
-  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav__inner">
-      <a href="../" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
-        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
-        <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
-      </a>
-      <ul class="nav__links" role="list">
-        <li><a href="../">← Back to Site</a></li>
-        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
-        <li><a href="../blog/">Blog</a></li>
-        <li><a href="./" class="active">Prompts</a></li>
-        <li><a href="../index.html#newsletter">Newsletter</a></li>
-      </ul>
-      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
+  <header class="nav" id="nav">
+    <a href="https://thedemandengineer.com/" class="lockup" aria-label="The Demand Engineer">
+      <svg class="mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true">
+        <path fill="currentColor" d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z"/>
+        <path fill="currentColor" d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z"/>
+        <rect x="22" y="20" width="56" height="13" fill="currentColor"/>
+        <rect x="26" y="43.5" width="48" height="13" fill="currentColor"/>
+        <rect x="22" y="67" width="56" height="13" fill="currentColor"/>
+      </svg>
+      <span style="display:inline-flex; align-items:baseline; gap:10px;">
+        <span class="label">The&nbsp;Demand</span>
+        <span class="word">Engine<span class="er">(er)</span></span>
+      </span>
+    </a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="https://thedemandengineer.com/#projects">Agents &amp; Skills</a>
+      <a href="https://thedemandengineer.com/blog/" target="_blank" rel="noopener">Blog</a>
+      <a href="https://thedemandengineer.com/prompts">Prompts</a>
+      <a href="https://thedemandengineer.com/#newsletter">Newsletter</a>
+      <a href="https://thedemandengineer.com/#contact">Contact</a>
+      <button class="nav-subscribe" data-formkit-toggle="0291ffce73">Subscribe <span class="arr">→</span></button>
+    </nav>
+  </header>
 
-  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
-    <a href="../" class="mobile-nav-link">← Back to Site</a>
-    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
-    <a href="../blog/" class="mobile-nav-link">Blog</a>
-    <a href="./" class="mobile-nav-link">Prompts</a>
-    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
-  </div>
-
-  <section class="prompts-hero">
-    <div class="prompts-hero__inner">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <ol class="breadcrumb__list">
-          <li><a href="../">Home</a></li>
-          <li aria-current="page">Prompt Library</li>
-        </ol>
-      </nav>
-      <span class="page-eyebrow">Free Prompt Library</span>
-      <h1 class="page-h1">Free Claude Prompts for B2B Demand Gen Managers</h1>
-      <p class="page-desc">15 production-ready prompts for paid media reporting, attribution audits, lead quality analysis, A/B testing, and demand gen operations. Built and used by a senior B2B SaaS demand gen manager.</p>
-      <p class="post-meta">15 prompts · Updated May 2026</p>
+  <section class="hero" id="top" data-dark>
+    <div class="dotgrid"></div>
+    <div class="grain"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow reveal"><span class="dot"></span>05 / The Prompt Library</div>
+      <h1 class="reveal" data-delay="1">Prompts that<br/><span class="ital">actually ship.</span></h1>
+      <p class="hero-sub reveal" data-delay="2">15 production-ready prompts for B2B demand gen. Built and used in the real world — not generated for a listicle.</p>
     </div>
   </section>
 
-  <main>
-    <div class="prompts-container">
+  <section class="content-section">
+    <div class="content-inner">
+
+      <nav aria-label="Breadcrumb" style="margin-bottom: 48px;">
+        <ol style="display:flex; align-items:center; list-style:none; padding:0; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted);">
+          <li><a href="https://thedemandengineer.com/" style="color:var(--cobalt);">Home</a></li>
+          <li style="opacity:0.4;">›</li>
+          <li aria-current="page">Prompt Library</li>
+        </ol>
+      </nav>
+
+      <p style="font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-bottom: 56px;">15 prompts · Updated May 2026</p>
 
       <!-- CATEGORY 1: PAID MEDIA REPORTING & ANALYSIS -->
-      <section class="category-section" aria-labelledby="cat-reporting">
+      <section class="category-section reveal" aria-labelledby="cat-reporting">
         <h2 class="category-heading" id="cat-reporting">Paid Media Reporting &amp; Analysis</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">Paid Media Reporting</span>
             <h3 class="prompt-card__title"><a href="weekly-paid-media-summary/">Weekly Paid Media Summary</a></h3>
             <p class="prompt-card__desc">Turns last week's channel spend, leads, and CPL into a structured exec summary in under 60 seconds.</p>
             <a class="prompt-card__action" href="weekly-paid-media-summary/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="2">
             <span class="prompt-card__chip">Paid Media Reporting</span>
             <h3 class="prompt-card__title"><a href="cpl-anomaly-detection/">CPL Anomaly Detection</a></h3>
             <p class="prompt-card__desc">Flags real CPL spikes from noise and surfaces the likely root cause before your next standup.</p>
             <a class="prompt-card__action" href="cpl-anomaly-detection/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="3">
             <span class="prompt-card__chip">Paid Media Reporting</span>
             <h3 class="prompt-card__title"><a href="channel-budget-reallocation/">Channel Budget Reallocation</a></h3>
             <p class="prompt-card__desc">Makes a structured case for moving budget between channels, grounded in pipeline data and CPL trends.</p>
             <a class="prompt-card__action" href="channel-budget-reallocation/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="3">
             <span class="prompt-card__chip">Paid Media Reporting</span>
             <h3 class="prompt-card__title"><a href="exec-summary-generator/">Exec Summary Generator</a></h3>
             <p class="prompt-card__desc">Generates a leadership-ready paid media exec summary from raw performance data — plain English, no jargon required.</p>
@@ -270,11 +291,11 @@
       </section>
 
       <!-- CATEGORY 2: ATTRIBUTION & TRACKING -->
-      <section class="category-section" aria-labelledby="cat-attribution">
+      <section class="category-section reveal" aria-labelledby="cat-attribution">
         <h2 class="category-heading" id="cat-attribution">Attribution &amp; Tracking</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">Attribution &amp; Tracking</span>
             <h3 class="prompt-card__title"><a href="attribution-audit-diagnostic/">Attribution Audit Diagnostic</a></h3>
             <p class="prompt-card__desc">Audits GCLID population rates, OCI match rates, and conversion discrepancies to catch tracking breaks before they drive bad budget calls.</p>
@@ -285,25 +306,25 @@
       </section>
 
       <!-- CATEGORY 3: LEAD QUALITY & ICP ANALYSIS -->
-      <section class="category-section" aria-labelledby="cat-lead-quality">
+      <section class="category-section reveal" aria-labelledby="cat-lead-quality">
         <h2 class="category-heading" id="cat-lead-quality">Lead Quality &amp; ICP Analysis</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">Lead Quality &amp; ICP</span>
             <h3 class="prompt-card__title"><a href="lead-quality-scoring-prompt/">Lead Quality Scoring</a></h3>
             <p class="prompt-card__desc">Grades every lead against your ICP criteria and assigns each campaign an A–F quality score.</p>
             <a class="prompt-card__action" href="lead-quality-scoring-prompt/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="2">
             <span class="prompt-card__chip">Lead Quality &amp; ICP</span>
             <h3 class="prompt-card__title"><a href="ad-creative-audit/">Ad Creative Audit</a></h3>
             <p class="prompt-card__desc">Ranks video and influencer ad creative on view rate, 50% view rate, CPL, and MQL pull-through — so you scale what works and kill what doesn't.</p>
             <a class="prompt-card__action" href="ad-creative-audit/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="3">
             <span class="prompt-card__chip">Lead Quality &amp; ICP</span>
             <h3 class="prompt-card__title"><a href="bad-lead-pattern-detection/">Bad Lead Pattern Detection</a></h3>
             <p class="prompt-card__desc">Diagnoses month-over-month outbound coverage drops and traces them to the specific campaign, flight ending, or tracking cause.</p>
@@ -314,18 +335,18 @@
       </section>
 
       <!-- CATEGORY 4: REVOPS & MARKETING OPERATIONS -->
-      <section class="category-section" aria-labelledby="cat-revops">
+      <section class="category-section reveal" aria-labelledby="cat-revops">
         <h2 class="category-heading" id="cat-revops">RevOps &amp; Marketing Operations</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">RevOps &amp; MOps</span>
             <h3 class="prompt-card__title"><a href="marketo-nurture-diagnostic/">Marketo Nurture Diagnostic</a></h3>
             <p class="prompt-card__desc">Identifies why a specific paid-sourced lead missed nurture entry by matching against six known Marketo routing blockers.</p>
             <a class="prompt-card__action" href="marketo-nurture-diagnostic/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="2">
             <span class="prompt-card__chip">RevOps &amp; MOps</span>
             <h3 class="prompt-card__title"><a href="sales-enablement-package/">Sales Enablement Package</a></h3>
             <p class="prompt-card__desc">Generates the complete sales enablement package from a new content offer — one-pager, 3-email sequence, objection card, and paid annotation.</p>
@@ -336,25 +357,25 @@
       </section>
 
       <!-- CATEGORY 5: A/B TESTING & CREATIVE -->
-      <section class="category-section" aria-labelledby="cat-testing">
+      <section class="category-section reveal" aria-labelledby="cat-testing">
         <h2 class="category-heading" id="cat-testing">A/B Testing &amp; Creative</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">A/B Testing &amp; Creative</span>
             <h3 class="prompt-card__title"><a href="ad-copy-variant-generator/">Ad Copy Variant Generator</a></h3>
             <p class="prompt-card__desc">Generates 10 copy variants per element and scores each against a 5-persona expert panel — before any traffic hits the page.</p>
             <a class="prompt-card__action" href="ad-copy-variant-generator/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="2">
             <span class="prompt-card__chip">A/B Testing &amp; Creative</span>
             <h3 class="prompt-card__title"><a href="ab-test-hypothesis-generator/">A/B Test Hypothesis Generator</a></h3>
             <p class="prompt-card__desc">Produces a structured test hypothesis with variable, prediction, and success criteria — scored by impact × confidence × ease.</p>
             <a class="prompt-card__action" href="ab-test-hypothesis-generator/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="3">
             <span class="prompt-card__chip">A/B Testing &amp; Creative</span>
             <h3 class="prompt-card__title"><a href="test-result-interpretation/">Test Result Interpretation</a></h3>
             <p class="prompt-card__desc">Reads A/B test results and tells you whether the winner is real, a sample size artifact, or a loser worth learning from.</p>
@@ -365,18 +386,18 @@
       </section>
 
       <!-- CATEGORY 6: STRATEGIC BRIEFS & PIPELINE -->
-      <section class="category-section" aria-labelledby="cat-strategy">
+      <section class="category-section reveal" aria-labelledby="cat-strategy">
         <h2 class="category-heading" id="cat-strategy">Strategic Briefs &amp; Pipeline</h2>
         <div class="prompts-grid">
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="1">
             <span class="prompt-card__chip">Strategic Briefs</span>
             <h3 class="prompt-card__title"><a href="strategic-campaign-brief/">Strategic Campaign Brief</a></h3>
             <p class="prompt-card__desc">Builds a 7-section paid media support brief from a brand campaign overview — channel strategy, LP/CRO, experimentation roadmap, and measurement.</p>
             <a class="prompt-card__action" href="strategic-campaign-brief/" aria-hidden="true" tabindex="-1">View prompt →</a>
           </article>
 
-          <article class="prompt-card">
+          <article class="prompt-card reveal" data-delay="2">
             <span class="prompt-card__chip">Strategic Briefs</span>
             <h3 class="prompt-card__title"><a href="pipeline-gap-analysis/">Pipeline Gap Analysis</a></h3>
             <p class="prompt-card__desc">Classifies a pipeline shortfall as paid-addressable, tracking artifact, sales issue, or capacity constraint — and tells you what not to do.</p>
@@ -388,54 +409,79 @@
 
       <!-- NEWSLETTER CTA -->
       <div class="post-cta">
-        <p class="post-cta__heading">Get one new prompt every Monday.</p>
-        <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
-        <a class="btn btn--primary" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'prompts-hub'})}">Subscribe free →</a>
+        <div>
+          <p class="post-cta__heading">Get one new prompt every Monday.</p>
+          <p class="post-cta__body">Plus the system behind it. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+          <a class="btn--primary" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'prompts-hub'})}">Subscribe free →</a>
+        </div>
       </div>
 
     </div>
-  </main>
+  </section>
 
-  <footer class="prompts-footer">
-    <a href="../" class="post-footer__back">← Back to Site</a>
-    <p class="post-footer__copy">© 2026 Matt Danese · The Demand Engine(er)</p>
+  <footer class="footer" id="contact" data-dark>
+    <div class="dotgrid"></div>
+    <div class="grain"></div>
+    <div class="footer-inner">
+      <div class="reveal" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 38px; display: inline-flex; align-items: center; gap: 12px;">
+        <span style="width:22px; height:1px; background: rgba(255,255,255,0.55); display:inline-block;"></span>
+        Get in touch
+      </div>
+      <h2 class="reveal" data-delay="1">Let's <span class="ital">talk.</span></h2>
+      <div class="footer-rule reveal" data-delay="1"></div>
+      <p class="sub reveal" data-delay="2">I'm always up for a conversation about demand gen, AI systems, or what you're building. No pitch decks required.</p>
+      <div class="links reveal" data-delay="3">
+        <a class="link" href="https://linkedin.com/in/matthew-danese" target="_blank" rel="noopener">
+          <span class="ico" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.61 0h4.37v1.92h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 6.99V22h-4.56v-6.2c0-1.48-.03-3.39-2.07-3.39-2.07 0-2.39 1.62-2.39 3.29V22H7.83V8z"/></svg>
+          </span>
+          <span>/in/matthew-danese</span>
+          <span class="meta">LinkedIn</span>
+        </a>
+        <a class="link" href="mailto:matthewjdanese@gmail.com">
+          <span class="ico" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg>
+          </span>
+          <span>matthewjdanese@gmail.com</span>
+          <span class="meta">Email</span>
+        </a>
+      </div>
+      <div class="bottom">
+        <div class="nav-list">
+          <a href="https://thedemandengineer.com/#projects">Agents</a>
+          <a href="https://thedemandengineer.com/blog/">Blog</a>
+          <a href="https://thedemandengineer.com/prompts">Prompts</a>
+          <a href="https://thedemandengineer.com/#newsletter">Newsletter</a>
+        </div>
+        <div>© 2026 The Demand Engine(er) · Built in Jersey City</div>
+      </div>
+    </div>
   </footer>
 
   <script>
-    (function () {
-      'use strict';
-      var nav = document.getElementById('nav');
-      var lastScrollY = window.scrollY;
-      var scrollTick = false;
-      window.addEventListener('scroll', function () {
-        if (!scrollTick) {
-          window.requestAnimationFrame(function () {
-            var y = window.scrollY;
-            if (y > lastScrollY && y > 80) { nav.classList.add('nav--hidden'); }
-            else { nav.classList.remove('nav--hidden'); }
-            lastScrollY = y;
-            scrollTick = false;
-          });
-          scrollTick = true;
-        }
+    const nav = document.getElementById('nav');
+
+    function onScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const isDark = visible.target.hasAttribute('data-dark') || visible.target.classList.contains('footer');
+      nav.classList.toggle('on-light', !isDark);
+    }, { threshold: [0.25, 0.5] });
+    document.querySelectorAll('[data-dark], .content-section, .footer').forEach(s => sectionObserver.observe(s));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); }
       });
-      var hamburger = document.getElementById('hamburger');
-      var mobileNav = document.getElementById('mobileNav');
-      hamburger.addEventListener('click', function () {
-        var isOpen = hamburger.classList.toggle('open');
-        mobileNav.classList.toggle('open', isOpen);
-        hamburger.setAttribute('aria-expanded', String(isOpen));
-        mobileNav.setAttribute('aria-hidden', String(!isOpen));
-      });
-      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
-        link.addEventListener('click', function () {
-          hamburger.classList.remove('open');
-          mobileNav.classList.remove('open');
-          hamburger.setAttribute('aria-expanded', 'false');
-          mobileNav.setAttribute('aria-hidden', 'true');
-        });
-      });
-    })();
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(r => revealObserver.observe(r));
   </script>
 
 </body>

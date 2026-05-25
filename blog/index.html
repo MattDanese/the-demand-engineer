@@ -10,278 +10,114 @@
   <meta property="og:title" content="Blog — The Demand Engine(er)" />
   <meta property="og:description" content="Field notes from building AI systems for B2B demand gen. Long-form breakdowns of real systems — with the exact mechanics, prompts, and results." />
   <link rel="canonical" href="https://thedemandengineer.com/blog/" />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
 
   <style>
-    /* ========= CSS CUSTOM PROPERTIES ========= */
     :root {
-      --color-bg: #F4F6FB;
-      --color-bg-card: #FFFFFF;
-      --color-text: #0D1117;
-      --color-text-muted: #64748B;
-      --color-accent: #2D5BE3;
-      --color-accent-hover: #1E46C7;
-      --color-accent-dark: #0A1628;
-      --color-border: #DDE3F0;
-      --color-eyebrow: #2D5BE3;
-      --color-chip-bg: #EEF2FF;
-      --color-chip-text: #3B5CC4;
-      --font-heading: 'Fraunces', serif;
-      --font-body: 'DM Sans', system-ui, sans-serif;
-      --max-width: 760px;
-      --nav-height: 56px;
+      --navy: #0B0F1A;
+      --navy-2: #11162a;
+      --light: #F4F5F7;
+      --white: #FFFFFF;
+      --ink: #1A1D2E;
+      --muted: #6B7280;
+      --rule: #DDE3F0;
+      --cobalt: #3B5BDB;
+      --cobalt-bright: #5577ec;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "DM Sans", system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --pad-x: clamp(20px, 5vw, 88px);
+      --max: 1320px;
     }
-
-    /* ========= RESET & BASE ========= */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 17px; }
-    body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-body);
-      font-weight: 400;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { display: block; max-width: 100%; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--navy); color: var(--white); font-family: var(--sans); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
-    ul { list-style: none; }
-    button { font-family: var(--font-body); }
+    button { font-family: inherit; cursor: pointer; }
 
-    /* ========= NAVIGATION ========= */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      height: var(--nav-height);
-      background: rgba(244, 246, 251, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--color-border);
-      transition: transform 0.3s ease;
-    }
-    .nav--hidden { transform: translateY(-100%); }
-    .nav__inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    .nav__links a {
-      position: relative;
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 14px;
-      color: var(--color-text-muted);
-      transition: color 0.2s ease;
-      padding-bottom: 2px;
-    }
-    .nav__links a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px; left: 0;
-      width: 100%; height: 2px;
-      background-color: var(--color-accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.2s ease;
-    }
-    .nav__links a:hover { color: var(--color-accent); }
-    .nav__links a:hover::after { transform: scaleX(1); }
-    .nav__links a.active { color: var(--color-accent); font-weight: 600; }
-    .nav__hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 32px; height: 32px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-    .nav__hamburger span {
-      display: block;
-      width: 22px; height: 2px;
-      background-color: var(--color-accent-dark);
-      border-radius: 2px;
-      transition: all 0.25s ease;
-    }
-    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav__mobile {
-      display: none;
-      position: fixed;
-      top: var(--nav-height); left: 0; right: 0;
-      background: rgba(244, 246, 251, 0.97);
-      border-bottom: 1px solid var(--color-border);
-      padding: 20px 24px;
-      z-index: 99;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .nav__mobile.open { display: flex; }
-    .nav__mobile a {
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 17px;
-      color: var(--color-text);
-      transition: color 0.2s ease;
-    }
-    .nav__mobile a:hover { color: var(--color-accent); }
+    /* Grain */
+    .grain { position: absolute; inset: 0; pointer-events: none; opacity: 0.35; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.07 0 0 0 0 0.09 0 0 0 0 0.13 0 0 0 0.42 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+    .dotgrid { position: absolute; inset: 0; pointer-events: none; opacity: 0.18; background-image: radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1px); background-size: 32px 32px; mask-image: radial-gradient(ellipse 100% 70% at 50% 35%, #000 30%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 100% 70% at 50% 35%, #000 30%, transparent 75%); }
 
-    /* ========= PAGE HERO ========= */
-    .page-hero {
-      padding-top: calc(var(--nav-height) + 80px);
-      padding-bottom: 48px;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding-left: 24px;
-      padding-right: 24px;
-      border-bottom: 1px solid var(--color-border);
-    }
-    .page-hero__eyebrow {
-      display: inline-block;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-eyebrow);
-      margin-bottom: 16px;
-    }
-    .page-hero__h1 {
-      font-family: var(--font-heading);
-      font-weight: 900;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--color-accent-dark);
-      margin-bottom: 16px;
-    }
-    .page-hero__sub {
-      font-family: var(--font-body);
-      font-weight: 400;
-      font-size: 17px;
-      color: var(--color-text-muted);
-      max-width: 560px;
-      line-height: 1.65;
-    }
+    /* Nav */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 22px var(--pad-x); display: flex; justify-content: space-between; align-items: center; transition: backdrop-filter 0.3s ease, background 0.3s ease, padding 0.3s ease; }
+    .nav.scrolled { padding: 14px var(--pad-x); background: rgba(11,15,26,0.72); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav.on-light:not(.scrolled) { color: var(--ink); }
+    .nav.on-light.scrolled { background: rgba(244,245,247,0.82); border-bottom-color: rgba(0,0,0,0.06); color: var(--ink); }
+    .lockup { display: inline-flex; align-items: baseline; gap: 14px; line-height: 1; }
+    .lockup .mark { width: 28px; height: 28px; transform: translateY(4px); }
+    .lockup .label { font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.34em; text-transform: uppercase; }
+    .lockup .word { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: 22px; letter-spacing: -0.025em; }
+    .lockup .word .er { color: var(--cobalt-bright); font-style: italic; }
+    .nav.on-light .lockup .word .er { color: var(--cobalt); }
+    .navlinks { display: flex; gap: 36px; align-items: center; font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; }
+    .navlinks a { position: relative; padding: 6px 0; opacity: 0.75; transition: opacity 0.2s; }
+    .navlinks a:hover { opacity: 1; }
+    .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: currentColor; transition: right 0.25s ease; }
+    .navlinks a:hover::after { right: 0; }
+    .nav-subscribe { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; background: var(--cobalt); color: var(--white); border: none; padding: 10px 18px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; margin-left: 12px; }
+    .nav-subscribe:hover { background: var(--cobalt-bright); }
+    .nav-subscribe .arr { transition: transform 0.2s; }
+    .nav-subscribe:hover .arr { transform: translateX(3px); }
+    @media (max-width: 820px) { .navlinks { display: none; } .nav-subscribe { display: none; } }
 
-    /* ========= POSTS GRID ========= */
-    .posts-grid-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 64px 24px 80px;
-    }
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
+    /* Hero */
+    .hero { position: relative; min-height: 56vh; padding: 160px var(--pad-x) 100px; overflow: hidden; background: var(--navy); }
+    .hero-inner { position: relative; max-width: var(--max); margin: 0 auto; z-index: 2; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+    .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cobalt-bright); box-shadow: 0 0 12px var(--cobalt); animation: pulse 2.4s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .hero h1 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: clamp(48px, 8vw, 100px); line-height: 0.93; letter-spacing: -0.035em; margin: 0; color: var(--white); max-width: 900px; }
+    .hero h1 .ital { font-style: italic; color: var(--cobalt-bright); font-weight: 900; }
+    .hero-sub { margin-top: 32px; max-width: 560px; font-family: var(--sans); font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.72); }
 
-    /* ========= POST CARD ========= */
-    .post-card {
-      background: var(--color-bg-card);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.22s ease;
-    }
-    .post-card:hover {
-      border-color: var(--color-accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 24px rgba(45, 91, 227, 0.08);
-    }
-    .post-card__category {
-      display: inline-block;
-      background-color: var(--color-chip-bg);
-      color: var(--color-chip-text);
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 4px;
-      align-self: flex-start;
-      margin-bottom: 12px;
-    }
-    .post-card__title {
-      font-family: var(--font-heading);
-      font-weight: 700;
-      font-size: 18px;
-      color: var(--color-accent-dark);
-      line-height: 1.3;
-      margin-bottom: 10px;
-    }
-    .post-card__teaser {
-      font-family: var(--font-body);
-      font-size: 14px;
-      color: var(--color-text-muted);
-      line-height: 1.65;
-      flex: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .post-card__footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--color-border);
-    }
-    .post-card__readtime {
-      font-family: var(--font-body);
-      font-weight: 400;
-      font-size: 12px;
-      color: var(--color-text-muted);
-    }
-    .post-card__read {
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 13px;
-      color: var(--color-accent);
-    }
-    .post-card:hover .post-card__read { text-decoration: underline; }
+    /* Content section */
+    .content-section { background: var(--light); color: var(--ink); position: relative; clip-path: polygon(0 70px, 100% 0, 100% 100%, 0 100%); margin-top: -70px; padding-top: 70px; }
+    .content-inner { max-width: var(--max); margin: 0 auto; padding: 80px var(--pad-x) 120px; }
 
-    /* ========= PAGE FOOTER ========= */
-    .page-footer {
-      border-top: 1px solid var(--color-border);
-      padding: 32px 24px;
-      text-align: center;
-    }
-    .page-footer__copy {
-      font-family: var(--font-body);
-      font-size: 12px;
-      color: var(--color-text-muted);
-    }
+    /* Post cards grid */
+    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
+    @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; } }
 
-    /* ========= MOBILE ========= */
-    @media (max-width: 768px) {
-      html { font-size: 16px; }
-      .nav__links { display: none; }
-      .nav__hamburger { display: flex; }
-      .posts-grid { grid-template-columns: 1fr; }
-      .posts-grid-wrap { padding: 40px 20px 60px; }
-    }
+    /* Post card */
+    .post-card { background: var(--white); border: 1px solid var(--rule); padding: 32px 32px 28px; display: flex; flex-direction: column; color: var(--ink); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .post-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -20px rgba(11,15,26,0.18); border-color: var(--ink); }
+    .post-card__category { display: inline-flex; align-items: center; font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--cobalt); padding: 4px 10px; border: 1px solid var(--rule); align-self: flex-start; margin-bottom: 20px; }
+    .post-card__title { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 700; font-size: 22px; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 12px; text-wrap: balance; flex: 1; }
+    .post-card__teaser { font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--muted); margin: 0 0 24px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .post-card__footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--rule); }
+    .post-card__readtime { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+    .post-card__read { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobalt); }
+
+    /* Footer */
+    .footer { background: var(--navy); color: var(--white); padding: 120px var(--pad-x) 60px; position: relative; overflow: hidden; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; position: relative; z-index: 2; }
+    .footer h2 { font-family: var(--serif); font-variation-settings: "opsz" 144; font-weight: 900; font-size: clamp(72px, 14vw, 200px); line-height: 0.88; letter-spacing: -0.04em; margin: 0; color: var(--white); }
+    .footer h2 .ital { font-style: italic; color: var(--cobalt-bright); font-weight: 900; }
+    .footer-rule { height: 2px; width: 280px; background: var(--cobalt-bright); margin: -8px 0 48px; display: block; }
+    .footer .sub { margin-top: 28px; max-width: 520px; font-size: 18px; color: rgba(255,255,255,0.7); }
+    .footer .links { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 36px; }
+    .footer .link { display: flex; align-items: center; gap: 16px; padding: 24px 0; font-family: var(--serif); font-size: 26px; line-height: 1; color: var(--white); transition: color 0.2s, padding 0.2s; }
+    .footer .link:hover { color: var(--cobalt-bright); padding-left: 12px; }
+    .footer .link .ico { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.25); border-radius: 50%; }
+    .footer .link .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-left: auto; }
+    .footer .bottom { margin-top: 72px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .footer .bottom .nav-list { display: flex; gap: 24px; }
+    .footer .bottom a { transition: color 0.2s; }
+    .footer .bottom a:hover { color: var(--white); }
+    @media (max-width: 720px) { .footer .links { grid-template-columns: 1fr; } }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
   </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
@@ -295,48 +131,45 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav__inner">
-      <a href="../index.html" class="nav__logo-lockup" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
-  <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z" fill="#0A1628"/><path d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z" fill="#0A1628"/><rect x="22" y="20" width="56" height="13" fill="#0A1628"/><rect x="26" y="43.5" width="48" height="13" fill="#0A1628"/><rect x="22" y="67" width="56" height="13" fill="#0A1628"/></svg>
-  <div style="display:flex;align-items:baseline;gap:10px;line-height:1;"><span style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.34em;text-transform:uppercase;color:#0A1628;">The&nbsp;Demand</span><span style="font-family:'Fraunces',Georgia,serif;font-weight:900;font-size:18px;letter-spacing:-0.025em;color:#0A1628;">Engine<span style="color:#2D5BE3;font-style:italic;">(er)</span></span></div>
-</a>
-      <ul class="nav__links" role="list">
-        <li><a href="../index.html">← Back to Site</a></li>
-        <li><a href="../index.html#projects">Agents &amp; Skills</a></li>
-        <li><a href="../index.html#blog" class="active">Blog</a></li>
-        <li><a href="../prompts/">Prompts</a></li>
-        <li><a href="../index.html#newsletter">Newsletter</a></li>
-      </ul>
-      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+  <header class="nav" id="nav">
+    <a href="https://thedemandengineer.com/" class="lockup" aria-label="The Demand Engineer">
+      <svg class="mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true">
+        <path fill="currentColor" d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z"/>
+        <path fill="currentColor" d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z"/>
+        <rect x="22" y="20" width="56" height="13" fill="currentColor"/>
+        <rect x="26" y="43.5" width="48" height="13" fill="currentColor"/>
+        <rect x="22" y="67" width="56" height="13" fill="currentColor"/>
+      </svg>
+      <span style="display:inline-flex; align-items:baseline; gap:10px;">
+        <span class="label">The&nbsp;Demand</span>
+        <span class="word">Engine<span class="er">(er)</span></span>
+      </span>
+    </a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="https://thedemandengineer.com/#projects">Agents &amp; Skills</a>
+      <a href="https://thedemandengineer.com/blog/">Blog</a>
+      <a href="https://thedemandengineer.com/prompts" target="_blank" rel="noopener">Prompts</a>
+      <a href="https://thedemandengineer.com/#newsletter">Newsletter</a>
+      <a href="https://thedemandengineer.com/#contact">Contact</a>
+      <button class="nav-subscribe" data-formkit-toggle="0291ffce73">Subscribe <span class="arr">→</span></button>
+    </nav>
+  </header>
+
+  <section class="hero" id="top" data-dark>
+    <div class="dotgrid"></div>
+    <div class="grain"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow reveal"><span class="dot"></span>04 / Field Notes from the Build</div>
+      <h1 class="reveal" data-delay="1">Real experiments.<br/><span class="ital">Honest numbers.</span></h1>
+      <p class="hero-sub reveal" data-delay="2">Long-form breakdowns of AI systems I've built for B2B demand gen — with the exact mechanics, prompts, and results.</p>
     </div>
-  </nav>
+  </section>
 
-  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
-    <a href="../index.html" class="mobile-nav-link">← Back to Site</a>
-    <a href="../index.html#projects" class="mobile-nav-link">Agents &amp; Skills</a>
-    <a href="../index.html#blog" class="mobile-nav-link">Blog</a>
-    <a href="../prompts/" class="mobile-nav-link">Prompts</a>
-    <a href="../index.html#newsletter" class="mobile-nav-link">Newsletter</a>
-  </div>
-
-  <main>
-
-    <!-- PAGE HERO -->
-    <div class="page-hero">
-      <span class="page-hero__eyebrow">The Demand Engine(er) Blog</span>
-      <h1 class="page-hero__h1">Field Notes from the Build</h1>
-      <p class="page-hero__sub">Long-form breakdowns of AI systems I've built for B2B demand gen — with the exact mechanics, prompts, and results.</p>
-    </div>
-
-    <!-- POSTS GRID -->
-    <div class="posts-grid-wrap">
+  <section class="content-section">
+    <div class="content-inner">
       <div class="posts-grid">
 
-        <a class="post-card" href="ai-b2b-demand-generation-strategies-2026.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="1" href="ai-b2b-demand-generation-strategies-2026.html" target="_blank" rel="noopener">
           <span class="post-card__category">Strategy</span>
           <h2 class="post-card__title">AI B2B Demand Generation Strategies for 2026: What's Actually Working</h2>
           <p class="post-card__teaser">Six AI systems built and running in production — automated reporting, ICP scoring, budget allocation, attribution, CRO pre-validation, and ops diagnostics. Real build times, real numbers.</p>
@@ -346,7 +179,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="automated-paid-media-reporting.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="2" href="automated-paid-media-reporting.html" target="_blank" rel="noopener">
           <span class="post-card__category">Automation</span>
           <h2 class="post-card__title">How I Automated 12 Hours of Weekly Paid Media Reporting</h2>
           <p class="post-card__teaser">A fully automated paid media intelligence layer connecting LinkedIn Ads, Google Ads, and Slack. Full architecture, prompt patterns, and safety rules.</p>
@@ -356,7 +189,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="icp-lead-quality-scoring.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="3" href="icp-lead-quality-scoring.html" target="_blank" rel="noopener">
           <span class="post-card__category">Lead Quality</span>
           <h2 class="post-card__title">Your CPL Is Down. Are You Buying the Right Leads?</h2>
           <p class="post-card__teaser">A Python + Claude pipeline that scores every lead against ICP criteria and grades each campaign A through F. Here's how it works.</p>
@@ -366,7 +199,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="ab-testing-expert-panel.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="1" href="ab-testing-expert-panel.html" target="_blank" rel="noopener">
           <span class="post-card__category">CRO</span>
           <h2 class="post-card__title">51 Variants, 8 Minutes, Zero Live Traffic</h2>
           <p class="post-card__teaser">A simulated expert panel scores 50+ copy variants before any paid traffic hits your page. Took a landing page from 62 to 87/100 in 8 minutes.</p>
@@ -376,7 +209,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="marketo-nurture-diagnostic.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="2" href="marketo-nurture-diagnostic.html" target="_blank" rel="noopener">
           <span class="post-card__category">Marketing Ops</span>
           <h2 class="post-card__title">The Marketo Black Box: Why Leads Don't Enter Nurture</h2>
           <p class="post-card__teaser">A Claude-powered audit system that reads Marketo activity logs and surfaces the exact blocker for every lead that fell through the cracks.</p>
@@ -386,7 +219,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="slack-paid-media-bot.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="3" href="slack-paid-media-bot.html" target="_blank" rel="noopener">
           <span class="post-card__category">AI Strategy</span>
           <h2 class="post-card__title">I Built a Slack Bot That Answers Paid Media Questions</h2>
           <p class="post-card__teaser">Read-only, real-time, ~10 seconds from question to answer. Full architecture for a Slack bot that queries LinkedIn and Google Ads APIs live.</p>
@@ -396,7 +229,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="b2b-paid-media-attribution-tracking.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="1" href="b2b-paid-media-attribution-tracking.html" target="_blank" rel="noopener">
           <span class="post-card__category">Attribution</span>
           <h2 class="post-card__title">The B2B Paid Media Tracking Stack That Connects Ad Spend to Pipeline</h2>
           <p class="post-card__teaser">GCLID capture, Enhanced Conversions, Offline Conversion Import — the complete architecture for connecting a click to a Salesforce opportunity.</p>
@@ -406,7 +239,7 @@
           </div>
         </a>
 
-        <a class="post-card" href="ai-budget-allocation-paid-media.html" target="_blank" rel="noopener">
+        <a class="post-card reveal" data-delay="2" href="ai-budget-allocation-paid-media.html" target="_blank" rel="noopener">
           <span class="post-card__category">Strategy</span>
           <h2 class="post-card__title">How I Use Claude to Make Paid Media Budget Decisions</h2>
           <p class="post-card__teaser">The four-question framework for diagnosing whether a campaign is underperforming or just mismeasured — and a real story of a budget call that almost went wrong.</p>
@@ -418,74 +251,72 @@
 
       </div>
     </div>
+  </section>
 
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="page-footer">
-    <p class="page-footer__copy">© 2025 Matt Danese · The Demand Engine(er)</p>
+  <footer class="footer" id="contact" data-dark>
+    <div class="dotgrid"></div>
+    <div class="grain"></div>
+    <div class="footer-inner">
+      <div class="reveal" style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 38px; display: inline-flex; align-items: center; gap: 12px;">
+        <span style="width:22px; height:1px; background: rgba(255,255,255,0.55); display:inline-block;"></span>
+        Get in touch
+      </div>
+      <h2 class="reveal" data-delay="1">Let's <span class="ital">talk.</span></h2>
+      <div class="footer-rule reveal" data-delay="1"></div>
+      <p class="sub reveal" data-delay="2">I'm always up for a conversation about demand gen, AI systems, or what you're building. No pitch decks required.</p>
+      <div class="links reveal" data-delay="3">
+        <a class="link" href="https://linkedin.com/in/matthew-danese" target="_blank" rel="noopener">
+          <span class="ico" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.61 0h4.37v1.92h.06c.61-1.16 2.1-2.38 4.32-2.38 4.62 0 5.47 3.04 5.47 6.99V22h-4.56v-6.2c0-1.48-.03-3.39-2.07-3.39-2.07 0-2.39 1.62-2.39 3.29V22H7.83V8z"/></svg>
+          </span>
+          <span>/in/matthew-danese</span>
+          <span class="meta">LinkedIn</span>
+        </a>
+        <a class="link" href="mailto:matthewjdanese@gmail.com">
+          <span class="ico" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg>
+          </span>
+          <span>matthewjdanese@gmail.com</span>
+          <span class="meta">Email</span>
+        </a>
+      </div>
+      <div class="bottom">
+        <div class="nav-list">
+          <a href="https://thedemandengineer.com/#projects">Agents</a>
+          <a href="https://thedemandengineer.com/blog/">Blog</a>
+          <a href="https://thedemandengineer.com/prompts">Prompts</a>
+          <a href="https://thedemandengineer.com/#newsletter">Newsletter</a>
+        </div>
+        <div>© 2026 The Demand Engine(er) · Built in Jersey City</div>
+      </div>
+    </div>
   </footer>
 
   <script>
-    (function () {
-      'use strict';
+    const nav = document.getElementById('nav');
+    const sections = document.querySelectorAll('[data-dark], .footer');
 
-      // Nav hide/show on scroll direction
-      var nav = document.getElementById('nav');
-      var lastScrollY = window.scrollY;
-      var scrollTick = false;
+    function onScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 24);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-      window.addEventListener('scroll', function () {
-        if (!scrollTick) {
-          window.requestAnimationFrame(function () {
-            var y = window.scrollY;
-            if (y > lastScrollY && y > 80) {
-              nav.classList.add('nav--hidden');
-            } else {
-              nav.classList.remove('nav--hidden');
-            }
-            lastScrollY = y;
-            scrollTick = false;
-          });
-          scrollTick = true;
-        }
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const isDark = visible.target.hasAttribute('data-dark') || visible.target.classList.contains('footer');
+      nav.classList.toggle('on-light', !isDark);
+    }, { threshold: [0.25, 0.5] });
+    document.querySelectorAll('[data-dark], .content-section, .footer').forEach(s => sectionObserver.observe(s));
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); }
       });
-
-      // Hamburger toggle
-      var hamburger = document.getElementById('hamburger');
-      var mobileNav = document.getElementById('mobileNav');
-
-      hamburger.addEventListener('click', function () {
-        var open = mobileNav.classList.toggle('open');
-        hamburger.classList.toggle('open', open);
-        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
-        mobileNav.setAttribute('aria-hidden', open ? 'false' : 'true');
-      });
-
-      document.querySelectorAll('.mobile-nav-link').forEach(function (link) {
-        link.addEventListener('click', function () {
-          mobileNav.classList.remove('open');
-          hamburger.classList.remove('open');
-          hamburger.setAttribute('aria-expanded', 'false');
-          mobileNav.setAttribute('aria-hidden', 'true');
-        });
-      });
-
-      // Smooth scroll
-      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-        link.addEventListener('click', function (e) {
-          var href = link.getAttribute('href');
-          if (href === '#') return;
-          var target = document.querySelector(href);
-          if (target) {
-            e.preventDefault();
-            var top = target.getBoundingClientRect().top + window.scrollY - nav.offsetHeight;
-            window.scrollTo({ top: top, behavior: 'smooth' });
-          }
-        });
-      });
-
-    })();
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(r => revealObserver.observe(r));
   </script>
 
 </body>
