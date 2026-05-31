@@ -1085,7 +1085,7 @@
     document.getElementById('locked-grid').style.display = '';
 
     try {
-      var response = await fetch('/.netlify/functions/simulate', {
+      var response = await fetch('https://zesty-praline-18c9b3.netlify.app/.netlify/functions/simulate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: name, description: desc, icp: icp, channel: channel, offer: offer })
