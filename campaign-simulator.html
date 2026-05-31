@@ -570,67 +570,73 @@
     color: rgba(255,255,255,0.55);
     margin: 0;
   }
-  /* Plain email gate inside the unlock overlay */
-  .email-gate {
-    display: flex;
-    width: 100%;
-    max-width: 460px;
+  /* Kit form inside #kit-mount (unlock overlay) */
+  #kit-mount { width: 100%; max-width: 460px; }
+  #kit-mount .formkit-form,
+  #kit-mount [data-uid] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
   }
-  .email-gate input {
-    flex: 1;
-    min-width: 0;
-    background: var(--navy);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-right: none;
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 14px;
-    padding: 12px 16px;
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-    border-radius: 0;
+  #kit-mount .formkit-fields,
+  #kit-mount .formkit-field {
+    display: flex !important;
+    gap: 0 !important;
+    width: 100% !important;
   }
-  .email-gate input::placeholder { color: rgba(255,255,255,0.28); }
-  .email-gate input:focus { border-color: var(--cobalt); }
-  .btn-unlock {
-    flex-shrink: 0;
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    background: var(--cobalt);
-    color: var(--white);
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.2s;
+  #kit-mount .formkit-field input[type="email"] {
+    flex: 1 !important; min-width: 0 !important;
+    background: var(--navy) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-right: none !important;
+    color: var(--white) !important;
+    font-family: var(--sans) !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    height: auto !important;
   }
-  .btn-unlock:hover { background: var(--cobalt-bright); }
-  .btn-unlock .arr { display: inline-block; transition: transform 0.2s; }
-  .btn-unlock:hover .arr { transform: translateX(3px); }
-  .gate-note {
+  #kit-mount .formkit-field input[type="email"]::placeholder {
+    color: rgba(255,255,255,0.28) !important;
+  }
+  #kit-mount .formkit-submit,
+  #kit-mount button[type="submit"] {
+    flex-shrink: 0 !important;
+    background: var(--cobalt) !important;
+    color: var(--white) !important;
+    font-family: var(--sans) !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    height: auto !important;
+    white-space: nowrap !important;
+    transition: background 0.2s !important;
+  }
+  #kit-mount .formkit-submit:hover,
+  #kit-mount button[type="submit"]:hover { background: var(--cobalt-bright) !important; }
+  #kit-mount .formkit-guarantee,
+  #kit-mount .formkit-powered-by-convertkit-container,
+  #kit-mount [data-element="errors"],
+  #kit-mount .formkit-alert:not(.formkit-alert-success) { display: none !important; }
+  #kit-mount .formkit-alert-success,
+  #kit-mount [data-element="success"] {
+    color: rgba(255,255,255,0.7);
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin: 0;
+    text-align: center;
+    padding: 10px 0;
   }
-  .gate-error {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--red);
-    display: none;
-    margin: 0;
-  }
-  .gate-error.visible { display: block; }
 
   /* Full panel 2×2 grid */
   .full-panel { display: none; }
@@ -761,6 +767,8 @@
 </style>
 <!-- KIT EMBED SCRIPT — nav subscribe popup -->
 <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+<!-- KIT EMBED SCRIPT — unlock gate form -->
+<script async data-uid="4d030b8ed0" src="https://the-demand-engineer.kit.com/4d030b8ed0/index.js"></script>
 </head>
 <body>
 
@@ -923,12 +931,7 @@
       <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
         <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
         <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <div class="email-gate">
-          <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
-          <button class="btn-unlock" onclick="unlockPanel()">Unlock Full Panel <span class="arr">→</span></button>
-        </div>
-        <p class="gate-note">You'll also get the weekly Demand Engineer newsletter</p>
-        <p class="gate-error" id="gate-error"></p>
+        <div id="kit-mount"></div>
       </div>
 
     </div><!-- /.locked-grid -->
@@ -1110,6 +1113,7 @@
 
       renderTeaser(_result.cmo);
       document.getElementById('results-section').classList.add('visible');
+      moveKitForm();
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
@@ -1132,38 +1136,52 @@
   }
 
   // =========================================================
-  // EMAIL GATE / UNLOCK FULL PANEL
+  // KIT FORM — poll for render, move into overlay, detect submit
   // =========================================================
-  function unlockPanel() {
-    var emailInput = document.getElementById('gate-email');
-    var errorEl    = document.getElementById('gate-error');
-    var email      = emailInput.value.trim();
-    var emailRe    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    errorEl.textContent = '';
-    errorEl.classList.remove('visible');
-
-    if (!email || !emailRe.test(email)) {
-      errorEl.textContent = 'Please enter a valid email address.';
-      errorEl.classList.add('visible');
-      return;
+  // Move the Kit form from the off-screen staging div into the
+  // visible #kit-mount inside the overlay.
+  function moveKitForm() {
+    var mount = document.getElementById('kit-mount');
+    if (window._kitForm && mount && !mount.contains(window._kitForm)) {
+      mount.appendChild(window._kitForm);
     }
-
-    // Fire-and-forget subscription via Netlify proxy — do not block on response
-    fetch('https://zesty-praline-18c9b3.netlify.app/.netlify/functions/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
-    }).catch(function () {}); // swallow errors silently
-
-    revealFullPanel();
   }
 
-  // Allow Enter key in email field
-  document.getElementById('gate-email').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') unlockPanel();
+  // Poll for Kit to render its form into #kit-staging after page load.
+  document.addEventListener('DOMContentLoaded', function () {
+    var kitPoller = setInterval(function () {
+      var kitForm = document.querySelector('#kit-staging [data-uid="4d030b8ed0"]')
+        || document.querySelector('#kit-staging .formkit-form');
+      if (kitForm) {
+        clearInterval(kitPoller);
+        window._kitForm = kitForm;
+      }
+    }, 200);
   });
+
+  // Detect Kit form submission via postMessage.
+  window.addEventListener('message', function (e) {
+    if (e.data && (
+      e.data.type === 'konvertkit:form:submit' ||
+      e.data.type === 'formkit:submit'
+    )) {
+      revealFullPanel();
+    }
+  });
+
+  // Fallback: poll for Kit's success confirmation element becoming visible.
+  setInterval(function () {
+    var success = document.querySelector('#kit-mount .formkit-alert-success')
+      || document.querySelector('#kit-mount [data-element="success"]');
+    if (success && success.offsetParent !== null) {
+      revealFullPanel();
+    }
+  }, 300);
 </script>
+
+<!-- Kit renders its form here on page load (off-screen but not display:none) -->
+<div id="kit-staging" style="position:absolute;left:-9999px;top:-9999px;width:300px;opacity:0;pointer-events:none;"></div>
 
 </body>
 </html>
