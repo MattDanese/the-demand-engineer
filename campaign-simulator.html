@@ -1149,15 +1149,13 @@
       return;
     }
 
-    // Fire-and-forget Kit subscription — do not block on response
-    fetch('https://app.kit.com/forms/4d030b8ed0/subscriptions', {
+    // Fire-and-forget subscription via Netlify proxy — do not block on response
+    fetch('https://zesty-praline-18c9b3.netlify.app/.netlify/functions/subscribe', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ email_address: email })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
     }).catch(function () {}); // swallow errors silently
 
-    // Open downloads page in new tab, reveal panel immediately
-    window.open('https://thedemandengineer.com/downloads.html', '_blank');
     revealFullPanel();
   }
 
