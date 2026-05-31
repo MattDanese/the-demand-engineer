@@ -977,16 +977,6 @@
 
 <script>
   // =========================================================
-  // ⚠️  API KEY — DO NOT COMMIT THIS TO A PUBLIC REPO
-  //
-  //  This key is read client-side. It is fine for personal /
-  //  internal use, but anyone who views the page source can
-  //  see it. Before making this page public, move the API
-  //  call behind a server-side proxy and remove the key here.
-  // =========================================================
-  const ANTHROPIC_API_KEY = "YOUR_KEY_HERE";
-
-  // =========================================================
   // Cached result for the email-gate unlock step
   // =========================================================
   let _result = null;
@@ -1083,11 +1073,6 @@
       showError('form-error', 'Please fill in all five fields before simulating.');
       return;
     }
-    if (ANTHROPIC_API_KEY === 'YOUR_KEY_HERE') {
-      showError('form-error',
-        'API key not set. Open the file, find ANTHROPIC_API_KEY at the top of the <script>, and paste in your Anthropic key.');
-      return;
-    }
 
     var btn     = document.getElementById('btn-simulate');
     var loadMsg = document.getElementById('loading-msg');
@@ -1099,61 +1084,19 @@
     document.getElementById('full-panel').classList.remove('visible');
     document.getElementById('locked-grid').style.display = '';
 
-    var systemPrompt =
-      'You are simulating a panel of four business professionals reviewing a B2B SaaS marketing campaign. ' +
-      'Each persona must respond in character — blunt, specific, and honest. Do not be generically positive. ' +
-      'Return ONLY a valid JSON object with no markdown, no backticks, no preamble.';
-
-    var userPrompt =
-      'Review this campaign as four distinct personas. Return a JSON object with this exact structure:\n' +
-      '{\n' +
-      '  "cmo": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
-      '  "sales_director": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
-      '  "skeptical_prospect": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
-      '  "churned_customer": { "score": [1-10], "reaction": "[2-4 sentences in character]" }\n' +
-      '}\n\n' +
-      'Persona voices:\n' +
-      '- CMO: Strategic, ROI-focused, impatient. Evaluates pipeline potential and resource efficiency.\n' +
-      '- Director of Sales: Skeptical, conversion-focused. Evaluates lead quality and whether they can actually close these.\n' +
-      '- Skeptical Prospect: Busy, ad-fatigued, defensive. Evaluates whether they\'d stop scrolling.\n' +
-      '- Churned Customer: Burned before, candid, wary. Evaluates whether this feels like the same empty promise.\n\n' +
-      'Campaign details:\n' +
-      '- Name: '        + name    + '\n' +
-      '- Description: ' + desc    + '\n' +
-      '- Target audience: ' + icp + '\n' +
-      '- Channel: '     + channel + '\n' +
-      '- Offer / CTA: ' + offer;
-
     try {
-      var response = await fetch('https://api.anthropic.com/v1/messages', {
+      var response = await fetch('/.netlify/functions/simulate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-opus-4-20250514',
-          max_tokens: 1000,
-          system: systemPrompt,
-          messages: [{ role: 'user', content: userPrompt }]
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, description: desc, icp: icp, channel: channel, offer: offer })
       });
 
       if (!response.ok) {
         var errData = await response.json().catch(function () { return {}; });
-        throw new Error(errData.error && errData.error.message
-          ? errData.error.message
-          : 'API request failed with status ' + response.status);
+        throw new Error(errData.error || 'Request failed with status ' + response.status);
       }
 
-      var data = await response.json();
-      var raw  = (data.content && data.content[0] && data.content[0].text) || '';
-
-      // Strip accidental markdown code fences
-      var cleaned = raw.replace(/```(?:json)?/gi, '').replace(/```/g, '').trim();
-      _result = JSON.parse(cleaned);
+      _result = await response.json();
 
       renderTeaser(_result.cmo);
       document.getElementById('results-section').classList.add('visible');
