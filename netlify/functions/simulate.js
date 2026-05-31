@@ -36,14 +36,16 @@ function httpsPost(options, payload) {
 
 // ── handler ────────────────────────────────────────────────────────────────
 
-exports.handler = async function (event) {
+exports.handler = async function (event, context) {
+  const method = (event.httpMethod || '').toUpperCase();
+
   // CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
+  if (method === 'OPTIONS') {
     return { statusCode: 200, headers: CORS, body: '' };
   }
 
-  if (event.httpMethod !== 'POST') {
-    return respond(405, { error: 'Method not allowed' });
+  if (method !== 'POST') {
+    return respond(405, { error: 'Method not allowed. Got: ' + method });
   }
 
   const apiKey = process.env.Anthropic_API_for_Simulator;
