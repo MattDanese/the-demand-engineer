@@ -808,7 +808,7 @@
 <!-- KIT EMBED SCRIPT — nav subscribe popup -->
 <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
 <!-- KIT EMBED SCRIPT — unlock gate inline form -->
-<script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
+<script async data-uid="4d030b8ed0" src="https://the-demand-engineer.kit.com/4d030b8ed0/index.js"></script>
 </head>
 <body>
 
@@ -971,7 +971,7 @@
       <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
         <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
         <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
+        <script async data-uid="4d030b8ed0" src="https://the-demand-engineer.kit.com/4d030b8ed0/index.js"></script>
       </div>
 
     </div><!-- /.locked-grid -->
@@ -1174,7 +1174,26 @@
     document.getElementById('full-panel').classList.add('visible');
   }
 
-  // Listen for Kit's postMessage on successful form submission
+  // After Kit injects its form into the DOM, intercept the submit
+  // so it opens the confirmation URL in a new tab instead of
+  // navigating the simulator page away.
+  (function () {
+    var observer = new MutationObserver(function () {
+      var form = document.querySelector(
+        '.unlock-overlay form[data-sv-form], .unlock-overlay .formkit-form form, .unlock-overlay form'
+      );
+      if (form && !form.dataset.intercepted) {
+        form.target = '_blank';
+        form.action = 'https://thedemandengineer.com/downloads.html';
+        form.dataset.intercepted = '1';
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+
+  // Listen for Kit's postMessage on successful form submission,
+  // then reveal the full panel. The form's target="_blank" keeps
+  // the simulator page in place while downloads.html opens in a new tab.
   window.addEventListener('message', function (e) {
     if (e.data && e.data.type === 'konvertkit:form:submit') {
       revealFullPanel();
