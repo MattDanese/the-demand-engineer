@@ -570,50 +570,6 @@
     color: rgba(255,255,255,0.55);
     margin: 0;
   }
-  .email-gate {
-    display: flex;
-    width: 100%;
-    max-width: 460px;
-    margin-top: 4px;
-  }
-  .email-gate input {
-    flex: 1;
-    min-width: 0;
-    background: var(--navy);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-right: none;
-    color: var(--white);
-    font-family: var(--sans);
-    font-size: 14px;
-    padding: 12px 16px;
-    outline: none;
-    transition: border-color 0.2s;
-    border-radius: 0;
-    -webkit-appearance: none;
-  }
-  .email-gate input::placeholder { color: rgba(255,255,255,0.28); }
-  .email-gate input:focus { border-color: var(--cobalt); }
-  .btn-unlock {
-    font-family: var(--sans);
-    font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    background: var(--cobalt);
-    color: var(--white);
-    border: none;
-    padding: 12px 20px;
-    cursor: pointer;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: background 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .btn-unlock:hover { background: var(--cobalt-bright); }
-  .btn-unlock .arr { display: inline-block; transition: transform 0.2s; }
-  .btn-unlock:hover .arr { transform: translateX(3px); }
   /* Kit inline form inside the unlock overlay — override defaults */
   .unlock-overlay .formkit-form {
     width: 100% !important;
@@ -971,7 +927,7 @@
       <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
         <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
         <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <script async data-uid="4d030b8ed0" src="https://the-demand-engineer.kit.com/4d030b8ed0/index.js"></script>
+        <div id="kit-form-container"></div>
       </div>
 
     </div><!-- /.locked-grid -->
@@ -1153,6 +1109,7 @@
 
       renderTeaser(_result.cmo);
       document.getElementById('results-section').classList.add('visible');
+      moveKitFormToOverlay(); // move already-rendered Kit form into the now-visible overlay
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
@@ -1174,18 +1131,51 @@
     document.getElementById('full-panel').classList.add('visible');
   }
 
-  // After Kit injects its form into the DOM, intercept the submit
-  // so it opens the confirmation URL in a new tab instead of
-  // navigating the simulator page away.
+  // =========================================================
+  // KIT FORM — capture, patch, and move into overlay on demand
+  //
+  // Kit's script (loaded from <head>) renders the form on page
+  // load, but the overlay is hidden at that point so Kit won't
+  // inject into it directly. Instead:
+  //   1. MutationObserver watches for Kit to render its wrapper
+  //      anywhere in the body and stores a reference.
+  //   2. moveKitFormToOverlay() is called after simulate succeeds
+  //      to physically move the already-rendered element into the
+  //      visible #kit-form-container.
+  // =========================================================
+  var _kitFormEl = null;
+
+  function moveKitFormToOverlay() {
+    var container = document.getElementById('kit-form-container');
+    if (_kitFormEl && container && !container.contains(_kitFormEl)) {
+      container.appendChild(_kitFormEl);
+    }
+  }
+
   (function () {
     var observer = new MutationObserver(function () {
-      var form = document.querySelector(
-        '.unlock-overlay form[data-sv-form], .unlock-overlay .formkit-form form, .unlock-overlay form'
-      );
-      if (form && !form.dataset.intercepted) {
-        form.target = '_blank';
-        form.action = 'https://thedemandengineer.com/downloads.html';
-        form.dataset.intercepted = '1';
+      if (_kitFormEl) return; // already captured
+      // Kit renders a wrapper div with data-uid matching the embed
+      var wrapper = document.querySelector('[data-uid="4d030b8ed0"]');
+      if (!wrapper) return;
+      _kitFormEl = wrapper;
+      // Patch the inner <form> as soon as it exists (may arrive in
+      // a subsequent mutation if Kit builds it asynchronously)
+      function patchForm() {
+        var form = wrapper.querySelector('form');
+        if (form && !form.dataset.intercepted) {
+          form.target = '_blank';
+          form.action = 'https://thedemandengineer.com/downloads.html';
+          form.dataset.intercepted = '1';
+        }
+      }
+      patchForm();
+      // Watch inside the wrapper in case the <form> arrives later
+      var innerObserver = new MutationObserver(patchForm);
+      innerObserver.observe(wrapper, { childList: true, subtree: true });
+      // If results are already visible (e.g. Kit loaded late), move now
+      if (document.getElementById('results-section').classList.contains('visible')) {
+        moveKitFormToOverlay();
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
