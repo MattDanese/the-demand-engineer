@@ -614,15 +614,69 @@
   .btn-unlock:hover { background: var(--cobalt-bright); }
   .btn-unlock .arr { display: inline-block; transition: transform 0.2s; }
   .btn-unlock:hover .arr { transform: translateX(3px); }
-  .gate-error {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--red);
-    display: none;
-    margin: 0;
+  /* Kit inline form inside the unlock overlay — override defaults */
+  .unlock-overlay .formkit-form {
+    width: 100% !important;
+    max-width: 460px !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
   }
-  .gate-error.visible { display: block; }
+  .unlock-overlay .formkit-form * { box-sizing: border-box; }
+  .unlock-overlay .formkit-fields,
+  .unlock-overlay .formkit-field {
+    display: flex !important;
+    gap: 0 !important;
+    width: 100% !important;
+  }
+  .unlock-overlay .formkit-field input[type="email"] {
+    flex: 1 !important;
+    min-width: 0 !important;
+    background: var(--navy) !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-right: none !important;
+    color: var(--white) !important;
+    font-family: var(--sans) !important;
+    font-size: 14px !important;
+    padding: 12px 16px !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    height: auto !important;
+  }
+  .unlock-overlay .formkit-field input[type="email"]::placeholder {
+    color: rgba(255,255,255,0.3) !important;
+  }
+  .unlock-overlay [data-element="errors"],
+  .unlock-overlay .formkit-alert { display: none !important; }
+  .unlock-overlay .formkit-submit,
+  .unlock-overlay button[type="submit"],
+  .unlock-overlay .formkit-form input[type="submit"] {
+    flex-shrink: 0 !important;
+    background: var(--cobalt) !important;
+    color: var(--white) !important;
+    font-family: var(--sans) !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    height: auto !important;
+    transition: background 0.2s !important;
+    white-space: nowrap !important;
+  }
+  .unlock-overlay .formkit-submit:hover,
+  .unlock-overlay button[type="submit"]:hover {
+    background: var(--cobalt-bright) !important;
+  }
+  .unlock-overlay .formkit-guarantee,
+  .unlock-overlay .formkit-powered-by-convertkit-container {
+    display: none !important;
+  }
 
   /* Full panel 2×2 grid */
   .full-panel { display: none; }
@@ -751,8 +805,10 @@
   }
   .footer .nav-list a:hover { color: rgba(255,255,255,0.65); }
 </style>
-<!-- KIT EMBED SCRIPT -->
+<!-- KIT EMBED SCRIPT — nav subscribe popup -->
 <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+<!-- KIT EMBED SCRIPT — unlock gate inline form -->
+<script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
 </head>
 <body>
 
@@ -915,11 +971,7 @@
       <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
         <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
         <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <div class="email-gate">
-          <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
-          <button class="btn-unlock" onclick="unlockPanel()">Unlock Full Panel <span class="arr">→</span></button>
-        </div>
-        <p class="gate-error" id="gate-error"></p>
+        <script async data-uid="b1558ff9b5" src="https://the-demand-engineer.kit.com/b1558ff9b5/index.js"></script>
       </div>
 
     </div><!-- /.locked-grid -->
@@ -1079,10 +1131,11 @@
     btn.disabled = true;
     loadMsg.classList.add('visible');
 
-    // Hide any stale results
+    // Reset stale results state
     document.getElementById('results-section').classList.remove('visible');
     document.getElementById('full-panel').classList.remove('visible');
     document.getElementById('locked-grid').style.display = '';
+    document.getElementById('cmo-wrap').style.display = '';
 
     try {
       var response = await fetch('https://zesty-praline-18c9b3.netlify.app/.netlify/functions/simulate', {
@@ -1111,30 +1164,21 @@
   }
 
   // =========================================================
-  // EMAIL GATE / UNLOCK FULL PANEL
+  // REVEAL FULL PANEL — called after Kit form submit
   // =========================================================
-  function unlockPanel() {
-    clearError('gate-error');
-
-    var email = document.getElementById('gate-email').value.trim();
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!email || !emailRe.test(email)) {
-      showError('gate-error', 'Please enter a valid email address.');
-      return;
-    }
-
-    // TODO: Replace console.log with Kit embed or API call to add subscriber
-    console.log('Subscriber email:', email);
-
-    document.getElementById('locked-grid').style.display = 'none';
-    renderFullPanel(_result);
+  function revealFullPanel() {
+    if (!_result) return; // guard: no simulation result yet
+    document.getElementById('cmo-wrap').style.display = 'none';   // hide standalone CMO teaser
+    document.getElementById('locked-grid').style.display = 'none'; // hide blurred gate
+    renderFullPanel(_result);                                       // render all 4 in 2×2 grid
     document.getElementById('full-panel').classList.add('visible');
   }
 
-  // Allow Enter in email field
-  document.getElementById('gate-email').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') unlockPanel();
+  // Listen for Kit's postMessage on successful form submission
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'konvertkit:form:submit') {
+      revealFullPanel();
+    }
   });
 </script>
 
