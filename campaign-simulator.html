@@ -570,69 +570,67 @@
     color: rgba(255,255,255,0.55);
     margin: 0;
   }
-  /* Kit inline form inside the unlock overlay — override defaults */
-  .unlock-overlay .formkit-form {
-    width: 100% !important;
-    max-width: 460px !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-shadow: none !important;
+  /* Plain email gate inside the unlock overlay */
+  .email-gate {
+    display: flex;
+    width: 100%;
+    max-width: 460px;
   }
-  .unlock-overlay .formkit-form * { box-sizing: border-box; }
-  .unlock-overlay .formkit-fields,
-  .unlock-overlay .formkit-field {
-    display: flex !important;
-    gap: 0 !important;
-    width: 100% !important;
+  .email-gate input {
+    flex: 1;
+    min-width: 0;
+    background: var(--navy);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-right: none;
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
   }
-  .unlock-overlay .formkit-field input[type="email"] {
-    flex: 1 !important;
-    min-width: 0 !important;
-    background: var(--navy) !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    border-right: none !important;
-    color: var(--white) !important;
-    font-family: var(--sans) !important;
-    font-size: 14px !important;
-    padding: 12px 16px !important;
-    outline: none !important;
-    border-radius: 0 !important;
-    height: auto !important;
+  .email-gate input::placeholder { color: rgba(255,255,255,0.28); }
+  .email-gate input:focus { border-color: var(--cobalt); }
+  .btn-unlock {
+    flex-shrink: 0;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--cobalt);
+    color: var(--white);
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
   }
-  .unlock-overlay .formkit-field input[type="email"]::placeholder {
-    color: rgba(255,255,255,0.3) !important;
+  .btn-unlock:hover { background: var(--cobalt-bright); }
+  .btn-unlock .arr { display: inline-block; transition: transform 0.2s; }
+  .btn-unlock:hover .arr { transform: translateX(3px); }
+  .gate-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin: 0;
   }
-  .unlock-overlay [data-element="errors"],
-  .unlock-overlay .formkit-alert { display: none !important; }
-  .unlock-overlay .formkit-submit,
-  .unlock-overlay button[type="submit"],
-  .unlock-overlay .formkit-form input[type="submit"] {
-    flex-shrink: 0 !important;
-    background: var(--cobalt) !important;
-    color: var(--white) !important;
-    font-family: var(--sans) !important;
-    font-weight: 500 !important;
-    font-size: 11px !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    border: none !important;
-    padding: 12px 20px !important;
-    cursor: pointer !important;
-    border-radius: 0 !important;
-    height: auto !important;
-    transition: background 0.2s !important;
-    white-space: nowrap !important;
+  .gate-error {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    display: none;
+    margin: 0;
   }
-  .unlock-overlay .formkit-submit:hover,
-  .unlock-overlay button[type="submit"]:hover {
-    background: var(--cobalt-bright) !important;
-  }
-  .unlock-overlay .formkit-guarantee,
-  .unlock-overlay .formkit-powered-by-convertkit-container {
-    display: none !important;
-  }
+  .gate-error.visible { display: block; }
 
   /* Full panel 2×2 grid */
   .full-panel { display: none; }
@@ -763,8 +761,6 @@
 </style>
 <!-- KIT EMBED SCRIPT — nav subscribe popup -->
 <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
-<!-- KIT EMBED SCRIPT — unlock gate inline form -->
-<script async data-uid="4d030b8ed0" src="https://the-demand-engineer.kit.com/4d030b8ed0/index.js"></script>
 </head>
 <body>
 
@@ -927,7 +923,12 @@
       <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
         <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
         <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <div id="kit-form-container"></div>
+        <div class="email-gate">
+          <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
+          <button class="btn-unlock" onclick="unlockPanel()">Unlock Full Panel <span class="arr">→</span></button>
+        </div>
+        <p class="gate-note">You'll also get the weekly Demand Engineer newsletter</p>
+        <p class="gate-error" id="gate-error"></p>
       </div>
 
     </div><!-- /.locked-grid -->
@@ -1109,7 +1110,6 @@
 
       renderTeaser(_result.cmo);
       document.getElementById('results-section').classList.add('visible');
-      moveKitFormToOverlay(); // move already-rendered Kit form into the now-visible overlay
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     } catch (err) {
@@ -1132,62 +1132,38 @@
   }
 
   // =========================================================
-  // KIT FORM — capture, patch, and move into overlay on demand
-  //
-  // Kit's script (loaded from <head>) renders the form on page
-  // load, but the overlay is hidden at that point so Kit won't
-  // inject into it directly. Instead:
-  //   1. MutationObserver watches for Kit to render its wrapper
-  //      anywhere in the body and stores a reference.
-  //   2. moveKitFormToOverlay() is called after simulate succeeds
-  //      to physically move the already-rendered element into the
-  //      visible #kit-form-container.
+  // EMAIL GATE / UNLOCK FULL PANEL
   // =========================================================
-  var _kitFormEl = null;
+  function unlockPanel() {
+    var emailInput = document.getElementById('gate-email');
+    var errorEl    = document.getElementById('gate-error');
+    var email      = emailInput.value.trim();
+    var emailRe    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function moveKitFormToOverlay() {
-    var container = document.getElementById('kit-form-container');
-    if (_kitFormEl && container && !container.contains(_kitFormEl)) {
-      container.appendChild(_kitFormEl);
+    errorEl.textContent = '';
+    errorEl.classList.remove('visible');
+
+    if (!email || !emailRe.test(email)) {
+      errorEl.textContent = 'Please enter a valid email address.';
+      errorEl.classList.add('visible');
+      return;
     }
+
+    // Fire-and-forget Kit subscription — do not block on response
+    fetch('https://app.kit.com/forms/4d030b8ed0/subscriptions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ email_address: email })
+    }).catch(function () {}); // swallow errors silently
+
+    // Open downloads page in new tab, reveal panel immediately
+    window.open('https://thedemandengineer.com/downloads.html', '_blank');
+    revealFullPanel();
   }
 
-  (function () {
-    var observer = new MutationObserver(function () {
-      if (_kitFormEl) return; // already captured
-      // Kit renders a wrapper div with data-uid matching the embed
-      var wrapper = document.querySelector('[data-uid="4d030b8ed0"]');
-      if (!wrapper) return;
-      _kitFormEl = wrapper;
-      // Patch the inner <form> as soon as it exists (may arrive in
-      // a subsequent mutation if Kit builds it asynchronously)
-      function patchForm() {
-        var form = wrapper.querySelector('form');
-        if (form && !form.dataset.intercepted) {
-          form.target = '_blank';
-          form.action = 'https://thedemandengineer.com/downloads.html';
-          form.dataset.intercepted = '1';
-        }
-      }
-      patchForm();
-      // Watch inside the wrapper in case the <form> arrives later
-      var innerObserver = new MutationObserver(patchForm);
-      innerObserver.observe(wrapper, { childList: true, subtree: true });
-      // If results are already visible (e.g. Kit loaded late), move now
-      if (document.getElementById('results-section').classList.contains('visible')) {
-        moveKitFormToOverlay();
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  })();
-
-  // Listen for Kit's postMessage on successful form submission,
-  // then reveal the full panel. The form's target="_blank" keeps
-  // the simulator page in place while downloads.html opens in a new tab.
-  window.addEventListener('message', function (e) {
-    if (e.data && e.data.type === 'konvertkit:form:submit') {
-      revealFullPanel();
-    }
+  // Allow Enter key in email field
+  document.getElementById('gate-email').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') unlockPanel();
   });
 </script>
 
