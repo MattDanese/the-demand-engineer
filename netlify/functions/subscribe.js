@@ -65,7 +65,7 @@ exports.handler = async function (event, context) {
     const kit = await httpsPost(
       {
         hostname: 'api.convertkit.com',
-        path:     '/v3/forms/4d030b8ed0/subscribe',
+        path:     '/v3/forms/9505578/subscribe',
         method:   'POST',
         headers: {
           'Content-Type':   'application/json',
