@@ -785,6 +785,31 @@
     .panel-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Run Another Campaign button ────────────────────────── */
+  .btn-run-another {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--cobalt-bright);
+    border: 1px solid var(--cobalt);
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-top: 32px;
+  }
+  .btn-run-another:hover {
+    border-color: var(--cobalt-bright);
+    color: var(--white);
+  }
+  .btn-run-another .arr { transition: transform 0.2s; display: inline-block; }
+  .btn-run-another:hover .arr { transform: translateX(4px); }
+
   /* =========================================================
      FOOTER
      ========================================================= */
@@ -1059,13 +1084,13 @@
         </div>
 
         <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
-          <p class="unlock-headline">Your panel is ready.</p>
+          <p class="unlock-headline" id="unlock-headline">Your panel is ready.</p>
           <p class="unlock-sub">See how your CMO, Sales Director, prospect, and a churned customer each scored it — and exactly what to fix.</p>
           <div class="email-gate">
             <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
-            <button id="btn-unlock">Unlock Full Panel →</button>
+            <button id="btn-unlock">See My Full Results →</button>
           </div>
-          <p class="gate-note">You'll also get the weekly Demand Engineer newsletter</p>
+          <p class="gate-note">No spam. One weekly email. Unsubscribe anytime.</p>
           <p class="gate-error" id="gate-error"></p>
         </div>
       </div><!-- /.locked-grid -->
@@ -1109,6 +1134,13 @@
       <div class="results-cta">
         Want systems that build campaigns worth launching?<br>
         <a href="https://thedemandengineer.com/newsletter">Read The Demand Engineer →</a>
+      </div>
+
+      <!-- Section 6: Run another -->
+      <div style="text-align:center; padding-bottom: 16px;">
+        <button class="btn-run-another" id="btn-run-another">
+          Run Another Campaign <span class="arr">→</span>
+        </button>
       </div>
 
     </div><!-- /#full-panel -->
@@ -1223,6 +1255,14 @@
     tVerdict.style.color = col;
     tVerdict.style.borderColor = col;
     tConsens.textContent = result.consensus;
+
+    // Dynamic gate headline: "Your campaign scored X/10 — Verdict."
+    var headline = document.getElementById('unlock-headline');
+    if (headline) {
+      headline.innerHTML =
+        'Your campaign scored <span style="color:' + col + '">' +
+        result.panel_score + '/10</span> — ' + result.verdict + '.';
+    }
 
     // Full panel Section 1 scoreboard (same data)
     var fNum     = document.getElementById('full-score-num');
@@ -1376,6 +1416,30 @@
   document.getElementById('btn-unlock').addEventListener('click', unlockPanel);
   document.getElementById('gate-email').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') unlockPanel();
+  });
+
+  // =========================================================
+  // RUN ANOTHER CAMPAIGN — reset form and scroll back up
+  // =========================================================
+  document.getElementById('btn-run-another').addEventListener('click', function () {
+    // Clear form fields
+    document.getElementById('f-name').value    = '';
+    document.getElementById('f-desc').value    = '';
+    document.getElementById('f-icp').value     = '';
+    document.getElementById('f-channel').value = '';
+    document.getElementById('f-offer').value   = '';
+    document.getElementById('gate-email').value = '';
+
+    // Reset result state
+    _result = null;
+
+    // Hide results
+    document.getElementById('results-section').classList.remove('visible');
+    document.getElementById('full-panel').classList.remove('visible');
+
+    // Scroll to form and focus first field
+    document.getElementById('f-name').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function () { document.getElementById('f-name').focus(); }, 400);
   });
 </script>
 
