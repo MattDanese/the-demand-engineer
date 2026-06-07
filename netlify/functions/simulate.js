@@ -70,15 +70,23 @@ exports.handler = async function (event, context) {
   const systemPrompt =
     'You are simulating a panel of four business professionals reviewing a B2B SaaS marketing campaign. ' +
     'Each persona must respond in character — blunt, specific, and honest. Do not be generically positive. ' +
+    'Also return: panel_score (average of all four scores to one decimal), verdict (one of: Kill It / Needs Work / Has Potential / Strong Play / Launch Ready), ' +
+    'consensus (one sentence on what all personas agreed, good or bad), strongest_element (the single best thing about this campaign in one sentence), ' +
+    'fix_these (array of exactly 3 specific, actionable fixes a demand gen manager could implement before launch). ' +
     'Return ONLY a valid JSON object with no markdown, no backticks, no preamble.';
 
   const userPrompt =
     'Review this campaign as four distinct personas. Return a JSON object with this exact structure:\n' +
     '{\n' +
-    '  "cmo": { "score": [1-10], "reaction": "[2-4 sentences]" },\n' +
-    '  "sales_director": { "score": [1-10], "reaction": "[2-4 sentences]" },\n' +
-    '  "skeptical_prospect": { "score": [1-10], "reaction": "[2-4 sentences]" },\n' +
-    '  "churned_customer": { "score": [1-10], "reaction": "[2-4 sentences]" }\n' +
+    '  "cmo": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
+    '  "sales_director": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
+    '  "skeptical_prospect": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
+    '  "churned_customer": { "score": [1-10], "reaction": "[2-4 sentences in character]" },\n' +
+    '  "panel_score": [average of all four scores to one decimal],\n' +
+    '  "verdict": "[one of: Kill It, Needs Work, Has Potential, Strong Play, Launch Ready]",\n' +
+    '  "consensus": "[one sentence max — what all four personas agreed on, good or bad]",\n' +
+    '  "strongest_element": "[one sentence — the single best thing about this campaign]",\n' +
+    '  "fix_these": ["[specific fix #1]", "[specific fix #2]", "[specific fix #3]"]\n' +
     '}\n' +
     'Persona voices:\n' +
     '- CMO: Strategic, ROI-focused, impatient. Evaluates pipeline potential and resource efficiency.\n' +
@@ -93,7 +101,7 @@ exports.handler = async function (event, context) {
 
   const payload = JSON.stringify({
     model: 'claude-haiku-4-5-20251001',
-    max_tokens: 1000,
+    max_tokens: 1500,
     system: systemPrompt,
     messages: [{ role: 'user', content: userPrompt }],
   });

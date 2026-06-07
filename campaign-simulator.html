@@ -493,8 +493,151 @@
     padding-top: 20px;
   }
 
-  /* CMO teaser — single wide card */
-  .teaser-wrap { margin-bottom: 28px; }
+  /* Teaser wrap */
+  .teaser-wrap { margin-bottom: 0; }
+
+  /* ── Scoreboard ──────────────────────────────────────────── */
+  .scoreboard-header {
+    text-align: center;
+    padding: 56px 24px 48px;
+  }
+  .panel-score-display {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .panel-score-num {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 144;
+    font-weight: 900;
+    font-size: clamp(80px, 14vw, 128px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .panel-score-denom {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 144;
+    font-weight: 300;
+    font-size: clamp(28px, 5vw, 48px);
+    color: rgba(255,255,255,0.28);
+    letter-spacing: -0.02em;
+  }
+  .verdict-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid currentColor;
+    margin-bottom: 22px;
+  }
+  .consensus-line {
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.62);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* ── Persona card with score-color left border ───────────── */
+  .persona-card.border-green { border-left: 3px solid var(--green); }
+  .persona-card.border-amber { border-left: 3px solid var(--amber); }
+  .persona-card.border-red   { border-left: 3px solid var(--red);   }
+
+  /* ── Panel section label ─────────────────────────────────── */
+  .panel-section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .panel-section-label::before {
+    content: "";
+    width: 20px; height: 1px;
+    background: rgba(255,255,255,0.2);
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* ── Insight cards (strongest element + fix these) ────────── */
+  .insight-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .insight-card {
+    background: var(--navy-2);
+    border: 1px solid var(--rule-dark);
+    padding: 28px 32px;
+  }
+  .insight-card.insight-green { border-left: 3px solid var(--green); }
+  .insight-card.insight-amber { border-left: 3px solid var(--amber); }
+  .insight-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  .insight-content {
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.82);
+    margin: 0;
+  }
+  .fix-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .fix-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.82);
+  }
+  .fix-num {
+    font-family: var(--serif);
+    font-variation-settings: "opsz" 144;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    color: var(--amber);
+    flex-shrink: 0;
+    min-width: 22px;
+  }
+
+  /* ── Results CTA ─────────────────────────────────────────── */
+  .results-cta {
+    text-align: center;
+    padding: 52px 0 0;
+    font-family: var(--sans);
+    font-size: 16px;
+    color: rgba(255,255,255,0.42);
+    line-height: 1.55;
+  }
+  .results-cta a {
+    color: var(--cobalt-bright);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .results-cta a:hover { color: var(--white); }
 
   /* Locked cards + overlay wrapper */
   .locked-grid {
@@ -875,68 +1018,100 @@
   <div class="results-wrap">
 
     <hr class="results-divider" />
-    <div class="results-eyebrow">Panel Feedback</div>
 
-    <!-- CMO Teaser (always visible once API returns) -->
-    <div class="teaser-wrap" id="cmo-wrap">
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-meta">
-            <p class="persona-name">The CMO</p>
-            <p class="persona-title">Chief Marketing Officer</p>
+    <!-- ── TEASER — visible after simulate, before email unlock ── -->
+    <div id="teaser-wrap">
+
+      <!-- Scoreboard: panel score + verdict + consensus -->
+      <div class="scoreboard-header">
+        <div class="panel-score-display">
+          <span class="panel-score-num" id="teaser-score-num">—</span>
+          <span class="panel-score-denom">/10</span>
+        </div>
+        <div class="verdict-badge" id="teaser-verdict"></div>
+        <p class="consensus-line" id="teaser-consensus"></p>
+      </div>
+
+      <!-- Blurred panel preview + email gate -->
+      <div class="locked-grid" id="locked-grid">
+        <div class="locked-cards" aria-hidden="true">
+          <div class="locked-card">
+            <div class="locked-card-name">The CMO</div>
+            <div class="locked-card-title">Chief Marketing Officer</div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
           </div>
-          <div class="persona-score" id="cmo-score"></div>
+          <div class="locked-card">
+            <div class="locked-card-name">Director of Sales</div>
+            <div class="locked-card-title">Head of Revenue</div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
+          </div>
+          <div class="locked-card">
+            <div class="locked-card-name">Skeptical Prospect</div>
+            <div class="locked-card-title">Your Target Buyer</div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
+            <div class="locked-card-bar"></div>
+          </div>
         </div>
-        <p class="persona-reaction" id="cmo-reaction"></p>
-      </div>
-    </div>
 
-    <!-- Locked panel — three blurred cards + email gate overlay -->
-    <div class="locked-grid" id="locked-grid">
-
-      <div class="locked-cards" aria-hidden="true">
-        <div class="locked-card">
-          <div class="locked-card-name">Director of Sales</div>
-          <div class="locked-card-title">Head of Revenue</div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
+        <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
+          <p class="unlock-headline">Your panel is ready.</p>
+          <p class="unlock-sub">See how your CMO, Sales Director, prospect, and a churned customer each scored it — and exactly what to fix.</p>
+          <div class="email-gate">
+            <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
+            <button id="btn-unlock">Unlock Full Panel →</button>
+          </div>
+          <p class="gate-note">You'll also get the weekly Demand Engineer newsletter</p>
+          <p class="gate-error" id="gate-error"></p>
         </div>
-        <div class="locked-card">
-          <div class="locked-card-name">Skeptical Prospect</div>
-          <div class="locked-card-title">Your Target Buyer</div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
-        </div>
-        <div class="locked-card">
-          <div class="locked-card-name">Churned Customer</div>
-          <div class="locked-card-title">Former Client</div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
-          <div class="locked-card-bar"></div>
-        </div>
-      </div>
+      </div><!-- /.locked-grid -->
 
-      <div class="unlock-overlay" role="region" aria-label="Unlock full panel">
-        <p class="unlock-headline">See what Sales, your prospect, and a churned customer actually think.</p>
-        <p class="unlock-sub">Enter your email to unlock the full panel.</p>
-        <div class="email-gate">
-          <input type="email" id="gate-email" placeholder="your@email.com" aria-label="Email address" />
-          <button id="btn-unlock">Unlock Full Panel →</button>
-        </div>
-        <p class="gate-note">You'll also get the weekly Demand Engineer newsletter</p>
-        <p class="gate-error" id="gate-error"></p>
-      </div>
+    </div><!-- /#teaser-wrap -->
 
-    </div><!-- /.locked-grid -->
-
-    <!-- Full panel (shown after email submit) -->
+    <!-- ── FULL RESULTS — visible after email submit ── -->
     <div class="full-panel" id="full-panel">
+
+      <!-- Section 1: Score header -->
+      <div class="scoreboard-header">
+        <div class="panel-score-display">
+          <span class="panel-score-num" id="full-score-num">—</span>
+          <span class="panel-score-denom">/10</span>
+        </div>
+        <div class="verdict-badge" id="full-verdict"></div>
+        <p class="consensus-line" id="full-consensus"></p>
+      </div>
+
+      <!-- Section 2: The Panel -->
+      <div class="panel-section-label">The Panel</div>
       <div class="panel-grid" id="panel-grid">
         <!-- Injected by renderFullPanel() -->
       </div>
-    </div>
+
+      <!-- Sections 3 + 4: Insights -->
+      <div class="insight-cards">
+        <div class="insight-card insight-green">
+          <p class="insight-label" style="color:var(--green)">What's Working</p>
+          <p class="insight-content" id="strongest-text"></p>
+        </div>
+        <div class="insight-card insight-amber">
+          <p class="insight-label" style="color:var(--amber)">Before You Launch</p>
+          <ol class="fix-list" id="fix-list">
+            <!-- Injected by renderFullPanel() -->
+          </ol>
+        </div>
+      </div>
+
+      <!-- Section 5: CTA -->
+      <div class="results-cta">
+        Want systems that build campaigns worth launching?<br>
+        <a href="https://thedemandengineer.com/newsletter">Read The Demand Engineer →</a>
+      </div>
+
+    </div><!-- /#full-panel -->
 
   </div><!-- /.results-wrap -->
 </section>
@@ -1007,6 +1182,19 @@
     return 'score-red';
   }
 
+  function borderClass(n) {
+    if (n >= 8) return 'border-green';
+    if (n >= 5) return 'border-amber';
+    return 'border-red';
+  }
+
+  function verdictColor(v) {
+    if (v === 'Launch Ready')  return 'var(--green)';
+    if (v === 'Strong Play')   return 'var(--cobalt-bright)';
+    if (v === 'Kill It')       return 'var(--red)';
+    return 'var(--amber)'; // Needs Work, Has Potential
+  }
+
   function showError(id, msg) {
     const el = document.getElementById(id);
     el.textContent = msg;
@@ -1019,20 +1207,37 @@
   }
 
   // =========================================================
-  // RENDER — CMO TEASER
+  // RENDER — SCOREBOARD (populates both teaser + full panel)
   // =========================================================
-  function renderTeaser(cmo) {
-    const scoreEl    = document.getElementById('cmo-score');
-    const reactionEl = document.getElementById('cmo-reaction');
-    const cls = scoreClass(cmo.score);
-    scoreEl.innerHTML =
-      '<span class="' + cls + '">' + cmo.score + '</span>' +
-      '<span class="denom">&thinsp;/&thinsp;10</span>';
-    reactionEl.textContent = cmo.reaction;
+  function renderScoreboard(result) {
+    var col = verdictColor(result.verdict);
+    var cls = scoreClass(parseFloat(result.panel_score));
+
+    // Teaser scoreboard
+    var tNum     = document.getElementById('teaser-score-num');
+    var tVerdict = document.getElementById('teaser-verdict');
+    var tConsens = document.getElementById('teaser-consensus');
+    tNum.textContent = result.panel_score;
+    tNum.className = 'panel-score-num ' + cls;
+    tVerdict.textContent = result.verdict;
+    tVerdict.style.color = col;
+    tVerdict.style.borderColor = col;
+    tConsens.textContent = result.consensus;
+
+    // Full panel Section 1 scoreboard (same data)
+    var fNum     = document.getElementById('full-score-num');
+    var fVerdict = document.getElementById('full-verdict');
+    var fConsens = document.getElementById('full-consensus');
+    fNum.textContent = result.panel_score;
+    fNum.className = 'panel-score-num ' + cls;
+    fVerdict.textContent = result.verdict;
+    fVerdict.style.color = col;
+    fVerdict.style.borderColor = col;
+    fConsens.textContent = result.consensus;
   }
 
   // =========================================================
-  // RENDER — FULL PANEL
+  // RENDER — FULL PANEL (panel grid + insights)
   // =========================================================
   function renderFullPanel(result) {
     var personas = [
@@ -1046,8 +1251,9 @@
     personas.forEach(function (p) {
       var data = result[p.key];
       var cls  = scoreClass(data.score);
+      var bord = borderClass(data.score);
       var card = document.createElement('div');
-      card.className = 'persona-card';
+      card.className = 'persona-card ' + bord;
       card.innerHTML =
         '<div class="persona-header">' +
           '<div class="persona-meta">' +
@@ -1061,6 +1267,19 @@
         '</div>' +
         '<p class="persona-reaction">' + data.reaction + '</p>';
       grid.appendChild(card);
+    });
+
+    // Section 3: Strongest element
+    document.getElementById('strongest-text').textContent = result.strongest_element || '';
+
+    // Section 4: Fix these
+    var fixList = document.getElementById('fix-list');
+    fixList.innerHTML = '';
+    (result.fix_these || []).forEach(function (fix, i) {
+      var li = document.createElement('li');
+      li.className = 'fix-item';
+      li.innerHTML = '<span class="fix-num">' + (i + 1) + '</span><span>' + fix + '</span>';
+      fixList.appendChild(li);
     });
   }
 
@@ -1090,7 +1309,7 @@
     document.getElementById('results-section').classList.remove('visible');
     document.getElementById('full-panel').classList.remove('visible');
     document.getElementById('locked-grid').style.display = '';
-    document.getElementById('cmo-wrap').style.display = '';
+    document.getElementById('teaser-wrap').style.display = '';
 
     try {
       var response = await fetch('https://zesty-praline-18c9b3.netlify.app/.netlify/functions/simulate', {
@@ -1106,7 +1325,8 @@
 
       _result = await response.json();
 
-      renderTeaser(_result.cmo);
+      renderScoreboard(_result);   // populate both teaser + full-panel scoreboards
+      renderFullPanel(_result);    // populate panel grid + insights (hidden until unlock)
       document.getElementById('results-section').classList.add('visible');
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
@@ -1119,14 +1339,13 @@
   }
 
   // =========================================================
-  // REVEAL FULL PANEL — called after Kit form submit
+  // REVEAL FULL PANEL — called after email submit
   // =========================================================
   function revealFullPanel() {
     if (!_result) return; // guard: no simulation result yet
-    document.getElementById('cmo-wrap').style.display = 'none';   // hide standalone CMO teaser
-    document.getElementById('locked-grid').style.display = 'none'; // hide blurred gate
-    renderFullPanel(_result);                                       // render all 4 in 2×2 grid
+    document.getElementById('teaser-wrap').style.display = 'none'; // hide scoreboard + blurred gate
     document.getElementById('full-panel').classList.add('visible');
+    document.getElementById('full-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // =========================================================
