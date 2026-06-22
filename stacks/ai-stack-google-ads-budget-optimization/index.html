@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Stack for Ad Creative Testing: Google Ads + Meta Ads + Claude + Notion | The Demand Engineer</title>
-  <meta name="description" content="The exact tools, Claude prompt, and step-by-step workflow for structured B2B ad creative testing. Design hypotheses with Claude, log results in Notion, and build institutional creative knowledge." />
+  <title>AI Stack for Google Ads Budget Optimization: Google Ads + Claude + Sheets | The Demand Engineer</title>
+  <meta name="description" content="The exact tools, Claude prompt, and workflow for AI-powered Google Ads budget optimization. Pull campaign data, run a Claude reallocation analysis, and make every budget move data-driven." />
   <meta name="author" content="Matt Danese" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://thedemandengineer.com/stacks/ai-stack-ad-creative-testing/" />
-  <meta property="og:title" content="AI Stack for Ad Creative Testing" />
-  <meta property="og:description" content="The exact tools, Claude prompt, and step-by-step workflow for structured B2B ad creative testing. Design hypotheses with Claude, log results in Notion, and build institutional creative knowledge." />
+  <link rel="canonical" href="https://thedemandengineer.com/stacks/ai-stack-google-ads-budget-optimization/" />
+  <meta property="og:title" content="AI Stack for Google Ads Budget Optimization" />
+  <meta property="og:description" content="The exact tools, Claude prompt, and workflow for AI-powered Google Ads budget optimization. Pull campaign data, run a Claude reallocation analysis, and make every budget move data-driven." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://thedemandengineer.com/stacks/ai-stack-ad-creative-testing/" />
+  <meta property="og:url" content="https://thedemandengineer.com/stacks/ai-stack-google-ads-budget-optimization/" />
   <meta property="og:site_name" content="The Demand Engineer" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI Stack for Ad Creative Testing" />
-  <meta name="twitter:description" content="The exact tools, Claude prompt, and step-by-step workflow for structured B2B ad creative testing. Design hypotheses with Claude, log results in Notion, and build institutional creative knowledge." />
+  <meta name="twitter:title" content="AI Stack for Google Ads Budget Optimization" />
+  <meta name="twitter:description" content="The exact tools, Claude prompt, and workflow for AI-powered Google Ads budget optimization. Pull campaign data, run a Claude reallocation analysis, and make every budget move data-driven." />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
@@ -26,14 +26,14 @@
   {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "name": "How to Build a Structured Ad Creative Testing Stack with Claude",
-    "description": "A workflow for designing structured ad creative tests with Claude, logging results in Notion, and building institutional creative knowledge.",
+    "name": "How to Build an AI Google Ads Budget Optimization Stack",
+    "description": "A structured workflow for pulling Google Ads campaign data, analyzing budget efficiency with Claude, and making data-driven reallocation decisions.",
     "step": [
-      { "@type": "HowToStep", "position": 1, "name": "Review current creative performance", "text": "Pull the past 30 days of creative performance from Google Ads and Meta Ads — CTR, CPL, and conversion rate by ad creative. Identify the control (current best performer) for each test." },
-      { "@type": "HowToStep", "position": 2, "name": "Generate the test hypothesis", "text": "Paste your campaign objective and current performance data into the A/B Test Hypothesis Generator prompt. Claude outputs a structured test plan with hypothesis, evaluation criteria, and 3 creative variables to test." },
-      { "@type": "HowToStep", "position": 3, "name": "Set up the test", "text": "Launch the test variants in your ad platform with the same targeting, budget, and settings as the control. Set the scheduled review date based on the minimum sample size Claude recommended." },
-      { "@type": "HowToStep", "position": 4, "name": "Interpret results at the review date", "text": "Pull results and run them through a test result interpretation prompt. Claude evaluates statistical significance and flags whether the declared winner is real or a noise artifact from insufficient sample size." },
-      { "@type": "HowToStep", "position": 5, "name": "Log and build the knowledge base", "text": "Record the full test — hypothesis, result, confidence level, and transferable insight — in your Notion test log. Post the winner and key insight to Slack. This log becomes your creative strategy reference." }
+      { "@type": "HowToStep", "position": 1, "name": "Export Google Ads campaign data", "text": "Pull the past 30 days of campaign performance from the Google Ads API — spend, clicks, conversions, CPL, and impression share by campaign type and match type." },
+      { "@type": "HowToStep", "position": 2, "name": "Pull pipeline contribution from Salesforce", "text": "Export Google Ads-sourced opportunities and pipeline created from Salesforce for the same period. Map back to campaign names via UTM data." },
+      { "@type": "HowToStep", "position": 3, "name": "Build the budget model in Sheets", "text": "Create a simple budget model in Google Sheets: current spend by campaign, pipeline contribution, and efficiency ratio (pipeline ÷ spend). This is your input dataset." },
+      { "@type": "HowToStep", "position": 4, "name": "Run the reallocation prompt", "text": "Paste the budget model into the Channel Budget Reallocation prompt. Claude identifies which campaigns to increase, reduce, or pause — with specific dollar amounts and rationale for each move." },
+      { "@type": "HowToStep", "position": 5, "name": "Implement and communicate", "text": "Apply the recommended budget changes in Google Ads. Post a summary of what changed and why to Slack. Log the decision in your Sheets model so the rationale is tracked over time." }
     ]
   }
   </script>
@@ -45,7 +45,7 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home",          "item": "https://thedemandengineer.com" },
       { "@type": "ListItem", "position": 2, "name": "Stack Library", "item": "https://thedemandengineer.com/stacks/" },
-      { "@type": "ListItem", "position": 3, "name": "AI Stack for Ad Creative Testing", "item": "https://thedemandengineer.com/stacks/ai-stack-ad-creative-testing/" }
+      { "@type": "ListItem", "position": 3, "name": "AI Stack for Google Ads Budget Optimization", "item": "https://thedemandengineer.com/stacks/ai-stack-google-ads-budget-optimization/" }
     ]
   }
   </script>
@@ -190,12 +190,12 @@
         <ol class="breadcrumb__list">
           <li><a href="../../">Home</a></li>
           <li><a href="../../stacks/">Stack Library</a></li>
-          <li>AI Stack for Ad Creative Testing</li>
+          <li>AI Stack for Google Ads Budget Optimization</li>
         </ol>
       </nav>
       <span class="post-category">Paid Media</span>
-      <h1 class="post-title">AI Stack for Ad Creative Testing</h1>
-      <div class="post-subtitle">Google Ads + Meta Ads → Claude → Notion Test Log + Slack</div>
+      <h1 class="post-title">AI Stack for Google Ads Budget Optimization</h1>
+      <div class="post-subtitle">Google Ads API + Sheets budget model → Claude → Sheets + Slack</div>
       <p class="post-meta">By Matt Danese &middot; Updated June 2026</p>
     </div>
   </div>
@@ -210,15 +210,15 @@
 
   <main class="post-body">
 
-    <p>Most ad creative testing is undisciplined — you launch a few variants, one performs better, you scale it, and three months later you have no idea why it worked or what to test next. This stack imposes structure. Define your hypothesis with Claude before you test, set pre-determined evaluation criteria so you know what counts as a win, run the test, and interpret the results through a structured output prompt. Every test gets logged in Notion. The log compounds into institutional knowledge — not a graveyard of inconclusive experiments.</p>
+    <p>Google Ads budget decisions are usually made under pressure — you're mid-month, spend is pacing fast, and you need to know where to cut without tanking the pipeline. This stack gives you a structured way to answer that question. Pull your current campaign spend, pipeline contribution, and efficiency metrics from Google Ads, run the combined data through a Claude budget reallocation prompt, and get a prioritized set of budget moves with rationale attached. No gut-feel reallocations. No 'pause everything and see what happens.'</p>
 
     <h2>The Stack</h2>
     <div class="stack-flow">
         <div class="stack-layer">
           <span class="stack-layer__label">Input</span>
           <div class="stack-layer__tools">
-            <span class="stack-tool">Google Ads</span>
-            <span class="stack-tool">Meta Ads</span>
+            <span class="stack-tool">Google Ads API</span>
+            <span class="stack-tool">Google Sheets budget model</span>
           </div>
         </div>
         <div class="stack-layer">
@@ -230,65 +230,65 @@
         <div class="stack-layer">
           <span class="stack-layer__label">Output</span>
           <div class="stack-layer__tools">
-            <span class="stack-tool">Notion Test Log</span>
+            <span class="stack-tool">Google Sheets</span>
             <span class="stack-tool">Slack</span>
           </div>
         </div>
     </div>
 
     <h2>The Prompt</h2>
-    <p>This stack is built around the <strong>A/B Test Hypothesis Generator Prompt</strong>. Here's the abbreviated version — the full prompt with all variables and usage notes is on its own page.</p>
+    <p>This stack is built around the <strong>Channel Budget Reallocation Prompt</strong>. Here's the abbreviated version — the full prompt with all variables and usage notes is on its own page.</p>
     <div class="prompt-block">
       <span class="prompt-label">Claude Prompt — Abbreviated</span>
-      <pre class="prompt-text">You are a B2B paid media specialist designing a structured ad creative test.
+      <pre class="prompt-text">You are a B2B paid search specialist optimizing Google Ads budget allocation.
 
-Review the current campaign performance data and the test objective provided below.
-Generate a structured test hypothesis: what you're testing, what you predict, and why.
-Define the evaluation criteria: minimum sample size, test duration, and the metric that determines the winner.
-Identify 3 creative variables to test (headline angle, visual format, CTA language) with a hypothesis for each.
-Output the test plan in a format ready to log in a structured test tracking document.</pre>
+Review the campaign spend, pipeline contribution, and efficiency data provided below.
+Identify campaigns that are overspending relative to their pipeline contribution — flag for reduction.
+Identify campaigns with strong CPL and pipeline output that have remaining budget headroom — flag for scaling.
+For each recommendation, specify the exact budget adjustment and the efficiency rationale behind it.
+Output a prioritized budget reallocation brief with specific dollar changes and expected impact.</pre>
       <span class="prompt-ellipsis">[ ... continued — see full prompt ]</span>
     </div>
     <div class="prompt-link-row">
-      <a href="/prompts/ab-test-hypothesis-generator/">View the full prompt with variables and usage notes →</a>
+      <a href="/prompts/channel-budget-reallocation/">View the full prompt with variables and usage notes →</a>
     </div>
 
     <h2>The Workflow</h2>
     <ol class="workflow-steps">
       <li class="workflow-step">
-        <h3>Review current creative performance</h3>
-        <p>Pull the past 30 days of creative performance from Google Ads and Meta Ads — CTR, CPL, and conversion rate by ad creative. Identify the control (current best performer) for each test.</p>
+        <h3>Export Google Ads campaign data</h3>
+        <p>Pull the past 30 days of campaign performance from the Google Ads API — spend, clicks, conversions, CPL, and impression share by campaign type and match type.</p>
       </li>
       <li class="workflow-step">
-        <h3>Generate the test hypothesis</h3>
-        <p>Paste your campaign objective and current performance data into the A/B Test Hypothesis Generator prompt. Claude outputs a structured test plan with hypothesis, evaluation criteria, and 3 creative variables to test.</p>
+        <h3>Pull pipeline contribution from Salesforce</h3>
+        <p>Export Google Ads-sourced opportunities and pipeline created from Salesforce for the same period. Map back to campaign names via UTM data.</p>
       </li>
       <li class="workflow-step">
-        <h3>Set up the test</h3>
-        <p>Launch the test variants in your ad platform with the same targeting, budget, and settings as the control. Set the scheduled review date based on the minimum sample size Claude recommended.</p>
+        <h3>Build the budget model in Sheets</h3>
+        <p>Create a simple budget model in Google Sheets: current spend by campaign, pipeline contribution, and efficiency ratio (pipeline ÷ spend). This is your input dataset.</p>
       </li>
       <li class="workflow-step">
-        <h3>Interpret results at the review date</h3>
-        <p>Pull results and run them through a test result interpretation prompt. Claude evaluates statistical significance and flags whether the declared winner is real or a noise artifact from insufficient sample size.</p>
+        <h3>Run the reallocation prompt</h3>
+        <p>Paste the budget model into the Channel Budget Reallocation prompt. Claude identifies which campaigns to increase, reduce, or pause — with specific dollar amounts and rationale for each move.</p>
       </li>
       <li class="workflow-step">
-        <h3>Log and build the knowledge base</h3>
-        <p>Record the full test — hypothesis, result, confidence level, and transferable insight — in your Notion test log. Post the winner and key insight to Slack. This log becomes your creative strategy reference.</p>
+        <h3>Implement and communicate</h3>
+        <p>Apply the recommended budget changes in Google Ads. Post a summary of what changed and why to Slack. Log the decision in your Sheets model so the rationale is tracked over time.</p>
       </li>
     </ol>
 
     <h2>What This Replaces</h2>
     <ul class="replaces-list">
-        <li>Creative tests launched without a hypothesis that can't be learned from even when they show a winner</li>
-        <li>Tests called as winners at sample sizes too small to trust the result</li>
-        <li>Creative decisions made from memory and gut feel because there's no structured test record</li>
+        <li>Mid-month budget decisions made on instinct because pulling pipeline data takes too long</li>
+        <li>Across-the-board budget cuts that hit strong campaigns the same as weak ones</li>
+        <li>Verbal budget decisions that nobody documents and nobody remembers the reasoning for</li>
     </ul>
 
     <h2>Related Stacks</h2>
     <ul class="related-stacks__list">
-        <li><a href="/stacks/ai-stack-linkedin-ads-campaigns/">AI Stack for LinkedIn Ads Campaigns →</a></li>
         <li><a href="/stacks/ai-stack-google-ads-management/">AI Stack for Google Ads Management →</a></li>
-        <li><a href="/stacks/ai-stack-b2b-ad-copywriting/">AI Stack for B2B Ad Copywriting →</a></li>
+        <li><a href="/stacks/ai-stack-paid-media-reporting/">AI Stack for Paid Media Reporting →</a></li>
+        <li><a href="/stacks/ai-stack-b2b-paid-media-attribution/">AI Stack for B2B Paid Media Attribution →</a></li>
     </ul>
 
     <div class="post-cta">
