@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Stacks for B2B Demand Gen: Tools, Prompts &amp; Workflows | The Demand Engineer</title>
-  <meta name="description" content="The AI tool stacks, prompts, and workflow systems B2B demand gen managers actually use — paid media reporting, lead scoring, attribution, pipeline analysis, and more. Built and tested in-house." />
+  <meta name="description" content="50 AI stack guides for B2B demand gen managers. Each stack includes the tools, Claude prompt, and workflow for one specific use case." />
   <meta name="author" content="Matt Danese" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://thedemandengineer.com/stacks/" />
@@ -63,6 +63,29 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home",        "item": "https://thedemandengineer.com" },
       { "@type": "ListItem", "position": 2, "name": "Stack Library", "item": "https://thedemandengineer.com/stacks/" }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AI Stacks for B2B Demand Gen",
+    "description": "50 AI stack guides for B2B demand gen managers — tools, Claude prompts, and workflow logic for every use case.",
+    "url": "https://thedemandengineer.com/stacks/",
+    "numberOfItems": 10,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1,  "name": "AI Stack for Paid Media Reporting",        "url": "https://thedemandengineer.com/stacks/ai-stack-paid-media-reporting/" },
+      { "@type": "ListItem", "position": 2,  "name": "AI Stack for B2B Paid Media Attribution",  "url": "https://thedemandengineer.com/stacks/ai-stack-b2b-paid-media-attribution/" },
+      { "@type": "ListItem", "position": 3,  "name": "AI Stack for Google Ads Management",       "url": "https://thedemandengineer.com/stacks/ai-stack-google-ads-management/" },
+      { "@type": "ListItem", "position": 4,  "name": "AI Stack for LinkedIn Ads Campaigns",      "url": "https://thedemandengineer.com/stacks/ai-stack-linkedin-ads-campaigns/" },
+      { "@type": "ListItem", "position": 5,  "name": "AI Stack for B2B Lead Scoring",            "url": "https://thedemandengineer.com/stacks/ai-stack-b2b-lead-scoring/" },
+      { "@type": "ListItem", "position": 6,  "name": "AI Stack for ICP Qualification",           "url": "https://thedemandengineer.com/stacks/ai-stack-icp-qualification/" },
+      { "@type": "ListItem", "position": 7,  "name": "AI Stack for Marketo Automation",          "url": "https://thedemandengineer.com/stacks/ai-stack-marketo-automation/" },
+      { "@type": "ListItem", "position": 8,  "name": "AI Stack for Demand Gen Reporting",        "url": "https://thedemandengineer.com/stacks/ai-stack-demand-gen-reporting/" },
+      { "@type": "ListItem", "position": 9,  "name": "AI Stack for Marketing Attribution",       "url": "https://thedemandengineer.com/stacks/ai-stack-marketing-attribution/" },
+      { "@type": "ListItem", "position": 10, "name": "AI Stack for Ad Creative Testing",         "url": "https://thedemandengineer.com/stacks/ai-stack-ad-creative-testing/" }
     ]
   }
   </script>
@@ -129,8 +152,9 @@
     .nav-res:focus-within .nav-res__caret { transform: rotate(180deg); }
     .nav-res__drop {
       position: absolute;
-      top: calc(100% + 10px);
+      top: 100%;
       left: 50%;
+      padding-top: 8px;
       transform: translateX(-50%) translateY(-4px);
       background: var(--navy-2);
       border: 1px solid rgba(255,255,255,0.12);
@@ -180,6 +204,9 @@
     .content-section { background: var(--light); color: var(--ink); position: relative; clip-path: polygon(0 70px, 100% 0, 100% 100%, 0 100%); margin-top: -70px; padding-top: 70px; }
     .content-inner { max-width: var(--max); margin: 0 auto; padding: 80px var(--pad-x) 120px; }
 
+    /* Intro paragraph */
+    .stacks-intro { font-family: var(--sans); font-size: 18px; line-height: 1.7; color: var(--muted); max-width: 720px; margin: 0 0 64px; }
+
     /* Category section */
     .category-section { margin-bottom: 64px; }
     .category-heading { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cobalt); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); display: inline-flex; align-items: center; gap: 12px; }
@@ -196,6 +223,11 @@
     .stack-card__tool { background: var(--light); padding: 3px 8px; border-radius: 2px; }
     .stack-card__desc { font-family: var(--sans); font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; }
     .stack-card__soon { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(59,91,219,0.5); display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; }
+    /* Live stack cards */
+    .stack-card--live { padding: 0; }
+    .stack-card__inner-link { display: flex; flex-direction: column; gap: 14px; padding: 28px; height: 100%; text-decoration: none; color: inherit; }
+    .stack-card__arrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cobalt); display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: auto; transition: color 0.2s, gap 0.2s; }
+    .stack-card--live:hover .stack-card__arrow { color: var(--cobalt-bright); gap: 12px; }
 
     /* Newsletter CTA block */
     .post-cta { background: var(--ink); color: var(--white); padding: 44px var(--pad-x); margin-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 32px; clip-path: polygon(0 12px, 100% 0, 100% calc(100% - 12px), 0 100%); margin-left: calc(var(--pad-x) * -1); margin-right: calc(var(--pad-x) * -1); }
@@ -275,97 +307,705 @@
   <section class="content-section">
     <div class="content-inner">
 
-      <!-- CATEGORY 1: REPORTING & INTELLIGENCE -->
-      <section class="category-section reveal" aria-labelledby="cat-reporting">
-        <h2 class="category-heading" id="cat-reporting">Reporting &amp; Intelligence</h2>
+      <p class="stacks-intro reveal">Every stack on this page is built around a single use case a B2B demand gen manager actually runs into. Each one shows you the exact tools, the Claude prompt that drives it, and the workflow logic that connects them. Wave 1 stacks are live now. New stacks drop weekly — subscribe to get each one as it ships.</p>
+
+      <!-- CATEGORY 1: PAID MEDIA -->
+      <section class="category-section reveal" aria-labelledby="cat-paid-media">
+        <h2 class="category-heading" id="cat-paid-media">Paid Media</h2>
         <div class="stacks-grid">
 
+          <article class="stack-card stack-card--live reveal">
+            <a href="/stacks/ai-stack-paid-media-reporting/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Paid Media</span>
+              <h3 class="stack-card__title">AI Stack for Paid Media Reporting</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Google Ads</span>
+                <span class="stack-card__tool">LinkedIn Ads</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Slack</span>
+              </div>
+              <p class="stack-card__desc">Pulls weekly performance data from Google and LinkedIn Ads, runs it through a structured Claude prompt, and posts a formatted summary to Slack — no spreadsheet required.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card stack-card--live reveal" data-delay="1">
+            <a href="/stacks/ai-stack-b2b-paid-media-attribution/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Paid Media</span>
+              <h3 class="stack-card__title">AI Stack for B2B Paid Media Attribution</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Salesforce</span>
+                <span class="stack-card__tool">GA4</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Sheets</span>
+              </div>
+              <p class="stack-card__desc">Connects CRM pipeline data with GA4 sessions to build a complete attribution picture across the funnel — from first touch to closed-won.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card stack-card--live reveal" data-delay="2">
+            <a href="/stacks/ai-stack-google-ads-management/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Paid Media</span>
+              <h3 class="stack-card__title">AI Stack for Google Ads Management</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Google Ads</span>
+                <span class="stack-card__tool">Search Console</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Sheets</span>
+              </div>
+              <p class="stack-card__desc">Audits keyword performance, surfaces wasted spend, and generates bid and budget recommendations — so your weekly optimization isn't a gut-feel exercise.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card stack-card--live reveal" data-delay="3">
+            <a href="/stacks/ai-stack-linkedin-ads-campaigns/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Paid Media</span>
+              <h3 class="stack-card__title">AI Stack for LinkedIn Ads Campaigns</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">LinkedIn Ads</span>
+                <span class="stack-card__tool">CRM</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Notion</span>
+              </div>
+              <p class="stack-card__desc">Analyzes audience performance, creative fatigue, and CPL trends across your LinkedIn campaigns — and produces a prioritized optimization brief you can act on Monday morning.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
           <article class="stack-card reveal">
-            <span class="stack-card__chip">Reporting</span>
-            <h3 class="stack-card__title">Paid Media Reporting Stack</h3>
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for CPL Anomaly Detection</h3>
             <div class="stack-card__tools">
-              <span class="stack-card__tool">LinkedIn Ads</span>
               <span class="stack-card__tool">Google Ads</span>
+              <span class="stack-card__tool">LinkedIn Ads</span>
               <span class="stack-card__tool">Claude</span>
               <span class="stack-card__tool">Slack</span>
             </div>
-            <p class="stack-card__desc">Automates weekly paid media summaries across channels. Pulls raw performance data, runs it through a structured Claude prompt, and posts a formatted summary to Slack — no spreadsheet required.</p>
+            <p class="stack-card__desc">Monitors CPL across every active campaign and flags anomalies — cost spikes, audience overlap inflation, or seasonal drifts — before they make it into your next leadership review.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
           <article class="stack-card reveal" data-delay="1">
-            <span class="stack-card__chip">Reporting</span>
-            <h3 class="stack-card__title">Executive Reporting Stack</h3>
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Budget Reallocation</h3>
             <div class="stack-card__tools">
+              <span class="stack-card__tool">Ad Platforms</span>
               <span class="stack-card__tool">Salesforce</span>
               <span class="stack-card__tool">Claude</span>
-              <span class="stack-card__tool">Google Slides</span>
+              <span class="stack-card__tool">Sheets</span>
             </div>
-            <p class="stack-card__desc">Turns raw pipeline and channel data into a board-ready executive summary. Structures the narrative, surfaces the right metrics, and drafts talking points — so your Friday afternoon isn't a write-off.</p>
+            <p class="stack-card__desc">Analyzes pipeline efficiency by channel and recommends budget reallocation based on CPL, MQL quality, and pipeline contribution — not just spend pacing.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Paid Media Forecasting</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Historical Ad Data</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Builds a bottoms-up paid media forecast from historical CPL and conversion rates — with confidence intervals and sensitivity analysis for leadership review.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Competitive Ad Intelligence</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">LinkedIn Ad Library</span>
+              <span class="stack-card__tool">Google Transparency</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Monitors competitor ad copy, offer positioning, and creative formats across platforms — surfacing shifts in messaging before they show up in your pipeline numbers.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Account-Based Paid Media</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">6sense</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Aligns paid media targeting with account-level buying signals — so budget flows toward accounts that are actually in-market rather than accounts that match your ICP on paper.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Paid Media QBR Prep</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Ad Platforms</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slides</span>
+            </div>
+            <p class="stack-card__desc">Generates a complete paid media QBR deck — channel performance, key decisions, results vs. forecast, and what you're adjusting next quarter — in under 30 minutes.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for LinkedIn Audience Testing</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Systematically tests audience segments, exclusions, and bidding strategies — and tracks results in a structured test log that builds an institutional record of what works.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Paid Media</span>
+            <h3 class="stack-card__title">AI Stack for Retargeting Optimization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Google Ads</span>
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Segments retargeting audiences by funnel stage and engagement signal — and generates audience-specific messaging briefs for each layer of the retargeting stack.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
         </div>
       </section>
 
-      <!-- CATEGORY 2: PIPELINE & LEAD QUALITY -->
-      <section class="category-section reveal" aria-labelledby="cat-pipeline">
-        <h2 class="category-heading" id="cat-pipeline">Pipeline &amp; Lead Quality</h2>
+      <!-- CATEGORY 2: LEAD GEN & SCORING -->
+      <section class="category-section reveal" aria-labelledby="cat-lead-gen">
+        <h2 class="category-heading" id="cat-lead-gen">Lead Gen &amp; Scoring</h2>
         <div class="stacks-grid">
 
-          <article class="stack-card reveal">
-            <span class="stack-card__chip">Lead Quality</span>
-            <h3 class="stack-card__title">Lead Scoring Stack</h3>
+          <article class="stack-card stack-card--live reveal">
+            <a href="/stacks/ai-stack-b2b-lead-scoring/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Lead Scoring</span>
+              <h3 class="stack-card__title">AI Stack for B2B Lead Scoring</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Salesforce</span>
+                <span class="stack-card__tool">Marketo</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Slack</span>
+              </div>
+              <p class="stack-card__desc">Runs enriched lead records through a Claude scoring model that flags high-intent signals, ICP fit, and disqualifiers — before a rep wastes a call on a lead that was never going to close.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card stack-card--live reveal" data-delay="1">
+            <a href="/stacks/ai-stack-icp-qualification/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Lead Scoring</span>
+              <h3 class="stack-card__title">AI Stack for ICP Qualification</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Clay</span>
+                <span class="stack-card__tool">Clearbit</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Salesforce</span>
+              </div>
+              <p class="stack-card__desc">Enriches inbound leads with firmographic and technographic data, then scores them against your ICP definition — filtering out noise before it hits your CRM.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Lead Scoring</span>
+            <h3 class="stack-card__title">AI Stack for Bad Lead Pattern Detection</h3>
             <div class="stack-card__tools">
-              <span class="stack-card__tool">Marketo</span>
               <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Marketo</span>
               <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
             </div>
-            <p class="stack-card__desc">Runs enriched lead records through a Claude scoring model that flags high-intent signals, ICP fit, and disqualifiers — before Sales wastes a single call on a lead that was never going to close.</p>
+            <p class="stack-card__desc">Analyzes disqualified leads to find the patterns — job titles, company sizes, geographies, channels — that consistently produce junk and flags them for exclusion targeting.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Lead Gen</span>
+            <h3 class="stack-card__title">AI Stack for Inbound Lead Prioritization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Clearbit</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Scores and ranks inbound leads by urgency — intent signals, ICP fit, and timing — so sales works the right leads first and stops treating all MQLs as equal.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Lead Gen</span>
+            <h3 class="stack-card__title">AI Stack for Lead Enrichment Automation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Clay</span>
+              <span class="stack-card__tool">Apollo</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Salesforce</span>
+            </div>
+            <p class="stack-card__desc">Automatically enriches net-new leads with contact details, company firmographics, and tech stack data — reducing manual research time before the first rep touchpoint.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
           <article class="stack-card reveal" data-delay="1">
-            <span class="stack-card__chip">Pipeline</span>
-            <h3 class="stack-card__title">Pipeline Gap Analysis Stack</h3>
+            <span class="stack-card__chip">Lead Gen</span>
+            <h3 class="stack-card__title">AI Stack for MQL-to-SAO Conversion Analysis</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Diagnoses exactly where MQLs are failing to convert to SAOs — whether it's lead quality, sales follow-up speed, routing logic, or ICP mismatch — so you fix the right problem.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Lead Gen</span>
+            <h3 class="stack-card__title">AI Stack for Form Conversion Optimization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">Clearbit</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Analyzes form completion rates by traffic source, device, and audience segment — and generates a ranked list of form field, placement, and copy tests to run.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Lead Gen</span>
+            <h3 class="stack-card__title">AI Stack for Sales-Ready Lead Packaging</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Clearbit</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Packages qualified leads with context cards before sales outreach — ICP fit score, intent signals, recent behavior, and suggested talk track — so the first call isn't a cold start.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CATEGORY 3: REPORTING & ANALYTICS -->
+      <section class="category-section reveal" aria-labelledby="cat-reporting">
+        <h2 class="category-heading" id="cat-reporting">Reporting &amp; Analytics</h2>
+        <div class="stacks-grid">
+
+          <article class="stack-card stack-card--live reveal">
+            <a href="/stacks/ai-stack-demand-gen-reporting/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Reporting</span>
+              <h3 class="stack-card__title">AI Stack for Demand Gen Reporting</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Salesforce</span>
+                <span class="stack-card__tool">GA4</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Slides</span>
+              </div>
+              <p class="stack-card__desc">Generates a weekly demand gen summary across pipeline, paid media, and conversion metrics — formatted for stakeholder review without a manual slide build.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card stack-card--live reveal" data-delay="1">
+            <a href="/stacks/ai-stack-marketing-attribution/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Reporting</span>
+              <h3 class="stack-card__title">AI Stack for Marketing Attribution</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Salesforce</span>
+                <span class="stack-card__tool">GA4</span>
+                <span class="stack-card__tool">Marketo</span>
+                <span class="stack-card__tool">Claude</span>
+              </div>
+              <p class="stack-card__desc">Builds a multi-touch attribution model that maps touchpoints to pipeline and revenue — giving you a defensible answer when leadership asks where the pipeline is really coming from.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for UTM Taxonomy Audit</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">Sheets</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Scans your UTM data for broken naming conventions, missing parameters, and inconsistent source/medium mappings — and outputs a cleanup plan before your next attribution pull.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for Channel ROI Analysis</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Ad Platforms</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Calculates fully-loaded ROI by channel — cost per pipeline dollar, cost per closed-won dollar — and surfaces which channels deserve more budget and which ones need a case to survive.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for Campaign Performance Digest</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Google Ads</span>
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Sends a structured campaign performance digest to Slack every Monday — top performers, underperformers, spend pacing, and three decisions to make this week.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for Marketing QBR Preparation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slides</span>
+            </div>
+            <p class="stack-card__desc">Generates the narrative, data tables, and slide structure for your quarterly marketing review — so you spend your prep time fact-checking, not formatting.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for Pipeline Coverage Modeling</h3>
             <div class="stack-card__tools">
               <span class="stack-card__tool">Salesforce</span>
               <span class="stack-card__tool">Claude</span>
               <span class="stack-card__tool">Sheets</span>
             </div>
-            <p class="stack-card__desc">Classifies a pipeline shortfall as a paid-media problem, a tracking artifact, a sales execution issue, or a capacity constraint — so you know whether to spend more, fix attribution, or push back on the number.</p>
+            <p class="stack-card__desc">Models pipeline coverage against quota at the stage, segment, and channel level — flagging gaps early enough to run a response play rather than explain a miss.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">AI Stack for Cohort Conversion Analysis</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Tracks conversion rates from MQL through closed-won by cohort month — surfacing whether your funnel is improving, degrading, or just fluctuating with deal timing noise.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
         </div>
       </section>
 
-      <!-- CATEGORY 3: TESTING & OPTIMIZATION -->
-      <section class="category-section reveal" aria-labelledby="cat-testing">
-        <h2 class="category-heading" id="cat-testing">Testing &amp; Optimization</h2>
+      <!-- CATEGORY 4: MARKETING OPERATIONS -->
+      <section class="category-section reveal" aria-labelledby="cat-mops">
+        <h2 class="category-heading" id="cat-mops">Marketing Operations</h2>
         <div class="stacks-grid">
 
-          <article class="stack-card reveal">
-            <span class="stack-card__chip">A/B Testing</span>
-            <h3 class="stack-card__title">A/B Testing Stack</h3>
+          <article class="stack-card stack-card--live reveal">
+            <a href="/stacks/ai-stack-marketo-automation/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Marketing Ops</span>
+              <h3 class="stack-card__title">AI Stack for Marketo Automation</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Marketo</span>
+                <span class="stack-card__tool">Salesforce</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Slack</span>
+              </div>
+              <p class="stack-card__desc">Diagnoses Marketo nurture performance — open rates, click rates, unsubscribe patterns, and stage progression — and generates a prioritized optimization playbook.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Nurture Program Optimization</h3>
             <div class="stack-card__tools">
-              <span class="stack-card__tool">Google Sheets</span>
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
               <span class="stack-card__tool">Claude</span>
-              <span class="stack-card__tool">Statsig</span>
+              <span class="stack-card__tool">Sheets</span>
             </div>
-            <p class="stack-card__desc">Generates structured test hypotheses from your current campaign data, interprets results once the test ends, and tells you whether the winner is real or a sample-size artifact you're about to over-index on.</p>
+            <p class="stack-card__desc">Analyzes email sequence performance by segment and stage — identifying which nurture paths are accelerating pipeline and which are leaking contacts before they ever engage sales.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for CRM Data Quality</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Audits Salesforce contact and account records for data hygiene issues — duplicates, missing fields, stale ownership, and invalid email domains — and outputs a remediation queue.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for HubSpot Workflow Automation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">HubSpot</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Audits existing HubSpot workflows for logic gaps, enrollment criteria errors, and orphaned contacts — then generates a clean rebuild spec for the workflows causing the most downstream noise.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Marketing Database Segmentation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Builds dynamic segmentation logic from your CRM data — by industry, role, stage, and behavior — so campaign targeting reflects actual buying signals rather than static list pulls.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
           <article class="stack-card reveal" data-delay="1">
-            <span class="stack-card__chip">Attribution</span>
-            <h3 class="stack-card__title">Attribution Diagnostic Stack</h3>
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Campaign Tagging Governance</h3>
             <div class="stack-card__tools">
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
               <span class="stack-card__tool">GA4</span>
-              <span class="stack-card__tool">UTM Builder</span>
               <span class="stack-card__tool">Claude</span>
             </div>
-            <p class="stack-card__desc">Audits your UTM taxonomy, surfaces broken or inconsistent tracking, and produces a prioritized fix list — before your quarterly review exposes the gap in front of leadership.</p>
+            <p class="stack-card__desc">Enforces campaign tag consistency across your CRM, MAP, and analytics stack — flagging campaigns that will break attribution before they launch.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Lead Routing Optimization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">LeanData</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Audits lead assignment logic to surface routing rules that are causing coverage gaps, rep overload, or ICP mismatch — and generates updated routing criteria for review.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Email Deliverability Monitoring</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Google Postmaster</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Monitors domain reputation, bounce rates, and spam complaint trends — and alerts before deliverability issues start showing up as engagement drops in your campaign reports.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Webinar Operations Automation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Zoom / ON24</span>
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Automates the post-webinar workflow — attendance scoring, follow-up sequence triggering, CRM updates, and an AI-written performance summary delivered to Slack after every event.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Marketing Ops</span>
+            <h3 class="stack-card__title">AI Stack for Tech Stack Rationalization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">G2</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Evaluates your current martech stack for redundancy, utilization gaps, and integration debt — and outputs a rationalization recommendation before your next renewal cycle.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CATEGORY 5: CONTENT & CREATIVE -->
+      <section class="category-section reveal" aria-labelledby="cat-creative">
+        <h2 class="category-heading" id="cat-creative">Content &amp; Creative</h2>
+        <div class="stacks-grid">
+
+          <article class="stack-card stack-card--live reveal">
+            <a href="/stacks/ai-stack-ad-creative-testing/" class="stack-card__inner-link">
+              <span class="stack-card__chip">Creative</span>
+              <h3 class="stack-card__title">AI Stack for Ad Creative Testing</h3>
+              <div class="stack-card__tools">
+                <span class="stack-card__tool">Google Ads</span>
+                <span class="stack-card__tool">Meta Ads</span>
+                <span class="stack-card__tool">Claude</span>
+                <span class="stack-card__tool">Notion</span>
+              </div>
+              <p class="stack-card__desc">Designs structured creative tests with clear hypotheses, pre-set evaluation criteria, and a Notion test log — so creative decisions build institutional knowledge instead of gut feel.</p>
+              <span class="stack-card__arrow">View stack →</span>
+            </a>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Ad Copy Generation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+              <span class="stack-card__tool">LinkedIn Ads</span>
+            </div>
+            <p class="stack-card__desc">Generates on-brand ad copy variants across audiences, offers, and funnel stages — with structured output organized by campaign type so it's ready to paste into your ad platform.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Landing Page Optimization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">Hotjar</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Analyzes landing page conversion data and session behavior — then generates a ranked test backlog with copy, layout, and CTA hypotheses ordered by expected impact.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Email Campaign Optimization</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Analyzes open rate, click rate, and conversion patterns across email campaigns by segment and offer — generating subject line tests, copy rewrites, and send-time recommendations.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Creative Brief Automation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+              <span class="stack-card__tool">Figma</span>
+            </div>
+            <p class="stack-card__desc">Generates structured creative briefs from campaign goals and audience data — with target audience, messaging hierarchy, tone guidance, and format specifications in a single document.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Content Performance Analysis</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Correlates content engagement with pipeline data — surfacing which blog posts, guides, and landing pages are actually influencing deals rather than just generating sessions.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Creative</span>
+            <h3 class="stack-card__title">AI Stack for Video Ad Script Generation</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">YouTube Ads</span>
+            </div>
+            <p class="stack-card__desc">Generates direct-response video scripts for B2B paid social — with hook, problem framing, proof point, and CTA structured for the attention window of each platform format.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- CATEGORY 6: STRATEGY & PLANNING -->
+      <section class="category-section reveal" aria-labelledby="cat-strategy">
+        <h2 class="category-heading" id="cat-strategy">Strategy &amp; Planning</h2>
+        <div class="stacks-grid">
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Strategy</span>
+            <h3 class="stack-card__title">AI Stack for Strategic Campaign Brief</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Generates a full campaign brief from pipeline gaps and business goals — with target segment, channel mix, messaging strategy, budget allocation, and success metrics built in.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Strategy</span>
+            <h3 class="stack-card__title">AI Stack for Pipeline Gap Analysis</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Classifies a pipeline shortfall as a paid media problem, tracking artifact, sales execution issue, or capacity constraint — so you fix the right lever instead of just spending more.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="2">
+            <span class="stack-card__chip">Strategy</span>
+            <h3 class="stack-card__title">AI Stack for Competitive Intelligence</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">LinkedIn</span>
+              <span class="stack-card__tool">G2</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Monitors competitor positioning, messaging shifts, and product changes — and synthesizes weekly competitive intelligence into a brief that's actually useful for campaign planning.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="3">
+            <span class="stack-card__chip">Strategy</span>
+            <h3 class="stack-card__title">AI Stack for Demand Gen Roadmap Planning</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Builds a quarterly demand gen roadmap from pipeline targets and current performance gaps — with channel, program, and headcount recommendations grounded in actual funnel math.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Strategy</span>
+            <h3 class="stack-card__title">AI Stack for Sales Enablement Package</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Notion</span>
+            </div>
+            <p class="stack-card__desc">Generates a complete sales enablement package per campaign — with objection handling, competitor comparison points, and channel-specific talk tracks ready for SDR use.</p>
             <span class="stack-card__soon">Coming soon →</span>
           </article>
 
@@ -377,7 +1017,7 @@
         <div>
           <p class="post-cta__heading">Get the stacks before anyone else.</p>
           <p class="post-cta__body">New stacks drop every week — tools, prompts, and the workflow logic behind them. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
-          <a class="btn--primary" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'stacks-hub'})}">Subscribe free →</a>
+          <button class="btn--primary" data-formkit-toggle="0291ffce73" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'stacks-hub'})}">Get weekly AI demand gen systems →</button>
         </div>
       </div>
 
