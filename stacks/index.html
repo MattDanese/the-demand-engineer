@@ -4,16 +4,68 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog — The Demand Engine(er)</title>
-  <meta name="description" content="Field notes from building AI systems for B2B demand gen. Long-form breakdowns of real systems — with the exact mechanics, prompts, and results." />
+  <title>AI Stacks for B2B Demand Gen: Tools, Prompts &amp; Workflows | The Demand Engineer</title>
+  <meta name="description" content="The AI tool stacks, prompts, and workflow systems B2B demand gen managers actually use — paid media reporting, lead scoring, attribution, pipeline analysis, and more. Built and tested in-house." />
   <meta name="author" content="Matt Danese" />
-  <meta property="og:title" content="Blog — The Demand Engine(er)" />
-  <meta property="og:description" content="Field notes from building AI systems for B2B demand gen. Long-form breakdowns of real systems — with the exact mechanics, prompts, and results." />
-  <link rel="canonical" href="https://thedemandengineer.com/blog/" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/stacks/" />
+
+  <meta property="og:title" content="AI Stacks for B2B Demand Gen: Tools, Prompts &amp; Workflows" />
+  <meta property="og:description" content="The AI tool stacks, prompts, and workflow systems B2B demand gen managers actually use — built and tested in-house, not generated for a listicle." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thedemandengineer.com/stacks/" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Stacks for B2B Demand Gen: Tools, Prompts &amp; Workflows" />
+  <meta name="twitter:description" content="The AI tool stacks, prompts, and workflow systems B2B demand gen managers actually use — built and tested in-house." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
   <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-N24QM0NQG6');
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "AI Stacks for B2B Demand Gen",
+    "description": "The AI tool stacks, prompts, and workflow systems used by in-house B2B demand gen managers — built and tested in production.",
+    "url": "https://thedemandengineer.com/stacks/",
+    "author": {
+      "@type": "Person",
+      "name": "Matt Danese",
+      "jobTitle": "Senior Demand Generation Manager",
+      "url": "https://thedemandengineer.com",
+      "sameAs": ["https://linkedin.com/in/matthew-danese"]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Demand Engineer",
+      "url": "https://thedemandengineer.com"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",        "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Stack Library", "item": "https://thedemandengineer.com/stacks/" }
+    ]
+  }
+  </script>
 
   <style>
     :root {
@@ -59,55 +111,55 @@
     .navlinks a:hover { opacity: 1; }
     .navlinks a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: currentColor; transition: right 0.25s ease; }
     .navlinks a:hover::after { right: 0; }
-  /* ── Resources dropdown ── */
-  .nav-res {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 0;
-    opacity: 0.75;
-    cursor: default;
-    transition: opacity 0.2s;
-  }
-  .nav-res:hover,
-  .nav-res:focus-within { opacity: 1; }
-  .nav-res__caret { font-size: 9px; transition: transform 0.2s; line-height: 1; }
-  .nav-res:hover .nav-res__caret,
-  .nav-res:focus-within .nav-res__caret { transform: rotate(180deg); }
-  .nav-res__drop {
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-4px);
-    background: var(--navy-2);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 6px 0;
-    min-width: 152px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s, transform 0.15s;
-    z-index: 200;
-  }
-  .nav-res:hover .nav-res__drop,
-  .nav-res:focus-within .nav-res__drop {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
-  }
-  .nav-res__drop a {
-    display: block;
-    padding: 10px 18px;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    opacity: 0.7;
-    transition: opacity 0.15s, background 0.15s;
-    white-space: nowrap;
-  }
-  .nav-res__drop a:hover { opacity: 1; background: rgba(255,255,255,0.05); }
-  .nav-res__drop a::after { display: none !important; }
+    /* ── Resources dropdown ── */
+    .nav-res {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 0;
+      opacity: 0.75;
+      cursor: default;
+      transition: opacity 0.2s;
+    }
+    .nav-res:hover,
+    .nav-res:focus-within { opacity: 1; }
+    .nav-res__caret { font-size: 9px; transition: transform 0.2s; line-height: 1; }
+    .nav-res:hover .nav-res__caret,
+    .nav-res:focus-within .nav-res__caret { transform: rotate(180deg); }
+    .nav-res__drop {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: var(--navy-2);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 6px 0;
+      min-width: 152px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s, transform 0.15s;
+      z-index: 200;
+    }
+    .nav-res:hover .nav-res__drop,
+    .nav-res:focus-within .nav-res__drop {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-res__drop a {
+      display: block;
+      padding: 10px 18px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      transition: opacity 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-res__drop a:hover { opacity: 1; background: rgba(255,255,255,0.05); }
+    .nav-res__drop a::after { display: none !important; }
     .nav-subscribe { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; background: var(--cobalt); color: var(--white); border: none; padding: 10px 18px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: background 0.2s; margin-left: 12px; }
     .nav-subscribe:hover { background: var(--cobalt-bright); }
     .nav-subscribe .arr { transition: transform 0.2s; }
@@ -128,19 +180,30 @@
     .content-section { background: var(--light); color: var(--ink); position: relative; clip-path: polygon(0 70px, 100% 0, 100% 100%, 0 100%); margin-top: -70px; padding-top: 70px; }
     .content-inner { max-width: var(--max); margin: 0 auto; padding: 80px var(--pad-x) 120px; }
 
-    /* Post cards grid */
-    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; }
-    @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; } }
+    /* Category section */
+    .category-section { margin-bottom: 64px; }
+    .category-heading { font-family: var(--sans); font-weight: 500; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cobalt); margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); display: inline-flex; align-items: center; gap: 12px; }
+    .category-heading::before { content: ""; width: 22px; height: 1px; background: var(--cobalt); }
+    .stacks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    @media (max-width: 600px) { .stacks-grid { grid-template-columns: 1fr; } }
 
-    /* Post card */
-    .post-card { background: var(--white); border: 1px solid var(--rule); padding: 32px 32px 28px; display: flex; flex-direction: column; color: var(--ink); transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
-    .post-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -20px rgba(11,15,26,0.18); border-color: var(--ink); }
-    .post-card__category { display: inline-flex; align-items: center; font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--cobalt); padding: 4px 10px; border: 1px solid var(--rule); align-self: flex-start; margin-bottom: 20px; }
-    .post-card__title { font-family: var(--serif); font-variation-settings: "opsz" 72; font-weight: 700; font-size: 22px; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin: 0 0 12px; text-wrap: balance; flex: 1; }
-    .post-card__teaser { font-family: var(--sans); font-size: 15px; line-height: 1.55; color: var(--muted); margin: 0 0 24px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .post-card__footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 18px; border-top: 1px solid var(--rule); }
-    .post-card__readtime { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-    .post-card__read { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cobalt); }
+    /* Stack card */
+    .stack-card { background: var(--white); border: 1px solid var(--rule); padding: 28px; display: flex; flex-direction: column; gap: 14px; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .stack-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -20px rgba(11,15,26,0.18); border-color: var(--ink); }
+    .stack-card__chip { display: inline-flex; font-family: var(--sans); font-weight: 500; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--cobalt); padding: 4px 10px; border: 1px solid var(--rule); align-self: flex-start; }
+    .stack-card__title { font-family: var(--serif); font-variation-settings: "opsz" 72; font-weight: 700; font-size: 20px; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); }
+    .stack-card__tools { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; }
+    .stack-card__tool { background: var(--light); padding: 3px 8px; border-radius: 2px; }
+    .stack-card__desc { font-family: var(--sans); font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; }
+    .stack-card__soon { font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(59,91,219,0.5); display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; }
+
+    /* Newsletter CTA block */
+    .post-cta { background: var(--ink); color: var(--white); padding: 44px var(--pad-x); margin-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 32px; clip-path: polygon(0 12px, 100% 0, 100% calc(100% - 12px), 0 100%); margin-left: calc(var(--pad-x) * -1); margin-right: calc(var(--pad-x) * -1); }
+    .post-cta__heading { font-family: var(--serif); font-variation-settings: "opsz" 72; font-weight: 700; font-size: clamp(22px, 2.5vw, 32px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px; color: var(--white); }
+    .post-cta__body { font-family: var(--sans); font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.55; margin: 0 0 20px; max-width: 44ch; }
+    .btn--primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; font-family: var(--sans); font-weight: 500; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; background: var(--cobalt); color: var(--white); border: none; cursor: pointer; transition: background 0.2s; text-decoration: none; }
+    .btn--primary:hover { background: var(--cobalt-bright); }
+    @media (max-width: 720px) { .post-cta { flex-direction: column; align-items: flex-start; } }
 
     /* Footer */
     .footer { background: var(--navy); color: var(--white); padding: 120px var(--pad-x) 60px; position: relative; overflow: hidden; }
@@ -168,15 +231,6 @@
     .reveal[data-delay="3"] { transition-delay: 0.24s; }
     @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
   </style>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-N24QM0NQG6');
-</script>
-<!-- End Google Analytics -->
 </head>
 <body>
 
@@ -202,7 +256,7 @@
           <a href="https://thedemandengineer.com/blog/">Blog</a>
           <a href="https://thedemandengineer.com/prompts/">Prompts</a>
           <a href="https://thedemandengineer.com/campaign-simulator.html">Simulator</a>
-          <a href="https://thedemandengineer.com/stacks/">Stacks</a>
+          <a href="https://thedemandengineer.com/stacks/" class="active">Stacks</a>
         </div>
       </div>
       <button class="nav-subscribe" data-formkit-toggle="0291ffce73">Subscribe <span class="arr">→</span></button>
@@ -213,97 +267,121 @@
     <div class="dotgrid"></div>
     <div class="grain"></div>
     <div class="hero-inner">
-      <div class="hero-eyebrow reveal"><span class="dot"></span>04 / Field Notes from the Build</div>
-      <h1 class="reveal" data-delay="1">Real experiments.<br/><span class="ital">Honest numbers.</span></h1>
-      <p class="hero-sub reveal" data-delay="2">Long-form breakdowns of AI systems I've built for B2B demand gen — with the exact mechanics, prompts, and results.</p>
+      <div class="hero-eyebrow reveal"><span class="dot"></span>06 / The Stack Library</div>
+      <h1 class="reveal" data-delay="1">Stacks that<br/><span class="ital">actually scale.</span></h1>
+      <p class="hero-sub reveal" data-delay="2">The AI tools, prompts, and workflow systems used by in-house B2B demand gen teams — built in production, documented in full.</p>
     </div>
   </section>
 
   <section class="content-section">
     <div class="content-inner">
-      <div class="posts-grid">
 
-        <a class="post-card reveal" data-delay="1" href="ai-b2b-demand-generation-strategies-2026.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Strategy</span>
-          <h2 class="post-card__title">AI B2B Demand Generation Strategies for 2026: What's Actually Working</h2>
-          <p class="post-card__teaser">Six AI systems built and running in production — automated reporting, ICP scoring, budget allocation, attribution, CRO pre-validation, and ops diagnostics. Real build times, real numbers.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">14 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+      <!-- CATEGORY 1: REPORTING & INTELLIGENCE -->
+      <section class="category-section reveal" aria-labelledby="cat-reporting">
+        <h2 class="category-heading" id="cat-reporting">Reporting &amp; Intelligence</h2>
+        <div class="stacks-grid">
 
-        <a class="post-card reveal" data-delay="2" href="automated-paid-media-reporting.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Automation</span>
-          <h2 class="post-card__title">How I Automated 12 Hours of Weekly Paid Media Reporting</h2>
-          <p class="post-card__teaser">A fully automated paid media intelligence layer connecting LinkedIn Ads, Google Ads, and Slack. Full architecture, prompt patterns, and safety rules.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">9 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">Paid Media Reporting Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">LinkedIn Ads</span>
+              <span class="stack-card__tool">Google Ads</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Slack</span>
+            </div>
+            <p class="stack-card__desc">Automates weekly paid media summaries across channels. Pulls raw performance data, runs it through a structured Claude prompt, and posts a formatted summary to Slack — no spreadsheet required.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
 
-        <a class="post-card reveal" data-delay="3" href="icp-lead-quality-scoring.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Lead Quality</span>
-          <h2 class="post-card__title">Your CPL Is Down. Are You Buying the Right Leads?</h2>
-          <p class="post-card__teaser">A Python + Claude pipeline that scores every lead against ICP criteria and grades each campaign A through F. Here's how it works.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">8 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Reporting</span>
+            <h3 class="stack-card__title">Executive Reporting Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Google Slides</span>
+            </div>
+            <p class="stack-card__desc">Turns raw pipeline and channel data into a board-ready executive summary. Structures the narrative, surfaces the right metrics, and drafts talking points — so your Friday afternoon isn't a write-off.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
 
-        <a class="post-card reveal" data-delay="1" href="ab-testing-expert-panel.html" target="_blank" rel="noopener">
-          <span class="post-card__category">CRO</span>
-          <h2 class="post-card__title">51 Variants, 8 Minutes, Zero Live Traffic</h2>
-          <p class="post-card__teaser">A simulated expert panel scores 50+ copy variants before any paid traffic hits your page. Took a landing page from 62 to 87/100 in 8 minutes.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">10 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+        </div>
+      </section>
 
-        <a class="post-card reveal" data-delay="2" href="marketo-nurture-diagnostic.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Marketing Ops</span>
-          <h2 class="post-card__title">The Marketo Black Box: Why Leads Don't Enter Nurture</h2>
-          <p class="post-card__teaser">A Claude-powered audit system that reads Marketo activity logs and surfaces the exact blocker for every lead that fell through the cracks.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">7 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+      <!-- CATEGORY 2: PIPELINE & LEAD QUALITY -->
+      <section class="category-section reveal" aria-labelledby="cat-pipeline">
+        <h2 class="category-heading" id="cat-pipeline">Pipeline &amp; Lead Quality</h2>
+        <div class="stacks-grid">
 
-        <a class="post-card reveal" data-delay="3" href="slack-paid-media-bot.html" target="_blank" rel="noopener">
-          <span class="post-card__category">AI Strategy</span>
-          <h2 class="post-card__title">I Built a Slack Bot That Answers Paid Media Questions</h2>
-          <p class="post-card__teaser">Read-only, real-time, ~10 seconds from question to answer. Full architecture for a Slack bot that queries LinkedIn and Google Ads APIs live.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">8 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">Lead Quality</span>
+            <h3 class="stack-card__title">Lead Scoring Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Marketo</span>
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Runs enriched lead records through a Claude scoring model that flags high-intent signals, ICP fit, and disqualifiers — before Sales wastes a single call on a lead that was never going to close.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
 
-        <a class="post-card reveal" data-delay="1" href="b2b-paid-media-attribution-tracking.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Attribution</span>
-          <h2 class="post-card__title">The B2B Paid Media Tracking Stack That Connects Ad Spend to Pipeline</h2>
-          <p class="post-card__teaser">GCLID capture, Enhanced Conversions, Offline Conversion Import — the complete architecture for connecting a click to a Salesforce opportunity.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">11 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Pipeline</span>
+            <h3 class="stack-card__title">Pipeline Gap Analysis Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Salesforce</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Sheets</span>
+            </div>
+            <p class="stack-card__desc">Classifies a pipeline shortfall as a paid-media problem, a tracking artifact, a sales execution issue, or a capacity constraint — so you know whether to spend more, fix attribution, or push back on the number.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
 
-        <a class="post-card reveal" data-delay="2" href="ai-budget-allocation-paid-media.html" target="_blank" rel="noopener">
-          <span class="post-card__category">Strategy</span>
-          <h2 class="post-card__title">How I Use Claude to Make Paid Media Budget Decisions</h2>
-          <p class="post-card__teaser">The four-question framework for diagnosing whether a campaign is underperforming or just mismeasured — and a real story of a budget call that almost went wrong.</p>
-          <div class="post-card__footer">
-            <span class="post-card__readtime">9 min read</span>
-            <span class="post-card__read">Read →</span>
-          </div>
-        </a>
+        </div>
+      </section>
 
+      <!-- CATEGORY 3: TESTING & OPTIMIZATION -->
+      <section class="category-section reveal" aria-labelledby="cat-testing">
+        <h2 class="category-heading" id="cat-testing">Testing &amp; Optimization</h2>
+        <div class="stacks-grid">
+
+          <article class="stack-card reveal">
+            <span class="stack-card__chip">A/B Testing</span>
+            <h3 class="stack-card__title">A/B Testing Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">Google Sheets</span>
+              <span class="stack-card__tool">Claude</span>
+              <span class="stack-card__tool">Statsig</span>
+            </div>
+            <p class="stack-card__desc">Generates structured test hypotheses from your current campaign data, interprets results once the test ends, and tells you whether the winner is real or a sample-size artifact you're about to over-index on.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+          <article class="stack-card reveal" data-delay="1">
+            <span class="stack-card__chip">Attribution</span>
+            <h3 class="stack-card__title">Attribution Diagnostic Stack</h3>
+            <div class="stack-card__tools">
+              <span class="stack-card__tool">GA4</span>
+              <span class="stack-card__tool">UTM Builder</span>
+              <span class="stack-card__tool">Claude</span>
+            </div>
+            <p class="stack-card__desc">Audits your UTM taxonomy, surfaces broken or inconsistent tracking, and produces a prioritized fix list — before your quarterly review exposes the gap in front of leadership.</p>
+            <span class="stack-card__soon">Coming soon →</span>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- NEWSLETTER CTA -->
+      <div class="post-cta">
+        <div>
+          <p class="post-cta__heading">Get the stacks before anyone else.</p>
+          <p class="post-cta__body">New stacks drop every week — tools, prompts, and the workflow logic behind them. Free. Built for in-house demand gen managers at B2B SaaS companies.</p>
+          <a class="btn--primary" data-formkit-toggle="0291ffce73" href="https://thedemandengineer.com/#newsletter" onclick="if(typeof gtag!=='undefined'){gtag('event','newsletter_signup_click',{source_page:'stacks-hub'})}">Subscribe free →</a>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -338,7 +416,8 @@
         <div class="nav-list">
           <a href="https://thedemandengineer.com/#projects">Agents</a>
           <a href="https://thedemandengineer.com/blog/">Blog</a>
-          <a href="https://thedemandengineer.com/prompts">Prompts</a>
+          <a href="https://thedemandengineer.com/prompts/">Prompts</a>
+          <a href="https://thedemandengineer.com/stacks/">Stacks</a>
           <a href="https://thedemandengineer.com/#newsletter">Newsletter</a>
         </div>
         <div>© 2026 The Demand Engine(er) · Built in Jersey City</div>
@@ -348,7 +427,6 @@
 
   <script>
     const nav = document.getElementById('nav');
-    const sections = document.querySelectorAll('[data-dark], .footer');
 
     function onScroll() {
       nav.classList.toggle('scrolled', window.scrollY > 24);
