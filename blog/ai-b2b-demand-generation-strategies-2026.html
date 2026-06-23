@@ -877,7 +877,7 @@
 
       <p>I estimated once that this ritual consumed 3–4 hours of my time per week. For a team running multiple channels with a reporting analyst, it hits 12–18 hours. That's one person's job, every week, for the rest of your career — just to answer the question "what happened last week?"</p>
 
-      <p>I automated it in Q4 of last year. The architecture is straightforward: Node.js hits the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8am, pre-processes the data to strip fields that don't matter for analysis, passes the cleaned data to Claude via the Anthropic API with a structured analyst prompt, and posts the result to Slack.</p>
+      <p>I automated it in Q4 of last year. The architecture is straightforward: Node.js hits the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8am, pre-processes the data to strip fields that don't matter for analysis, passes the cleaned data to Claude via the Anthropic API with a structured analyst prompt, and posts the result to Slack. The specific tools, models, and integrations are documented in the <a href="../stacks/ai-stack-paid-media-reporting/" style="color:var(--color-accent);">AI stack for paid media reporting</a>.</p>
 
       <p>The output format matters more than people expect. I didn't build a dashboard. I built a Slack briefing with four sections: one headline story (the single most important thing that happened last week), what worked, what needs attention, and three prioritized action items — ranked by expected pipeline impact, not urgency. Every action item includes the specific campaign name, the specific metric that triggered it, and the specific percentage or dollar change recommended.</p>
 

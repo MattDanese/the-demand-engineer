@@ -680,7 +680,7 @@
 
       <h3>The architecture (it's simpler than you think)</h3>
 
-      <p>The system has three components: a data layer, an analysis layer, and an output layer. That's it. I use Node.js to hit the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8AM. The data pulls are scoped to the prior calendar week — impressions, clicks, spend, conversions, CPL by campaign and ad set. Nothing fancy. The same numbers I used to pull by hand.</p>
+      <p>The system has three components: a data layer, an analysis layer, and an output layer. That's it. I use Node.js to hit the LinkedIn Ads API and Google Ads API on a cron schedule every Monday at 8AM. The data pulls are scoped to the prior calendar week — impressions, clicks, spend, conversions, CPL by campaign and ad set. Nothing fancy. The same numbers I used to pull by hand. The full list of tools, models, and integrations powering this is in the <a href="../stacks/ai-stack-paid-media-reporting/" style="color:var(--color-accent);">AI stack for paid media reporting</a>.</p>
 
       <p>That data gets passed to the Anthropic Claude API with a structured prompt that gives Claude a specific analyst persona: senior demand gen lead, 8+ years B2B experience, direct and prioritized in their output, no hedging. The persona matters more than most people expect. A Claude prompt without a persona gives you balanced, hedged, corporate-sounding analysis. Give it a point of view and it writes like a person.</p>
 

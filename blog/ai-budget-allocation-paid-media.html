@@ -706,7 +706,7 @@
 
       <h3>The pipeline gap diagnostic workflow</h3>
 
-      <p>When pipeline is behind plan and I can't immediately identify the cause, I run a structured diagnostic that I've built into a repeatable Claude workflow. The inputs are: pipeline created this month vs. plan, MQL volume vs. plan, MQL-to-SAO rate vs. trailing baseline, average days MQL-to-SAO vs. trailing baseline, and SAO-to-close rate vs. trailing baseline.</p>
+      <p>When pipeline is behind plan and I can't immediately identify the cause, I run a structured diagnostic that I've built into a repeatable Claude workflow — part of the broader <a href="../stacks/ai-stack-pipeline-gap-analysis/" style="color:var(--color-accent);">AI stack for pipeline gap analysis</a>. The inputs are: pipeline created this month vs. plan, MQL volume vs. plan, MQL-to-SAO rate vs. trailing baseline, average days MQL-to-SAO vs. trailing baseline, and SAO-to-close rate vs. trailing baseline.</p>
 
       <p>I paste all five into Claude with a single instruction: "Identify the most likely stage where the gap originated, rank the three most probable root causes in order of likelihood, and tell me what data I would need to confirm or rule out each one."</p>
 

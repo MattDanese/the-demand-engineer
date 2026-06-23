@@ -684,7 +684,7 @@
 
       <p>True ICP is what it sounds like — leads that match all three criteria. Near-Miss is leads that match two of three, typically the right function and size but a title that's one level below the decision-making threshold. Wrong Title is the largest bucket: companies that match on size but where the person who converted is clearly not the buyer (coordinator, intern, analyst at a non-ICP company). Noise is everything else.</p>
 
-      <p>The critical design decision was how to define these buckets. I didn't want a scoring model I had to maintain manually — one where I'm updating "acceptable titles" in a spreadsheet every quarter. I wanted a system that could reason about fit. So I passed the scoring criteria and the raw lead data to Claude and asked it to score each record with a brief justification for why it was placed in its bucket.</p>
+      <p>The critical design decision was how to define these buckets. I didn't want a scoring model I had to maintain manually — one where I'm updating "acceptable titles" in a spreadsheet every quarter. I wanted a system that could reason about fit. So I passed the scoring criteria and the raw lead data to Claude and asked it to score each record with a brief justification for why it was placed in its bucket. The full tool stack and scoring architecture are documented in the <a href="../stacks/ai-stack-b2b-lead-scoring/" style="color:var(--color-accent);">AI stack for B2B lead scoring</a>.</p>
 
       <div class="stat-callout">
         <span class="stat-number">34%</span>

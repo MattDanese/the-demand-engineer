@@ -699,7 +699,7 @@
 
       <h3>The Slack bot architecture</h3>
 
-      <p>The bot is a Node.js service that listens for Slack events via the Bolt SDK. When a message is posted in a designated channel with the right trigger format, it fires a pipeline: authenticate to LinkedIn Ads API and Google Ads API, pull the relevant data for the time window specified in the question, pass the data and the question to Claude with a structured prompt, format the response as a Slack block, post it as a threaded reply.</p>
+      <p>The bot is a Node.js service that listens for Slack events via the Bolt SDK. When a message is posted in a designated channel with the right trigger format, it fires a pipeline: authenticate to LinkedIn Ads API and Google Ads API, pull the relevant data for the time window specified in the question, pass the data and the question to Claude with a structured prompt, format the response as a Slack block, post it as a threaded reply. The full tool and model breakdown for this architecture is in the <a href="../stacks/ai-stack-demand-gen-reporting/" style="color:var(--color-accent);">AI stack for demand gen reporting</a>.</p>
 
       <p>The prompt has three components. A system prompt that defines the analyst persona and output requirements — same as the weekly briefing, but tuned for conversational Q&amp;A rather than structured reporting. A data block that contains the pre-processed API response — stripped of irrelevant fields, aggregated to the appropriate level, formatted as structured JSON. And the user's question, passed verbatim from Slack.</p>
 

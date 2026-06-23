@@ -685,7 +685,7 @@
 
       <h3>How the diagnostic system works</h3>
 
-      <p>The system I built accepts Marketo activity log exports — the raw activity data that Marketo generates when you export a lead's full activity history. I process these with a Python script that joins activity records with lead profile data, then passes the joined records to Claude with a prompt that asks it to diagnose, record by record, why each lead failed to enroll in its expected nurture program.</p>
+      <p>The system I built accepts Marketo activity log exports — the raw activity data that Marketo generates when you export a lead's full activity history. I process these with a Python script that joins activity records with lead profile data, then passes the joined records to Claude with a prompt that asks it to diagnose, record by record, why each lead failed to enroll in its expected nurture program. The full tool and workflow breakdown is in the <a href="../stacks/ai-stack-marketo-nurture-audit/" style="color:var(--color-accent);">AI stack for Marketo nurture audit</a>.</p>
 
       <p>Claude reads the activity chain for each lead: what campaigns fired, what conditions were evaluated, where the chain ends, and what the last recorded activity was before enrollment should have happened. It classifies each failure into one of the three buckets — suppression list, unsubscribe block, routing gap — and generates a plain-English explanation of exactly what happened and what needs to change to fix it.</p>
 
