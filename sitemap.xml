@@ -382,4 +382,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-b2b-retargeting/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-b2b-content-creation/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-campaign-brief-creation/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-campaign-operations/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-demand-gen-planning/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-campaign-strategy/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-b2b-go-to-market/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-pipeline-gap-analysis/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-demand-gen-forecasting/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-marketo-lead-scoring/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://thedemandengineer.com/stacks/ai-stack-marketo-nurture-audit/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

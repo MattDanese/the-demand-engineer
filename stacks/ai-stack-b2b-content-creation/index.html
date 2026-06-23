@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z' fill='%230A1628'/><path d='M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z' fill='%230A1628'/><rect x='22' y='20' width='56' height='13' fill='%230A1628'/><rect x='26' y='43.5' width='48' height='13' fill='%230A1628'/><rect x='22' y='67' width='56' height='13' fill='%230A1628'/></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Stack for B2B Content Creation: ICP Research + Content Data + Claude + Notion | The Demand Engineer</title>
+  <meta name="description" content="Use ICP research, top-performing content data, and keyword signals to generate pipeline-influencing B2B content drafts and distribution plans with Claude." />
+  <meta name="author" content="Matt Danese" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://thedemandengineer.com/stacks/ai-stack-b2b-content-creation/" />
+  <meta property="og:title" content="AI Stack for B2B Content Creation" />
+  <meta property="og:description" content="Use ICP research, top-performing content data, and keyword signals to generate pipeline-influencing B2B content drafts and distribution plans with Claude." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://thedemandengineer.com/stacks/ai-stack-b2b-content-creation/" />
+  <meta property="og:site_name" content="The Demand Engineer" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI Stack for B2B Content Creation" />
+  <meta name="twitter:description" content="Use ICP research, top-performing content data, and keyword signals to generate pipeline-influencing B2B content drafts and distribution plans with Claude." />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script async data-uid="0291ffce73" src="https://the-demand-engineer.kit.com/0291ffce73/index.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N24QM0NQG6"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-N24QM0NQG6');</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Create Pipeline-Influencing B2B Content with Claude",
+    "description": "A step-by-step process for using ICP research, content performance data, and keyword signals to generate B2B content drafts and distribution plans with Claude.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Pull your ICP profile and define the content type", "text": "Document your ICP: target job title, company size, primary pain points, and the buying trigger this piece needs to address. Decide the content type — blog post, guide, landing page, or email sequence — before pulling performance data." },
+      { "@type": "HowToStep", "position": 2, "name": "Pull top-performing content by pipeline influence", "text": "Export your top 5 pieces of content ranked by pipeline influenced — not traffic or pageviews. Pull engagement data, keyword rankings, and time-on-page from GA4 and your CRM. This is the pattern data Claude uses to structure the draft." },
+      { "@type": "HowToStep", "position": 3, "name": "Export keyword data for your target topic", "text": "Pull search volume, current ranking position, and SERP intent for your target keyword. Google Search Console works. Ahrefs or Semrush gives you more context on what's already ranking and why." },
+      { "@type": "HowToStep", "position": 4, "name": "Paste ICP, performance data, and keyword context into the prompt", "text": "Give Claude all three inputs together. Claude generates a complete content brief plus a full first draft structured around your highest-performing content patterns and the keyword intent signal." },
+      { "@type": "HowToStep", "position": 5, "name": "Add proprietary data, then execute the distribution plan", "text": "Review in Notion and add anything Claude can't access — customer quotes, case study data, internal research, product screenshots. Then execute the distribution plan Claude generates: which channels, formats, and audience segments to push it through." }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",         "item": "https://thedemandengineer.com" },
+      { "@type": "ListItem", "position": 2, "name": "Stack Library","item": "https://thedemandengineer.com/stacks/" },
+      { "@type": "ListItem", "position": 3, "name": "AI Stack for B2B Content Creation", "item": "https://thedemandengineer.com/stacks/ai-stack-b2b-content-creation/" }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{--color-bg:#F4F6FB;--color-bg-card:#FFFFFF;--color-text:#0D1117;--color-text-muted:#64748B;--color-accent:#2D5BE3;--color-accent-hover:#1E46C7;--color-accent-dark:#0A1628;--color-border:#DDE3F0;--color-chip-bg:#EEF2FF;--color-chip-text:#3B5CC4;--font-heading:'Fraunces',serif;--font-body:'DM Sans',system-ui,sans-serif;--max-width:760px;--nav-height:56px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;font-size:17px;}
+    body{background-color:var(--color-bg);color:var(--color-text);font-family:var(--font-body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;}
+    img{display:block;max-width:100%;}a{color:inherit;text-decoration:none;}ul{list-style:none;}button{font-family:var(--font-body);}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-height);background:rgba(244,246,251,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--color-border);transition:transform 0.3s ease;}
+    .nav--hidden{transform:translateY(-100%);}
+    .nav__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+    .nav__logo{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-heading);font-weight:700;font-size:18px;color:var(--color-accent-dark);letter-spacing:-0.01em;}
+    .nav__logo svg{flex-shrink:0;}
+    .nav__links{display:flex;align-items:center;gap:24px;}
+    .nav__links a{position:relative;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-text-muted);transition:color 0.2s ease;padding-bottom:2px;}
+    .nav__links a::after{content:'';position:absolute;bottom:-2px;left:0;width:100%;height:2px;background-color:var(--color-accent);transform:scaleX(0);transform-origin:left;transition:transform 0.2s ease;}
+    .nav__links a:hover{color:var(--color-accent);}.nav__links a:hover::after{transform:scaleX(1);}
+    .nav__item--res { position: relative; list-style: none; }
+    .nav__res-btn { font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--color-text-muted); cursor: default; display: flex; align-items: center; gap: 4px; transition: color 0.2s ease; padding-bottom: 2px; white-space: nowrap; }
+    .nav__item--res:hover .nav__res-btn, .nav__item--res:focus-within .nav__res-btn { color: var(--color-accent); }
+    .nav__res-caret { font-size: 10px; transition: transform 0.2s; }
+    .nav__item--res:hover .nav__res-caret, .nav__item--res:focus-within .nav__res-caret { transform: rotate(180deg); }
+    .nav__res-drop { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(-4px); background: var(--color-bg-card, #fff); border: 1px solid var(--color-border); border-radius: 8px; padding: 6px 0; min-width: 152px; opacity: 0; pointer-events: none; transition: opacity 0.15s, transform 0.15s; z-index: 200; list-style: none; margin: 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .nav__item--res:hover .nav__res-drop, .nav__item--res:focus-within .nav__res-drop { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav__res-drop li { list-style: none; }
+    .nav__res-drop a { display: block; padding: 9px 16px; font-size: 13px; font-weight: 500; color: var(--color-text-muted); white-space: nowrap; transition: color 0.15s, background 0.15s; }
+    .nav__res-drop a:hover { color: var(--color-accent); background: rgba(45,91,227,0.04); }
+    .nav__res-drop a::after { display: none !important; }
+    .nav__hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;cursor:pointer;background:none;border:none;padding:0;}
+    .nav__hamburger span{display:block;width:22px;height:2px;background-color:var(--color-accent-dark);border-radius:2px;transition:all 0.25s ease;}
+    .nav__hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav__hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+    .nav__hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nav__mobile{display:none;position:fixed;top:var(--nav-height);left:0;right:0;background:rgba(244,246,251,0.97);border-bottom:1px solid var(--color-border);padding:20px 24px;z-index:99;flex-direction:column;gap:20px;}
+    .nav__mobile.open{display:flex;}.nav__mobile a{font-family:var(--font-body);font-weight:500;font-size:17px;color:var(--color-text);transition:color 0.2s ease;}.nav__mobile a:hover{color:var(--color-accent);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 24px;border-radius:6px;font-family:var(--font-body);font-weight:600;font-size:15px;cursor:pointer;border:none;text-decoration:none;transition:all 0.2s ease;white-space:nowrap;}
+    .btn--primary{background-color:var(--color-accent);color:#fff;}.btn--primary:hover{background-color:var(--color-accent-hover);transform:translateY(-1px);}
+    .breadcrumb{margin-bottom:20px;}.breadcrumb__list{display:flex;align-items:center;list-style:none;padding:0;flex-wrap:wrap;}
+    .breadcrumb__list li{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);display:flex;align-items:center;}
+    .breadcrumb__list li+li::before{content:'›';margin:0 8px;color:var(--color-border);}
+    .breadcrumb__list a{color:var(--color-accent);}.breadcrumb__list a:hover{text-decoration:underline;}
+    .post-hero{padding-top:calc(var(--nav-height) + 56px);padding-bottom:40px;background:var(--color-bg);border-bottom:1px solid var(--color-border);}
+    .post-hero__inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;}
+    .post-category{display:inline-block;background-color:var(--color-chip-bg);color:var(--color-chip-text);font-family:var(--font-body);font-weight:600;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;margin-bottom:20px;}
+    .post-title{font-family:var(--font-heading);font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-bottom:16px;}
+    .post-subtitle{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;letter-spacing:0.08em;color:var(--color-text-muted);margin-bottom:20px;background:var(--color-chip-bg);display:inline-block;padding:6px 12px;border-radius:4px;}
+    .post-meta{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);}
+    .author-bio{max-width:680px;margin:0 auto;padding:20px 24px;border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);display:flex;align-items:center;gap:16px;}
+    .author-bio__avatar{width:48px;height:48px;border-radius:50%;background:var(--color-accent);color:#fff;font-family:var(--font-heading);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .author-bio__name{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-text);margin-bottom:3px;}
+    .author-bio__desc{font-family:var(--font-body);font-size:13px;color:var(--color-text-muted);line-height:1.5;}
+    .post-body{max-width:680px;margin:48px auto 0;padding:0 24px 80px;}
+    .post-body p{font-size:17px;line-height:1.75;margin-bottom:24px;color:var(--color-text);}
+    .post-body h2{font-family:var(--font-heading);font-weight:700;font-size:clamp(1.35rem,3vw,1.7rem);line-height:1.2;letter-spacing:-0.02em;color:var(--color-accent-dark);margin-top:56px;margin-bottom:20px;}
+    .post-body h3{font-family:var(--font-heading);font-weight:700;font-size:1.2rem;line-height:1.25;letter-spacing:-0.01em;color:var(--color-accent-dark);margin-top:40px;margin-bottom:12px;}
+    .post-body ul{list-style:disc;padding-left:20px;margin-bottom:24px;}.post-body ul li{line-height:1.8;margin-bottom:8px;font-size:17px;color:var(--color-text);}
+    .post-body strong{font-weight:600;}
+    .stack-flow{margin:0 0 8px;border:1px solid var(--color-border);border-radius:8px;overflow:hidden;}
+    .stack-layer{display:grid;grid-template-columns:80px 1fr;align-items:center;gap:16px;padding:16px 20px;background:var(--color-bg-card);border-bottom:1px solid var(--color-border);}
+    .stack-layer:last-child{border-bottom:none;}
+    .stack-layer__label{font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-text-muted);}
+    .stack-layer__tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+    .stack-tool{background:var(--color-chip-bg);color:var(--color-chip-text);font-family:var(--font-body);font-size:13px;font-weight:500;padding:5px 10px;border-radius:4px;}
+    .stack-tool--claude{background:#0A1628;color:#a8c0ff;}
+    .stack-arrow{font-size:16px;color:var(--color-accent);flex-shrink:0;margin:0 4px;}
+    .prompt-block{background:var(--color-accent-dark);border-radius:8px;padding:18px 22px 24px;margin:24px 0;font-family:'JetBrains Mono','Courier New',Courier,monospace;font-size:13px;color:#c9d4e8;line-height:1.75;position:relative;}
+    .prompt-label{font-family:var(--font-body);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#6b8cba;display:block;margin-bottom:14px;}
+    .prompt-text{margin:0;font-family:inherit;font-size:inherit;color:inherit;line-height:inherit;white-space:pre-wrap;background:none;border:none;padding:0;overflow-wrap:break-word;}
+    .prompt-ellipsis{color:#6b8cba;font-style:italic;font-size:12px;display:block;margin-top:10px;}
+    .prompt-link-row{margin-top:16px;}
+    .prompt-link-row a{display:inline-flex;align-items:center;gap:6px;color:#a8c0ff;font-family:var(--font-body);font-size:14px;font-weight:500;text-decoration:underline;transition:color 0.15s;}
+    .prompt-link-row a:hover{color:#fff;}
+    .workflow-steps{counter-reset:step;list-style:none;padding:0;margin:0;}
+    .workflow-step{counter-increment:step;display:grid;grid-template-columns:44px 1fr;gap:0 16px;padding:24px 0;border-bottom:1px solid var(--color-border);}
+    .workflow-step:last-child{border-bottom:none;}
+    .workflow-step::before{content:counter(step);font-family:var(--font-heading);font-size:2rem;font-weight:900;color:var(--color-accent);line-height:1;grid-row:1/3;align-self:start;padding-top:2px;}
+    .workflow-step h3{font-family:var(--font-heading);font-size:1.1rem;font-weight:700;color:var(--color-accent-dark);margin:0 0 6px;line-height:1.2;}
+    .workflow-step p{font-size:15px;color:var(--color-text-muted);line-height:1.65;margin:0;}
+    .replaces-list{list-style:none;padding:0;margin:0;}
+    .replaces-list li{padding:14px 0 14px 28px;border-bottom:1px solid var(--color-border);font-size:16px;color:var(--color-text);position:relative;line-height:1.6;}
+    .replaces-list li:last-child{border-bottom:none;}
+    .replaces-list li::before{content:"✕";position:absolute;left:0;color:var(--color-accent);font-size:13px;font-weight:700;top:16px;}
+    .related-stacks__list{list-style:none;padding:0;margin:0;}
+    .related-stacks__list li{padding:12px 0;border-bottom:1px solid var(--color-border);}
+    .related-stacks__list li:last-child{border-bottom:none;}
+    .related-stacks__list a{font-family:var(--font-body);font-weight:500;font-size:15px;color:var(--color-accent);transition:color 0.15s;display:inline-flex;align-items:center;gap:8px;}
+    .related-stacks__list a::after{display:none!important;}
+    .related-stacks__list a:hover{color:var(--color-accent-hover);text-decoration:underline;}
+    .post-cta{background:var(--color-chip-bg);border-left:3px solid var(--color-accent);border-radius:8px;padding:28px 32px;margin-top:48px;}
+    .post-cta__heading{font-family:var(--font-body);font-weight:600;font-size:15px;color:var(--color-accent-dark);margin-bottom:8px;}
+    .post-cta__body{font-family:var(--font-body);font-size:14px;color:var(--color-text-muted);line-height:1.6;margin-bottom:20px;}
+    .post-footer{max-width:680px;margin:0 auto;padding:24px 24px 48px;border-top:1px solid var(--color-border);}
+    .post-footer__back{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-body);font-weight:500;font-size:14px;color:var(--color-accent);margin-bottom:16px;transition:color 0.2s ease;}
+    .post-footer__back:hover{color:var(--color-accent-hover);}
+    .post-footer__copy{font-size:12px;color:var(--color-text-muted);text-align:center;}
+    @media(max-width:768px){html{font-size:16px;}.post-title{font-size:clamp(1.5rem,4vw,2rem);}.post-body{padding:0 20px 60px;}.post-hero__inner{padding:0 20px;}.post-footer{padding:24px 20px 40px;}.nav__links{display:none;}.nav__hamburger{display:flex;}.post-cta{padding:24px;}.stack-layer{grid-template-columns:64px 1fr;gap:12px;padding:14px 16px;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="../../" class="nav__logo" aria-label="The Demand Engineer home">
+        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" aria-hidden="true">
+        <path fill="currentColor" d="M 4 12 C 22 28, 22 72, 4 88 L 17 88 C 35 72, 35 28, 17 12 Z"/>
+        <path fill="currentColor" d="M 96 12 C 78 28, 78 72, 96 88 L 83 88 C 65 72, 65 28, 83 12 Z"/>
+        <rect x="22" y="20" width="56" height="13" fill="currentColor"/>
+        <rect x="26" y="43.5" width="48" height="13" fill="currentColor"/>
+        <rect x="22" y="67" width="56" height="13" fill="currentColor"/>
+      </svg>
+        <span>The Demand Engineer</span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="../../#projects">Agents &amp; Skills</a></li>
+        <li><a href="../../#newsletter">Newsletter</a></li>
+        <li class="nav__item--res" tabindex="0">
+          <span class="nav__res-btn">Resources <span class="nav__res-caret" aria-hidden="true">▾</span></span>
+          <ul class="nav__res-drop" role="list">
+            <li><a href="../../blog/">Blog</a></li>
+            <li><a href="../../prompts/">Prompts</a></li>
+            <li><a href="../../stacks/" class="active">Stacks</a></li>
+          </ul>
+        </li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav" aria-hidden="true">
+    <a href="../../#projects">Agents &amp; Skills</a>
+    <a href="../../#newsletter">Newsletter</a>
+    <a href="../../blog/">Blog</a>
+    <a href="../../prompts/">Prompts</a>
+    <a href="../../stacks/">Stacks</a>
+  </div>
+
+  <div class="post-hero">
+    <div class="post-hero__inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol class="breadcrumb__list">
+          <li><a href="../../">Home</a></li>
+          <li><a href="../../stacks/">Stack Library</a></li>
+          <li>AI Stack for B2B Content Creation</li>
+        </ol>
+      </nav>
+      <span class="post-category">Content & Creative</span>
+      <h1 class="post-title">AI Stack for B2B Content Creation</h1>
+      <div class="post-subtitle">ICP research + content performance data + keyword data → Claude → Draft content + distribution plan in Notion</div>
+      <p class="post-meta">By Matt Danese &middot; Updated June 2026</p>
+    </div>
+  </div>
+
+  <div class="author-bio">
+    <div class="author-bio__avatar" aria-hidden="true">M</div>
+    <div>
+      <div class="author-bio__name">Matt Danese</div>
+      <div class="author-bio__desc">Senior Demand Generation Manager. These stacks are built and used in production — not generated for a listicle.</div>
+    </div>
+  </div>
+
+  <main class="post-body">
+
+    <p>Most B2B content is created from a brief, a gut feeling, and whatever worked last quarter. This stack replaces that with a systematic process grounded in data. Pull your ICP profile, your top-performing content by pipeline influence (not just traffic), and keyword context for the topic you're creating. Feed all three into Claude and get back a content brief and full draft structured around what's actually driving deals — not what ranks well in a vacuum. The distribution plan Claude generates tells you exactly which channels, formats, and audience segments to push it through.</p>
+
+    <h2>The Stack</h2>
+    <div class="stack-flow">
+      <div class="stack-layer">
+          <span class="stack-layer__label">Input</span>
+          <div class="stack-layer__tools">
+            <span class="stack-tool">ICP research</span>
+              <span class="stack-tool">Top-performing content data</span>
+              <span class="stack-tool">Keyword data</span>
+          </div>
+        </div>
+      <div class="stack-layer">
+          <span class="stack-layer__label">AI</span>
+          <div class="stack-layer__tools">
+            <span class="stack-tool--claude">Claude</span>
+          </div>
+        </div>
+      <div class="stack-layer">
+          <span class="stack-layer__label">Output</span>
+          <div class="stack-layer__tools">
+            <span class="stack-tool">Draft content in Notion</span>
+              <span class="stack-tool">Distribution plan</span>
+          </div>
+        </div>
+    </div>
+
+    <h2>The Prompt</h2>
+    <p>This stack is built around the <strong>Sales Enablement Package Prompt</strong>. Here's the abbreviated version — the full prompt with all variables and usage notes is on its own page.</p>
+    <div class="prompt-block">
+      <span class="prompt-label">Claude Prompt — Abbreviated</span>
+      <pre class="prompt-text">You are a B2B content strategist building pipeline-influencing content.
+
+Using the ICP profile, top-performing content analysis, and keyword context below,
+generate a complete content brief and first draft for the specified content type.
+
+The brief must include:
+- Target ICP segment and their primary pain point this addresses
+- Angle that differentiates from what already ranks
+- Structural outline grounded in top-performer patterns
+
+The draft must include:
+- Headline optimized for the target keyword and ICP pain point
+- Introduction that leads with the business problem, not the solution
+- Body sections that map directly to the buyer journey stage</pre>
+      <span class="prompt-ellipsis">[ ... continued — see full prompt ]</span>
+    </div>
+    <div class="prompt-link-row">
+      <a href="/prompts/sales-enablement-package/">View the full prompt with variables and usage notes →</a>
+    </div>
+
+    <h2>The Workflow</h2>
+    <ol class="workflow-steps">
+      <li class="workflow-step">
+        <h3>Pull your ICP profile and define the content type</h3>
+        <p>Document your ICP: target job title, company size, primary pain points, and the buying trigger this piece needs to address. Decide the content type — blog post, guide, landing page, or email sequence — before pulling performance data.</p>
+      </li>
+      <li class="workflow-step">
+        <h3>Pull top-performing content by pipeline influence</h3>
+        <p>Export your top 5 pieces of content ranked by pipeline influenced — not traffic or pageviews. Pull engagement data, keyword rankings, and time-on-page from GA4 and your CRM. This is the pattern data Claude uses to structure the draft.</p>
+      </li>
+      <li class="workflow-step">
+        <h3>Export keyword data for your target topic</h3>
+        <p>Pull search volume, current ranking position, and SERP intent for your target keyword. Google Search Console works. Ahrefs or Semrush gives you more context on what's already ranking and why.</p>
+      </li>
+      <li class="workflow-step">
+        <h3>Paste ICP, performance data, and keyword context into the prompt</h3>
+        <p>Give Claude all three inputs together. Claude generates a complete content brief plus a full first draft structured around your highest-performing content patterns and the keyword intent signal.</p>
+      </li>
+      <li class="workflow-step">
+        <h3>Add proprietary data, then execute the distribution plan</h3>
+        <p>Review in Notion and add anything Claude can't access — customer quotes, case study data, internal research, product screenshots. Then execute the distribution plan Claude generates: which channels, formats, and audience segments to push it through.</p>
+      </li>
+    </ol>
+
+    <h2>What This Replaces</h2>
+    <ul class="replaces-list">
+        <li>Writing briefs from scratch without looking at what content is already influencing pipeline</li>
+        <li>Relying on guesswork for distribution instead of ICP and channel performance data</li>
+        <li>Content that addresses generic pain points rather than the specific buying triggers of your ICP</li>
+    </ul>
+
+    <h2>Related Stacks</h2>
+    <ul class="related-stacks__list">
+        <li><a href="/stacks/ai-stack-b2b-ad-copywriting/">AI Stack for B2B Ad Copywriting →</a></li>
+        <li><a href="/stacks/ai-stack-email-subject-line-testing/">AI Stack for Email Subject Line Testing →</a></li>
+        <li><a href="/stacks/ai-stack-campaign-brief-creation/">AI Stack for Campaign Brief Creation →</a></li>
+    </ul>
+
+    <div class="post-cta">
+      <p class="post-cta__heading">New stacks drop weekly.</p>
+      <p class="post-cta__body">Each one includes the tools, the Claude prompt, and the workflow logic. Free — built for in-house B2B demand gen managers.</p>
+      <button class="btn btn--primary" data-formkit-toggle="0291ffce73">Get weekly AI demand gen systems →</button>
+    </div>
+
+  </main>
+
+  <div class="post-footer">
+    <a class="post-footer__back" href="../../stacks/">← Back to Stack Library</a>
+    <p class="post-footer__copy">© 2026 The Demand Engineer · <a href="../../" style="color:inherit;text-decoration:underline;">thedemandengineer.com</a></p>
+  </div>
+
+  <script>
+    var lastY=0,nav=document.getElementById('nav');
+    window.addEventListener('scroll',function(){
+      var y=window.scrollY;
+      nav.classList.toggle('nav--hidden',y>lastY&&y>80);
+      lastY=y;
+    },{passive:true});
+    var hbg=document.getElementById('hamburger'),mob=document.getElementById('mobileNav');
+    if(hbg&&mob){hbg.addEventListener('click',function(){var o=hbg.classList.toggle('open');mob.classList.toggle('open',o);mob.setAttribute('aria-hidden',String(!o));});}
+  </script>
+</body>
+</html>
